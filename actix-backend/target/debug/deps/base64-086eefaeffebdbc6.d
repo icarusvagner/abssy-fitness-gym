@@ -1,0 +1,12 @@
+/home/vladiere/Projects/abs-mini-gym/actix-backend/target/debug/deps/libbase64-086eefaeffebdbc6.rmeta: /home/vladiere/.cargo/registry/src/index.crates.io-6f17d22bba15001f/base64-0.10.1/src/lib.rs /home/vladiere/.cargo/registry/src/index.crates.io-6f17d22bba15001f/base64-0.10.1/src/chunked_encoder.rs /home/vladiere/.cargo/registry/src/index.crates.io-6f17d22bba15001f/base64-0.10.1/src/display.rs /home/vladiere/.cargo/registry/src/index.crates.io-6f17d22bba15001f/base64-0.10.1/src/tables.rs /home/vladiere/.cargo/registry/src/index.crates.io-6f17d22bba15001f/base64-0.10.1/src/write/mod.rs /home/vladiere/.cargo/registry/src/index.crates.io-6f17d22bba15001f/base64-0.10.1/src/write/encoder.rs /home/vladiere/.cargo/registry/src/index.crates.io-6f17d22bba15001f/base64-0.10.1/src/encode.rs /home/vladiere/.cargo/registry/src/index.crates.io-6f17d22bba15001f/base64-0.10.1/src/decode.rs
+
+/home/vladiere/Projects/abs-mini-gym/actix-backend/target/debug/deps/base64-086eefaeffebdbc6.d: /home/vladiere/.cargo/registry/src/index.crates.io-6f17d22bba15001f/base64-0.10.1/src/lib.rs /home/vladiere/.cargo/registry/src/index.crates.io-6f17d22bba15001f/base64-0.10.1/src/chunked_encoder.rs /home/vladiere/.cargo/registry/src/index.crates.io-6f17d22bba15001f/base64-0.10.1/src/display.rs /home/vladiere/.cargo/registry/src/index.crates.io-6f17d22bba15001f/base64-0.10.1/src/tables.rs /home/vladiere/.cargo/registry/src/index.crates.io-6f17d22bba15001f/base64-0.10.1/src/write/mod.rs /home/vladiere/.cargo/registry/src/index.crates.io-6f17d22bba15001f/base64-0.10.1/src/write/encoder.rs /home/vladiere/.cargo/registry/src/index.crates.io-6f17d22bba15001f/base64-0.10.1/src/encode.rs /home/vladiere/.cargo/registry/src/index.crates.io-6f17d22bba15001f/base64-0.10.1/src/decode.rs
+
+/home/vladiere/.cargo/registry/src/index.crates.io-6f17d22bba15001f/base64-0.10.1/src/lib.rs:
+/home/vladiere/.cargo/registry/src/index.crates.io-6f17d22bba15001f/base64-0.10.1/src/chunked_encoder.rs:
+/home/vladiere/.cargo/registry/src/index.crates.io-6f17d22bba15001f/base64-0.10.1/src/display.rs:
+/home/vladiere/.cargo/registry/src/index.crates.io-6f17d22bba15001f/base64-0.10.1/src/tables.rs:
+/home/vladiere/.cargo/registry/src/index.crates.io-6f17d22bba15001f/base64-0.10.1/src/write/mod.rs:
+/home/vladiere/.cargo/registry/src/index.crates.io-6f17d22bba15001f/base64-0.10.1/src/write/encoder.rs:
+/home/vladiere/.cargo/registry/src/index.crates.io-6f17d22bba15001f/base64-0.10.1/src/encode.rs:
+/home/vladiere/.cargo/registry/src/index.crates.io-6f17d22bba15001f/base64-0.10.1/src/decode.rs:

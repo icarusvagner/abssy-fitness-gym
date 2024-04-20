@@ -1,0 +1,11 @@
+/home/vladiere/Projects/abs-mini-gym/actix-backend/target/debug/deps/libsqlx-51ef567e1febb850.rmeta: /home/vladiere/.cargo/registry/src/index.crates.io-6f17d22bba15001f/sqlx-0.7.4/src/lib.rs /home/vladiere/.cargo/registry/src/index.crates.io-6f17d22bba15001f/sqlx-0.7.4/src/any/mod.rs /home/vladiere/.cargo/registry/src/index.crates.io-6f17d22bba15001f/sqlx-0.7.4/src/macros/mod.rs /home/vladiere/.cargo/registry/src/index.crates.io-6f17d22bba15001f/sqlx-0.7.4/src/ty_match.rs /home/vladiere/.cargo/registry/src/index.crates.io-6f17d22bba15001f/sqlx-0.7.4/src/lib.md /home/vladiere/.cargo/registry/src/index.crates.io-6f17d22bba15001f/sqlx-0.7.4/src/macros/test.md /home/vladiere/.cargo/registry/src/index.crates.io-6f17d22bba15001f/sqlx-0.7.4/src/any/install_drivers_note.md
+
+/home/vladiere/Projects/abs-mini-gym/actix-backend/target/debug/deps/sqlx-51ef567e1febb850.d: /home/vladiere/.cargo/registry/src/index.crates.io-6f17d22bba15001f/sqlx-0.7.4/src/lib.rs /home/vladiere/.cargo/registry/src/index.crates.io-6f17d22bba15001f/sqlx-0.7.4/src/any/mod.rs /home/vladiere/.cargo/registry/src/index.crates.io-6f17d22bba15001f/sqlx-0.7.4/src/macros/mod.rs /home/vladiere/.cargo/registry/src/index.crates.io-6f17d22bba15001f/sqlx-0.7.4/src/ty_match.rs /home/vladiere/.cargo/registry/src/index.crates.io-6f17d22bba15001f/sqlx-0.7.4/src/lib.md /home/vladiere/.cargo/registry/src/index.crates.io-6f17d22bba15001f/sqlx-0.7.4/src/macros/test.md /home/vladiere/.cargo/registry/src/index.crates.io-6f17d22bba15001f/sqlx-0.7.4/src/any/install_drivers_note.md
+
+/home/vladiere/.cargo/registry/src/index.crates.io-6f17d22bba15001f/sqlx-0.7.4/src/lib.rs:
+/home/vladiere/.cargo/registry/src/index.crates.io-6f17d22bba15001f/sqlx-0.7.4/src/any/mod.rs:
+/home/vladiere/.cargo/registry/src/index.crates.io-6f17d22bba15001f/sqlx-0.7.4/src/macros/mod.rs:
+/home/vladiere/.cargo/registry/src/index.crates.io-6f17d22bba15001f/sqlx-0.7.4/src/ty_match.rs:
+/home/vladiere/.cargo/registry/src/index.crates.io-6f17d22bba15001f/sqlx-0.7.4/src/lib.md:
+/home/vladiere/.cargo/registry/src/index.crates.io-6f17d22bba15001f/sqlx-0.7.4/src/macros/test.md:
+/home/vladiere/.cargo/registry/src/index.crates.io-6f17d22bba15001f/sqlx-0.7.4/src/any/install_drivers_note.md:

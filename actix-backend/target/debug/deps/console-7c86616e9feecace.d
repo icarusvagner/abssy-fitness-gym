@@ -1,0 +1,11 @@
+/home/vladiere/Projects/abs-mini-gym/actix-backend/target/debug/deps/libconsole-7c86616e9feecace.rmeta: /home/vladiere/.cargo/registry/src/index.crates.io-6f17d22bba15001f/console-0.15.8/src/lib.rs /home/vladiere/.cargo/registry/src/index.crates.io-6f17d22bba15001f/console-0.15.8/src/common_term.rs /home/vladiere/.cargo/registry/src/index.crates.io-6f17d22bba15001f/console-0.15.8/src/kb.rs /home/vladiere/.cargo/registry/src/index.crates.io-6f17d22bba15001f/console-0.15.8/src/term.rs /home/vladiere/.cargo/registry/src/index.crates.io-6f17d22bba15001f/console-0.15.8/src/unix_term.rs /home/vladiere/.cargo/registry/src/index.crates.io-6f17d22bba15001f/console-0.15.8/src/utils.rs /home/vladiere/.cargo/registry/src/index.crates.io-6f17d22bba15001f/console-0.15.8/src/ansi.rs
+
+/home/vladiere/Projects/abs-mini-gym/actix-backend/target/debug/deps/console-7c86616e9feecace.d: /home/vladiere/.cargo/registry/src/index.crates.io-6f17d22bba15001f/console-0.15.8/src/lib.rs /home/vladiere/.cargo/registry/src/index.crates.io-6f17d22bba15001f/console-0.15.8/src/common_term.rs /home/vladiere/.cargo/registry/src/index.crates.io-6f17d22bba15001f/console-0.15.8/src/kb.rs /home/vladiere/.cargo/registry/src/index.crates.io-6f17d22bba15001f/console-0.15.8/src/term.rs /home/vladiere/.cargo/registry/src/index.crates.io-6f17d22bba15001f/console-0.15.8/src/unix_term.rs /home/vladiere/.cargo/registry/src/index.crates.io-6f17d22bba15001f/console-0.15.8/src/utils.rs /home/vladiere/.cargo/registry/src/index.crates.io-6f17d22bba15001f/console-0.15.8/src/ansi.rs
+
+/home/vladiere/.cargo/registry/src/index.crates.io-6f17d22bba15001f/console-0.15.8/src/lib.rs:
+/home/vladiere/.cargo/registry/src/index.crates.io-6f17d22bba15001f/console-0.15.8/src/common_term.rs:
+/home/vladiere/.cargo/registry/src/index.crates.io-6f17d22bba15001f/console-0.15.8/src/kb.rs:
+/home/vladiere/.cargo/registry/src/index.crates.io-6f17d22bba15001f/console-0.15.8/src/term.rs:
+/home/vladiere/.cargo/registry/src/index.crates.io-6f17d22bba15001f/console-0.15.8/src/unix_term.rs:
+/home/vladiere/.cargo/registry/src/index.crates.io-6f17d22bba15001f/console-0.15.8/src/utils.rs:
+/home/vladiere/.cargo/registry/src/index.crates.io-6f17d22bba15001f/console-0.15.8/src/ansi.rs:

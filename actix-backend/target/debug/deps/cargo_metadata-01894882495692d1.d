@@ -1,0 +1,9 @@
+/home/vladiere/Projects/abs-mini-gym/actix-backend/target/debug/deps/libcargo_metadata-01894882495692d1.rmeta: /home/vladiere/.cargo/registry/src/index.crates.io-6f17d22bba15001f/cargo_metadata-0.14.2/src/lib.rs /home/vladiere/.cargo/registry/src/index.crates.io-6f17d22bba15001f/cargo_metadata-0.14.2/src/dependency.rs /home/vladiere/.cargo/registry/src/index.crates.io-6f17d22bba15001f/cargo_metadata-0.14.2/src/diagnostic.rs /home/vladiere/.cargo/registry/src/index.crates.io-6f17d22bba15001f/cargo_metadata-0.14.2/src/errors.rs /home/vladiere/.cargo/registry/src/index.crates.io-6f17d22bba15001f/cargo_metadata-0.14.2/src/messages.rs
+
+/home/vladiere/Projects/abs-mini-gym/actix-backend/target/debug/deps/cargo_metadata-01894882495692d1.d: /home/vladiere/.cargo/registry/src/index.crates.io-6f17d22bba15001f/cargo_metadata-0.14.2/src/lib.rs /home/vladiere/.cargo/registry/src/index.crates.io-6f17d22bba15001f/cargo_metadata-0.14.2/src/dependency.rs /home/vladiere/.cargo/registry/src/index.crates.io-6f17d22bba15001f/cargo_metadata-0.14.2/src/diagnostic.rs /home/vladiere/.cargo/registry/src/index.crates.io-6f17d22bba15001f/cargo_metadata-0.14.2/src/errors.rs /home/vladiere/.cargo/registry/src/index.crates.io-6f17d22bba15001f/cargo_metadata-0.14.2/src/messages.rs
+
+/home/vladiere/.cargo/registry/src/index.crates.io-6f17d22bba15001f/cargo_metadata-0.14.2/src/lib.rs:
+/home/vladiere/.cargo/registry/src/index.crates.io-6f17d22bba15001f/cargo_metadata-0.14.2/src/dependency.rs:
+/home/vladiere/.cargo/registry/src/index.crates.io-6f17d22bba15001f/cargo_metadata-0.14.2/src/diagnostic.rs:
+/home/vladiere/.cargo/registry/src/index.crates.io-6f17d22bba15001f/cargo_metadata-0.14.2/src/errors.rs:
+/home/vladiere/.cargo/registry/src/index.crates.io-6f17d22bba15001f/cargo_metadata-0.14.2/src/messages.rs:

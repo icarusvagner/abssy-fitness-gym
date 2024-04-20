@@ -1,0 +1,10 @@
+/home/vladiere/Projects/abs-mini-gym/actix-backend/target/debug/deps/libactix_cors-44175caadebf4acc.rmeta: /home/vladiere/.cargo/registry/src/index.crates.io-6f17d22bba15001f/actix-cors-0.7.0/src/lib.rs /home/vladiere/.cargo/registry/src/index.crates.io-6f17d22bba15001f/actix-cors-0.7.0/src/all_or_some.rs /home/vladiere/.cargo/registry/src/index.crates.io-6f17d22bba15001f/actix-cors-0.7.0/src/builder.rs /home/vladiere/.cargo/registry/src/index.crates.io-6f17d22bba15001f/actix-cors-0.7.0/src/error.rs /home/vladiere/.cargo/registry/src/index.crates.io-6f17d22bba15001f/actix-cors-0.7.0/src/inner.rs /home/vladiere/.cargo/registry/src/index.crates.io-6f17d22bba15001f/actix-cors-0.7.0/src/middleware.rs
+
+/home/vladiere/Projects/abs-mini-gym/actix-backend/target/debug/deps/actix_cors-44175caadebf4acc.d: /home/vladiere/.cargo/registry/src/index.crates.io-6f17d22bba15001f/actix-cors-0.7.0/src/lib.rs /home/vladiere/.cargo/registry/src/index.crates.io-6f17d22bba15001f/actix-cors-0.7.0/src/all_or_some.rs /home/vladiere/.cargo/registry/src/index.crates.io-6f17d22bba15001f/actix-cors-0.7.0/src/builder.rs /home/vladiere/.cargo/registry/src/index.crates.io-6f17d22bba15001f/actix-cors-0.7.0/src/error.rs /home/vladiere/.cargo/registry/src/index.crates.io-6f17d22bba15001f/actix-cors-0.7.0/src/inner.rs /home/vladiere/.cargo/registry/src/index.crates.io-6f17d22bba15001f/actix-cors-0.7.0/src/middleware.rs
+
+/home/vladiere/.cargo/registry/src/index.crates.io-6f17d22bba15001f/actix-cors-0.7.0/src/lib.rs:
+/home/vladiere/.cargo/registry/src/index.crates.io-6f17d22bba15001f/actix-cors-0.7.0/src/all_or_some.rs:
+/home/vladiere/.cargo/registry/src/index.crates.io-6f17d22bba15001f/actix-cors-0.7.0/src/builder.rs:
+/home/vladiere/.cargo/registry/src/index.crates.io-6f17d22bba15001f/actix-cors-0.7.0/src/error.rs:
+/home/vladiere/.cargo/registry/src/index.crates.io-6f17d22bba15001f/actix-cors-0.7.0/src/inner.rs:
+/home/vladiere/.cargo/registry/src/index.crates.io-6f17d22bba15001f/actix-cors-0.7.0/src/middleware.rs:

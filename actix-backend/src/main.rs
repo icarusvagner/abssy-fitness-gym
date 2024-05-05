@@ -1,4 +1,4 @@
-use actix_backend::{middleware::AdminContextExtractor, model::ModelManager};
+use actix_backend::{config::core_config, middleware::AdminContextExtractor, model::ModelManager};
 use actix_web::{
     get,
     web::{self, Data},
@@ -20,14 +20,19 @@ async fn main() -> std::io::Result<()> {
         .expect("Model manager failed")
         .clone();
 
-    info!("{:<12} - Server is live", "http://127.0.0.1:3090");
+    info!(
+        "{:<12} - Server is live",
+        "http://{}:{}",
+        &core_config().SERVER_URL,
+        &core_config().SERVER_PORT
+    );
     HttpServer::new(move || {
         App::new()
             .app_data(mm.clone())
             .app_data(Data::new(AdminContextExtractor))
             .service(greet)
     })
-    .bind(("127.0.0.1", 3090))?
+    .bind((&core_config().SERVER_URL, &core_config().SERVER_PORT))?
     .run()
     .await
 }

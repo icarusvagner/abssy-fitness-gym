@@ -1,6 +1,6 @@
 use std::sync::OnceLock;
 
-use crate::utils::get_env;
+use crate::utils::{get_env, get_env_parse};
 
 pub fn core_config() -> &'static CoreConfig {
     static INSTANCE: OnceLock<CoreConfig> = OnceLock::new();
@@ -26,6 +26,9 @@ pub struct CoreConfig {
     pub PASSWORD_KEY: String,
     pub JWT_SECRET: String,
     pub HASH_SECRET: String,
+
+    pub SERVER_URL: String,
+    pub SERVER_PORT: u32,
 }
 
 impl CoreConfig {
@@ -42,6 +45,8 @@ impl CoreConfig {
             PASSWORD_KEY: get_env("PASSWORD_KEY")?,
             JWT_SECRET: get_env("JWT_SECRET")?,
             HASH_SECRET: get_env("HASH_SECRET")?,
+            SERVER_URL: get_env("SERVER_URL")?,
+            SERVER_PORT: get_env_parse("SERVER_PORT")?,
         })
     }
 }

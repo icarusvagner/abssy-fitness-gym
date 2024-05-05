@@ -14,3 +14,8 @@ pub fn get_env_as_bytes<T: FromStr>(name: &'static str) -> Result<T> {
 
     val.parse::<T>().map_err(|_| Error::WrongFormat(name))
 }
+
+pub fn get_env_parse<T: FromStr>(name: &'static str) -> Result<T> {
+    let val = get_env(name)?;
+    val.parse::<T>().map_err(|_| Error::WrongFormat(name))
+}

@@ -7,7 +7,7 @@
           <q-btn :to="{ name: 'membership' }" flat icon="mdi-arrow-left" label="Back" textColor="secondary" />
         </div>
         <div class="col-12 col-md-8">
-          <h1 class="text-h5">New Member</h1>
+          <h1 class="text-h6">New Member</h1>
         </div>
       </div>
       <q-form
@@ -15,7 +15,7 @@
         @reset="onReset"
         class="q-gutter-md"
       >
-        <span class="text-h6">Client Details</span>
+        <span class="text-h6">Member Details</span>
         <div class="row items-center">
           <q-input filled v-model="text" label="First Name" class="col q-mr-md" />
           <q-input filled v-model="text" label="Last Name" class="col" />

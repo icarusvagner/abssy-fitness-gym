@@ -40,12 +40,12 @@
       }]
     },
     title: {
-      text: 'Monthly Total Sales',
+      text: 'Total Sales',
       align: 'left'
     },
     plotOptions: {
       bar: {
-        horizontal: true,
+        columnWidth: '45%',
       }
     },
     dataLabels: {
@@ -62,7 +62,6 @@
       }
     },
     yaxis: {
-      reversed: true,
       axisTicks: {
         show: true
       }

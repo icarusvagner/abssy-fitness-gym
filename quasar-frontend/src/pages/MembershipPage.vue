@@ -3,7 +3,7 @@
     <!-- content -->
     <div class="row items-center">
       <div class="col-12 col-md-4">
-        <q-btn :to="{ name: 'new' }" flat label="New Member" icon="mdi-plus" text-color="secondary" />
+        <q-btn :to="{ name: 'new_member' }" flat label="New Member" icon="mdi-plus" text-color="secondary" />
       </div>
       <div class="col-12 col-md-8">
         <q-input color="secondary" label-color="secondary" dense rounded outlined v-model="text" label="Search...">

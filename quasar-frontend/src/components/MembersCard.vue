@@ -6,42 +6,37 @@
 
 <template>
     <q-card class="my-card bg-grey-12" bordered>
-      <div class="column q-pa-md">
+      <div class="column q-pa-md q-gutter-md text-capitalize">
 
-        <div class="row">
-          <span class="col"> First Name: </span>
-          <span class="col capitalize"> {{ props.firstName }} </span>
+        <div class="column">
+          <span class="text-grey-14"> Full Name: </span>
+          <span class="capitalize text-grey-10"> {{props.lastName}}, {{ props.firstName }} </span>
         </div>
 
-        <div class="row">
-          <span class="col"> Last Name: </span>
-          <span class="col text-capitalize"> {{ props.lastName }} </span>
+        <div class="column">
+          <span class="text-grey-14"> Phone Number: </span>
+          <span class="text-grey-10"> {{ props.phoneNumber }} </span>
         </div>
 
-        <div class="row">
-          <span class="col"> Phone Number: </span>
-          <span class="col"> {{ props.phoneNumber }} </span>
+        <div class="column">
+          <span class="text-grey-14"> Address: </span>
+          <span class="text-grey-10"> {{ props.address }}, {{ props.city }}, {{ props.state }} </span>
         </div>
 
-        <div class="row">
-          <span class="col"> Address: </span>
-          <span class="col ellipsis"> {{ props.address }} </span>
+        <div class="column">
+          <span class="text-grey-14"> Gender: </span>
+          <span class="text-grey-10"> {{ props.gender }} </span>
         </div>
 
-        <div class="row">
-          <span class="col"> Gender: </span>
-          <span class="col"> {{ props.gender }} </span>
-        </div>
-
-        <div class="row">
-          <span class="col"> Membership Type: </span>
-          <span class="col ellipsis"> {{ props.membershipType }} </span>
+        <div class="column">
+          <span class="text-grey-14"> Membership Type: </span>
+          <span class="text-grey-10"> {{ props.membershipType }} </span>
         </div>
 
       </div>
 
       <q-card-actions align="right">
-        <q-btn flat round color="teal" icon="mdi-information-variant-circle-outline" />
+        <q-btn :to="{ name: 'one_member', params: { id: props.id } }" flat round color="teal" icon="mdi-information-variant-circle-outline" />
       </q-card-actions>
     </q-card>
 </template>

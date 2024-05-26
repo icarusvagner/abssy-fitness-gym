@@ -5,10 +5,10 @@
         <DashboardCard v-bind="item" />
       </div>
     </div>
-    <div class="rounded-borders shadow-10">
+    <div class="rounded-borders shadow-10 q-pa-md">
       <LineChart />
     </div>
-    <div class="rounded-borders shadow-10">
+    <div class="rounded-borders shadow-10 q-pa-md">
       <BarChart />
     </div>
   </q-page>

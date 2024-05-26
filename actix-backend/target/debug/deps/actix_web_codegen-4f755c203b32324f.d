@@ -1,6 +1,0 @@
-/home/vladiere/Projects/abs-mini-gym/actix-backend/target/debug/deps/libactix_web_codegen-4f755c203b32324f.so: /home/vladiere/.cargo/registry/src/index.crates.io-6f17d22bba15001f/actix-web-codegen-4.2.2/src/lib.rs /home/vladiere/.cargo/registry/src/index.crates.io-6f17d22bba15001f/actix-web-codegen-4.2.2/src/route.rs
-
-/home/vladiere/Projects/abs-mini-gym/actix-backend/target/debug/deps/actix_web_codegen-4f755c203b32324f.d: /home/vladiere/.cargo/registry/src/index.crates.io-6f17d22bba15001f/actix-web-codegen-4.2.2/src/lib.rs /home/vladiere/.cargo/registry/src/index.crates.io-6f17d22bba15001f/actix-web-codegen-4.2.2/src/route.rs
-
-/home/vladiere/.cargo/registry/src/index.crates.io-6f17d22bba15001f/actix-web-codegen-4.2.2/src/lib.rs:
-/home/vladiere/.cargo/registry/src/index.crates.io-6f17d22bba15001f/actix-web-codegen-4.2.2/src/route.rs:

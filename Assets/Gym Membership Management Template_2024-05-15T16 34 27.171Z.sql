@@ -131,6 +131,13 @@ CREATE TABLE `package_table` (
 	PRIMARY KEY(`id`)
 );
 
+CREATE TABLE `refresh_token` (
+	`id` INT NOT NULL AUTO_INCREMENT UNIQUE,
+	`usernamer` VARCHAR(255) NOT NULL,
+	`refresh_token` VARCHAR(255) NOT NULL,
+	PRIMARY KEY(`id`)
+);
+
 ALTER TABLE `address_table`
 ADD FOREIGN KEY(`id`) REFERENCES `member_table`(`address_id`)
 ON UPDATE NO ACTION ON DELETE NO ACTION;

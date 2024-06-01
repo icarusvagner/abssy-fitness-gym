@@ -1,12 +1,55 @@
-import express from 'express';
+import path from "path";
+import cors from "cors";
+import helmet from "helmet";
+import morgan from "morgan";
+import bodyParser from "body-parser";
+import express, { Express } from "express";
 
-const app = express();
-const port = 3000;
+// routes
+import authRoute from './routes/auth.router';
 
+const app: Express = express();
+const PORT: number = Number(process.env.PORT) || 3000;
+const allowedOrigins = ['https://cpclibrary.online', 'http://localhost:9300', 'http://localhost:9000', 'http://localhost:9200'];
+
+const corsOptions = {
+  origin: (origin: any, callback: any) => {
+    if (!origin || allowedOrigins.includes(origin)) {
+      callback(null, true);
+    } else {
+      callback(new Error('Not allowed origin'));
+    }
+  }
+}
+
+// Logging
+app.use(morgan("dev"));
+
+// Parse the request
+app.use(express.urlencoded({ extended: false }));
+
+// Takes care of json data
+app.use(express.json({ limit: "100mb" })); // Setting the data size of an json
+app.use(bodyParser.json());
+app.use(cors(corsOptions));
+app.use(helmet());
+
+// Default route
 app.get('/', (req, res) => {
-  res.send('Success');
+  return res.status(200).json({ message: 'OK' });
 })
 
-app.listen(port, () => {
-  console.info('Server listening');
-})
+// Routes here
+app.use('/api', authRoute);
+
+// Error Handling
+app.use((req, res, next) => {
+  const error = new Error("Not Found");
+  return res.status(404).json({
+    message: error.message,
+  });
+});
+
+app.listen(PORT, () => {
+  console.info(`Server listening on Port ${PORT}`);
+});

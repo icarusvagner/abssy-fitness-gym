@@ -7,20 +7,11 @@ import express, { Express } from "express";
 
 // routes
 import authRoute from './routes/auth.router';
+import packageRoute from './routes/package.route';
 
 const app: Express = express();
 const PORT: number = Number(process.env.PORT) || 3000;
-const allowedOrigins = ['https://cpclibrary.online', 'http://localhost:9300', 'http://localhost:9000', 'http://localhost:9200'];
 
-const corsOptions = {
-  origin: (origin: any, callback: any) => {
-    if (!origin || allowedOrigins.includes(origin)) {
-      callback(null, true);
-    } else {
-      callback(new Error('Not allowed origin'));
-    }
-  }
-}
 
 // Logging
 app.use(morgan("dev"));
@@ -31,7 +22,7 @@ app.use(express.urlencoded({ extended: false }));
 // Takes care of json data
 app.use(express.json({ limit: "100mb" })); // Setting the data size of an json
 app.use(bodyParser.json());
-app.use(cors(corsOptions));
+app.use(cors());
 app.use(helmet());
 
 // Default route
@@ -41,6 +32,7 @@ app.get('/', (req, res) => {
 
 // Routes here
 app.use('/api', authRoute);
+app.use('/api', packageRoute);
 
 // Error Handling
 app.use((req, res, next) => {

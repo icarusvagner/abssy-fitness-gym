@@ -1,5 +1,5 @@
 import { Request, Response, NextFunction } from "express";
-import { StaffForCreate, AdminForCreate, UserForLogin } from '../models/auth.model';
+import { StaffForCreate, AdminForCreate, UserForLogin, PasswordForUpdate } from '../models/auth.model';
 import * as authService from '../services/auth.service';
 
 const registerStaff = async (req: Request, res: Response) => {
@@ -47,4 +47,14 @@ const logoutUser = async (req: Request, res: Response) => {
   }
 }
 
-export { registerStaff, loginUser, logoutUser, registerAdmin };
+const changePassword = async (req: Request, res: Response) => {
+  try {
+    let details: PasswordForUpdate = req.body;
+    let result = await authService.change_user_password(details);
+  } catch (error: any) {
+    console.error('Changing password error on controller: ', error.message);
+    res.status(500).json({ 'error': error.message });
+  }
+}
+
+export { registerStaff, loginUser, logoutUser, registerAdmin, changePassword };

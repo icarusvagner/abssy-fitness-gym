@@ -12,6 +12,7 @@ CREATE OR REPLACE TABLE `member_table` (
 	`detail_id` INT NOT NULL,
 	`address_id` INT NOT NULL,
 	`ec_id` INT NOT NULL,
+  `package_id` INT NOT NULL,
 	`health_confition` VARCHAR(255),
 	`ctime` TIMESTAMP NOT NULL DEFAULT current_timestamp,
 	`mtime` TIMESTAMP NOT NULL DEFAULT current_timestamp,
@@ -52,7 +53,7 @@ CREATE OR REPLACE TABLE `trainers_table` (
 	`availability` VARCHAR(255) NOT NULL,
 	`ctime` TIMESTAMP NOT NULL DEFAULT current_timestamp,
 	`mtime` TIMESTAMP NOT NULL DEFAULT current_timestamp,
-	`trainer_status` ENUM('active', 'inactive') NOT NULL DEFAULT 'active',
+	`trainer_status` ENUM('active', 'inactive', 'removed') NOT NULL DEFAULT 'active',
 	PRIMARY KEY(`id`)
 );
 
@@ -79,7 +80,7 @@ CREATE OR REPLACE TABLE TABLE `staff_table` (
 	`login_id` INT NOT NULL,
 	`ctime` TIMESTAMP NOT NULL DEFAULT current_timestamp,
 	`mtime` TIMESTAMP NOT NULL DEFAULT current_timestamp,
-	`staff_status` ENUM('active', 'inactive') NOT NULL DEFAULT 'active',
+	`staff_status` ENUM('active', 'inactive', 'removed') NOT NULL DEFAULT 'active',
 	PRIMARY KEY(`id`)
 );
 
@@ -103,6 +104,7 @@ CREATE OR REPLACE TABLE `schedules_table` (
 	`end_time` TIME NOT NULL,
 	`days_of_week` VARCHAR(255) NOT NULL,
 	`location` VARCHAR(255) NOT NULL,
+  `status` ENUM('available', 'unavailable'),
 	`ctime` TIMESTAMP NOT NULL DEFAULT current_timestamp,
 	`mtime` TIMESTAMP NOT NULL DEFAULT current_timestamp,
 	PRIMARY KEY(`id`)
@@ -134,9 +136,11 @@ CREATE OR REPLACE TABLE `payments_table` (
 CREATE OR REPLACE TABLE `package_table` (
 	`id` INT NOT NULL AUTO_INCREMENT UNIQUE,
 	`package_name` VARCHAR(255) NOT NULL,
-	`duration_months` DATETIME NOT NULL,
+	`duration` INT NOT NULL,
+  `package_type` ENUM('week','month','year') DEFAULT 'month',
 	`price` DECIMAL(10, 2) NOT NULL,
 	`benefits` VARCHAR(255) NOT NULL,
+  `status` ENUM('active','inactive', 'removed') DEFAULT 'active',
 	`ctime` TIMESTAMP NOT NULL DEFAULT current_timestamp,
 	`mtime` TIMESTAMP NOT NULL DEFAULT current_timestamp,
 	PRIMARY KEY(`id`)

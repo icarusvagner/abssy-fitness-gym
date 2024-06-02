@@ -154,10 +154,8 @@ const logout_user = async (refresh_token: string) => {
     console.log("refresh_token: ", refresh_token);
     const result: any = await executeQuery(query, [refresh_token]);
 
-    console.log("Logout result: ", result);
-
     if (result.affectedRows === 1) {
-      return { message: "Logout Successfully" };
+      return { message: "Logout Successfully", status: 200 };
     } else {
       return result;
     }

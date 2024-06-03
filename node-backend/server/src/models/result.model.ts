@@ -9,6 +9,7 @@ export interface IMySQLResult {
   info: string;
   serverStatus: number;
   warningStatus: number;
+  updatedRows: number;
 }
 
 export interface IUser {

@@ -13,7 +13,7 @@ CREATE OR REPLACE TABLE `member_table` (
 	`address_id` INT NOT NULL,
 	`ec_id` INT NOT NULL,
   `package_id` INT NOT NULL,
-	`health_confition` VARCHAR(255),
+	`health_condition` VARCHAR(255),
 	`ctime` TIMESTAMP NOT NULL DEFAULT current_timestamp,
 	`mtime` TIMESTAMP NOT NULL DEFAULT current_timestamp,
 	PRIMARY KEY(`id`)
@@ -51,9 +51,9 @@ CREATE OR REPLACE TABLE `trainers_table` (
 	`experience_years` INT NOT NULL,
 	`hire_date` VARCHAR(255) NOT NULL,
 	`availability` VARCHAR(255) NOT NULL,
+	`trainer_status` ENUM('active', 'inactive', 'removed') NOT NULL DEFAULT 'active',
 	`ctime` TIMESTAMP NOT NULL DEFAULT current_timestamp,
 	`mtime` TIMESTAMP NOT NULL DEFAULT current_timestamp,
-	`trainer_status` ENUM('active', 'inactive', 'removed') NOT NULL DEFAULT 'active',
 	PRIMARY KEY(`id`)
 );
 
@@ -128,8 +128,9 @@ CREATE OR REPLACE TABLE `payments_table` (
 	`payment_date` DATE NOT NULL,
 	`payment_method` ENUM('cash', 'card', 'ecash') NOT NULL DEFAULT 'cash',
 	`package_id` INT NOT NULL,
+	`payment_status` ENUM('active','late','early','removed'),
 	`ctime` TIMESTAMP NOT NULL DEFAULT current_timestamp,
-	`matime` TIMESTAMP NOT NULL DEFAULT current_timestamp,
+	`mtime` TIMESTAMP NOT NULL DEFAULT current_timestamp,
 	PRIMARY KEY(`id`)
 );
 

@@ -8,6 +8,11 @@ import express, { Express } from "express";
 // routes
 import authRoute from './routes/auth.router';
 import packageRoute from './routes/package.route';
+import schedRoute from './routes/schedule.route';
+import memberRoute from './routes/member.route';
+import staffRoute from './routes/staff.route';
+import trainerRoute from './routes/trainer.route';
+import paymentRoute from './routes/payment.route';
 
 const app: Express = express();
 const PORT: number = Number(process.env.PORT) || 3000;
@@ -32,7 +37,12 @@ app.get('/', (req, res) => {
 
 // Routes here
 app.use('/api', authRoute);
-app.use('/api', packageRoute);
+app.use('/api/package', packageRoute);
+app.use('/api/schedule', schedRoute);
+app.use('/api/member', memberRoute);
+app.use('/api/staff', staffRoute);
+app.use('/api/trainer', trainerRoute);
+app.use('/api/payment', paymentRoute);
 
 // Error Handling
 app.use((req, res, next) => {

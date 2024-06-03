@@ -181,10 +181,15 @@ BEGIN
 
         IF user_exists THEN
             -- If login_id is found in staff_table
-            SELECT id, role, password
-            FROM staff_table
-            WHERE login_id = login_id
-            LIMIT 1;
+            SELECT 
+              ld.username,
+              ld.password,
+              st.role,
+              'staff' AS user_type
+            FROM
+              staff_table st
+            LEFT JOIN login_details ld ON ld.id =  st.login_id
+            WHERE ld.id = login_id;
         ELSE
             -- Check if login_id is in admin_table
             SELECT COUNT(*) INTO user_exists
@@ -193,10 +198,15 @@ BEGIN
 
             IF user_exists THEN
                 -- If login_id is found in admin_table
-                SELECT id, role, password
-                FROM admin_table
-                WHERE login_id = login_id
-                LIMIT 1;
+               SELECT 
+                ld.username,
+                ld.password,
+                at2.role,
+                'admin' AS user_type
+              FROM
+                admin_table at2
+              LEFT JOIN login_details ld ON ld.id = at2.login_id 
+              WHERE ld.id = login_id;
             ELSE
                 -- If login_id is not found in both staff_table and admin_table
                 SELECT 'Account not found, user not registered' AS message, 404 AS status;

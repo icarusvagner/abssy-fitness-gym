@@ -6,8 +6,8 @@ CREATE PROCEDURE delete_schedule(
 BEGIN
     DECLARE EXIT HANDLER FOR SQLEXCEPTION
     BEGIN
-        -- Rollback transaction in case of an error
-        ROLLBACK;
+      ROLLBACK;
+      SELECT 'Error occurred during schedule creation.' AS error_message, 500 AS status;
     END;
 
     START TRANSACTION;

@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
 import jwt from "jsonwebtoken";
-import config from "./config";
-import executeQuery from "../functions/executeQuery";
+import config from "./config.util";
+import executeQuery from "../utils/executeQuery.util";
 
 // Middleware for verifying JWT token
 const refreshUserTokens = async (req: Request, res: Response) => {

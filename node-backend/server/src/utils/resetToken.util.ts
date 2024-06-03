@@ -3,14 +3,14 @@ import config from "./config.util";
 import jwt from "jsonwebtoken";
 
 const resetToken = (
-    email: any,
+    username: any,
     callback: (error: Error | null, reset_token: string | null | undefined) => void,
 ): void => {
-  console.info(`Attempting to sign for reset token to ${email}`);
+  console.info(`Attempting to sign for reset token to ${username}`);
 
   try {
     jwt.sign(
-      { username: username },
+      { username },
       config.server.token.resetAccessSecret,
       {
         issuer: config.server.token.issuer,

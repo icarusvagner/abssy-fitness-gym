@@ -4,9 +4,9 @@ import * as packageController from '../controllers/package.controller';
 
 const router = Router();
 
-router.post('/package/create', verifyToken, packageController.createPackage);
-router.post('/package/update', verifyToken, packageController.updatePackage);
-router.post('/package/read', verifyToken, packageController.readPackage);
-router.post('/package/delete', verifyToken, packageController.deletePackage);
+router.post('/create', verifyToken, packageController.createPackage);
+router.post('/update', verifyToken, packageController.updatePackage);
+router.post('/read', verifyToken, packageController.readPackage);
+router.post('/delete', verifyToken, packageController.deletePackage);
 
 export default router;

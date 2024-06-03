@@ -1,5 +1,5 @@
 import { Request, Response, NextFunction } from "express";
-import { PackageDate, PackageForCreate, PackageForUpdate } from "../models/package.model";
+import { PackageForCreate, PackageForUpdate } from "../models/package.model";
 import * as packageService from '../services/package.service';
 
 const createPackage = async (req: Request, res: Response) => {

@@ -29,7 +29,7 @@ const create_package = async (pack: PackageForCreate) => {
 const read_package = async (id: number) => {
   try {
     let query = "CALL read_package(?)";
-    let result = await executeQuery(query, [id]);
+    let result: any = await executeQuery(query, [id]);
 
     if (!result) {
       return {
@@ -38,7 +38,7 @@ const read_package = async (id: number) => {
       };
     }
 
-    return result;
+    return result[0];
   } catch (error: any) {
     console.error('Reading package error on service: ', error.message);
     return error.message;

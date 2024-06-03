@@ -43,16 +43,7 @@ BEGIN
     START TRANSACTION;
 
    	IF p_id = 0 THEN
-   		SELECT
-   			id,
-			package_name,
-			duration,
-			package_date,
-			price,
-			benefits,
-			ctime,
-			mtime
-		FROM package_table ORDER BY ctime DESC;
+   		SELECT * FROM package_table ORDER BY ctime DESC;
 	ELSE
     	SELECT * FROM package_table WHERE id = p_id;
 	END IF;
@@ -60,6 +51,7 @@ BEGIN
     COMMIT;
 END
 
+DELIMITER ;
 
 DELIMITER //
 

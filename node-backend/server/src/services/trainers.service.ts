@@ -29,6 +29,8 @@ const create_trainer = async (trainer: TrainerForCreate) => {
 			trainer.availability,
     ]);
 
+    console.log(result);
+
     return {
       message: 'Trainer created successfully',
       status: 201,

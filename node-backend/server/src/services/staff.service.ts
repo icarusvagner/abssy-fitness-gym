@@ -5,6 +5,7 @@ import { Gender } from '../models/auth.model';
 
 const update_staff = async (staff: StaffForUpdate) => {
   try {
+    console.log('Staff for update: ',staff);
     let query = "CALL update_staff(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
     let result: any = await executeQuery(query, [
 			staff.staff_id,
@@ -15,18 +16,19 @@ const update_staff = async (staff: StaffForUpdate) => {
 			staff.email_address,
 			staff.date_of_birth,
       checkValidEnumValue(Gender, staff.gender),
-			staff.street,
-			staff.brgy,
-			staff.city,
-			staff.province,
+			staff.address_street,
+			staff.address_brgy,
+			staff.address_city,
+			staff.address_province,
 			staff.ec_first_name,
 			staff.ec_last_name,
-			staff.relationship,
+			staff.ec_relationship,
 			staff.ec_phone_number,
       checkValidEnumValue(StaffRole, staff.role),
 			staff.shift_schedule,
     ]);
 
+    console.log('Result update: ', result);
     return {
       message: 'Staff updated',
       status: 201

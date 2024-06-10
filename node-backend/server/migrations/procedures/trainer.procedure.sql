@@ -5,7 +5,7 @@ CREATE PROCEDURE create_trainer(
     IN p_first_name VARCHAR(255),
     IN p_middle_name VARCHAR(255),
     IN p_last_name VARCHAR(255),
-    IN p_phone_number VARCHAR(11),
+    IN p_phone_number VARCHAR(13),
     IN p_email_address VARCHAR(255),
     IN p_date_of_birth DATE,
     IN p_gender ENUM('male', 'female', 'other'),
@@ -30,8 +30,17 @@ BEGIN
 
     DECLARE EXIT HANDLER FOR SQLEXCEPTION
     BEGIN
+        DECLARE sql_state CHAR(5);
+        DECLARE error_message TEXT;
+        DECLARE error_code INT;
+        
+        GET DIAGNOSTICS CONDITION 1
+            sql_state = RETURNED_SQLSTATE,
+            error_message = MESSAGE_TEXT,
+            error_code = MYSQL_ERRNO;
+        
         ROLLBACK;
-        SELECT 'Error occurred during trainer create.' AS error_message, 500 AS err_status;
+        SELECT 'Error occurred during trainer create.' AS error_message, error_code AS err_status, error_message AS detailed_message;
     END;
 
     -- Start the transaction
@@ -90,7 +99,7 @@ CREATE PROCEDURE update_trainer(
     IN p_first_name VARCHAR(255),
     IN p_middle_name VARCHAR(255),
     IN p_last_name VARCHAR(255),
-    IN p_phone_number VARCHAR(11),
+    IN p_phone_number VARCHAR(13),
     IN p_email_address VARCHAR(255),
     IN p_date_of_birth DATE,
     IN p_gender ENUM('male', 'female', 'other'),
@@ -101,7 +110,7 @@ CREATE PROCEDURE update_trainer(
     IN p_ec_first_name VARCHAR(255),
     IN p_ec_last_name VARCHAR(255),
     IN p_ec_relationship VARCHAR(255),
-    IN p_ec_phone_number VARCHAR(11),
+    IN p_ec_phone_number VARCHAR(13),
     IN p_specialization VARCHAR(255),
     IN p_certifications VARCHAR(255),
     IN p_experience_years INT,
@@ -116,8 +125,17 @@ BEGIN
 
     DECLARE EXIT HANDLER FOR SQLEXCEPTION
     BEGIN
-      ROLLBACK;
-      SELECT 'Error occurred during trainer update.' AS error_message, 500 AS err_status;
+        DECLARE sql_state CHAR(5);
+        DECLARE error_message TEXT;
+        DECLARE error_code INT;
+        
+        GET DIAGNOSTICS CONDITION 1
+            sql_state = RETURNED_SQLSTATE,
+            error_message = MESSAGE_TEXT,
+            error_code = MYSQL_ERRNO;
+        
+        ROLLBACK;
+        SELECT 'Error occurred during trainer update.' AS error_message, error_code AS err_status, error_message AS detailed_message;
     END;
 
     -- Start the transaction

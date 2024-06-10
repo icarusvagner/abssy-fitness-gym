@@ -17,6 +17,7 @@
     "apexcharts": "^3.49.0",
     "axios": "^1.2.1",
     "pinia": "^2.0.11",
+    "pinia-plugin-persistedstate": "^3.2.1",
     "quasar": "^2.8.0",
     "vue": "^3.2.29",
     "vue-router": "^4.0.12",

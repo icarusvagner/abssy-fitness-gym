@@ -23,13 +23,13 @@ export interface StaffForUpdate {
 	email_address: string;
 	date_of_birth: string;
 	gender: Gender;
-	street: string;
-	brgy: string;
-	city: string;
-	province: string;
+	address_street: string;
+	address_brgy: string;
+	address_city: string;
+	address_province: string;
 	ec_first_name: string;
 	ec_last_name: string;
-	relationship: string;
+	ec_relationship: string;
 	ec_phone_number: string;
 	role: StaffRole;
 	shift_schedule: string;

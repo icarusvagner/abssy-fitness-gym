@@ -11,28 +11,14 @@
     </div>
     <div class="q-mt-md">
       <q-expansion-item
+        v-for="(item, index) in announcements" :key="index"
         icon="mdi-bullhorn-variant-outline"
         label="By admin"
-        caption="John Doe"
+        :caption="item.fullname"
       >
         <q-card class="bg-grey-3">
           <q-card-section>
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quidem, eius reprehenderit eos corrupti
-            commodi magni quaerat ex numquam, dolorum officiis modi facere maiores architecto suscipit iste
-            eveniet doloribus ullam aliquid.
-          </q-card-section>
-        </q-card>
-      </q-expansion-item>
-      <q-expansion-item
-        icon="mdi-bullhorn-variant-outline"
-        label="By Staff"
-        caption="John Doe"
-      >
-        <q-card class="bg-grey-3">
-          <q-card-section>
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quidem, eius reprehenderit eos corrupti
-            commodi magni quaerat ex numquam, dolorum officiis modi facere maiores architecto suscipit iste
-            eveniet doloribus ullam aliquid.
+            {{ item.message }}
           </q-card-section>
         </q-card>
       </q-expansion-item>
@@ -42,30 +28,108 @@
 
   <q-dialog v-model="new_announce" persistent>
     <q-card>
-      <q-card-section class="row items-center q-pb-none">
-        <div class="text-h6">New Announcements</div>
-        <q-space />
-        <q-btn icon="close" flat round dense v-close-popup />
-      </q-card-section>
+      <q-form
+        @submit="onSubmit"
+        @reset="onReset"
+        class="q-gutter-md"
+      >
+          <q-card-section class="row items-center q-pb-none">
+            <div class="text-h6">New Announcements</div>
+            <q-space />
+            <q-btn icon="close" flat round dense @click="clear_inputs" v-close-popup />
+          </q-card-section>
 
-      <q-card-section style="width: 450px">
-        <q-input
-          v-model="text"
-          filled
-          type="textarea"
-        />
-      </q-card-section>
-      <q-card-actions align="right">
-        <q-btn flat label="Cancel" outlined v-close-popup />
-        <q-btn flat label="Add" color="secondary" />
-      </q-card-actions>
+          <q-card-section style="width: 450px" class="column q-gutter-y-md">
+            <q-input
+              v-model="form.title"
+              filled
+              :rules="[ val => !!val || 'Enter title for the announcement' ]"
+              label="Title"
+            />
+            <q-input
+              v-model="form.message"
+              filled
+              :rules="[ val => !!val || 'Enter message for the announcement' ]"
+              label="Message"
+              type="textarea"
+            />
+          </q-card-section>
+          <q-card-actions align="right">
+            <q-btn flat label="Cancel" outlined v-close-popup @click="clear_inputs"/>
+            <q-btn type="submit" flat label="Add" color="secondary" :disabled="isSubmit" />
+          </q-card-actions>
+      </q-form>
     </q-card>
   </q-dialog>
 </template>
 
 <script setup lang="ts">
-  import { ref } from 'vue';
+  import { ref, onMounted } from 'vue';
+  import { debounce, Notify } from 'quasar';
 
+  import AnnouncementService from 'src/services/announcement.service';
+  import { AnnouncementForCreate, AnnouncementForUpdate, AnnouncementForSelect, AnnouncementForSelectWrapper } from 'src/types/announcement.type';
+  import useAuthStore from 'stores/auth-store';
+
+  const authStore = useAuthStore();
   const new_announce = ref(false);
-  const text = ref('');
+  const announcementService = new AnnouncementService();
+  const isSubmit = ref(false);
+  const isLoading = ref(false);
+  const form = ref<AnnouncementForCreate>({
+    user_id: authStore.getId,
+    title: '',
+    message: '',
+  });
+  const announcements = ref<AnnouncementForSelectWrapper>([]);
+
+  const get_announcements = debounce(() => {
+    announcements.value = [];
+    announcementService.get().then(res => {
+      announcements.value = res.result;
+      isLoading.value = false;
+    })
+  }, 1500)
+
+  const onSubmit = () => {
+    announcementService.create(form.value).then(res => {
+      if (res.result.status === 201) {
+        clear_inputs();
+        isSubmit.value = true;
+        get_announcements();
+
+        Notify.create({
+          message: res.result.message,
+          position: 'top-right',
+          color: 'green-4',
+          textColor: 'white',
+          icon: 'mdi-cloud-check-outline',
+        });
+      } else {
+        Notify.create({
+          position: 'top-right',
+          color: 'red-5',
+          textColor: 'white',
+          icon: 'mdi-alert',
+          message: res.error.message
+        })
+      }
+    })
+  };
+
+
+  const clear_inputs = debounce(() => {
+    form.value.title = ''
+    form.value.message = ''
+  }, 500);
+
+  const onReset = () => {
+    form.value.title = ''
+    form.value.message = ''
+  }
+
+  onMounted(() => {
+    isLoading.value = true;
+    get_announcements();
+  })
 </script>

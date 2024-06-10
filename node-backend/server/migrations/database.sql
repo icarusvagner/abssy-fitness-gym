@@ -1,11 +1,22 @@
-CREATE OR REPLACE TABLE TABLE `login_details` (
+CREATE OR REPLACE TABLE `announcement` (
+	`id` INT NOT NULL AUTO_INCREMENT UNIQUE,
+  `user_id` INT NOT NULL,
+  `title` VARCHAR(128) NOT NULL,
+  `message` TEXT NOT NULL,
+  `stats` ENUM('active','inactive','removed') NOT NULL DEFAULT 'active',
+	`ctime` TIMESTAMP NOT NULL DEFAULT current_timestamp,
+	`mtime` TIMESTAMP NOT NULL DEFAULT current_timestamp,
+  PRIMARY KEY(`id`)
+);
+
+CREATE OR REPLACE TABLE `login_details` (
 	`id` INT NOT NULL AUTO_INCREMENT UNIQUE,
 	`username` VARCHAR(255) NOT NULL UNIQUE,
 	`password` VARCHAR(255) NOT NULL,
 	`ctime` TIMESTAMP NOT NULL DEFAULT current_timestamp,
 	`mtime` TIMESTAMP NOT NULL DEFAULT current_timestamp,
   PRIMARY KEY(`id`)
-);
+) AUTO_INCREMENT=0;
 
 CREATE OR REPLACE TABLE `member_table` (
 	`id` INT NOT NULL AUTO_INCREMENT UNIQUE,
@@ -35,7 +46,7 @@ CREATE OR REPLACE TABLE `emergency_contact_table` (
 	`first_name` VARCHAR(255) NOT NULL,
 	`last_name` VARCHAR(255) NOT NULL,
 	`relationship` VARCHAR(255) NOT NULL,
-	`phone_number` VARCHAR(11) NOT NULL,
+	`phone_number` VARCHAR(13) NOT NULL,
 	`ctime` TIMESTAMP NOT NULL DEFAULT current_timestamp,
 	`mtime` TIMESTAMP NOT NULL DEFAULT current_timestamp,
 	PRIMARY KEY(`id`)
@@ -62,14 +73,14 @@ CREATE OR REPLACE TABLE `details_table` (
 	`first_name` VARCHAR(255) NOT NULL,
 	`middle_name` VARCHAR(255) NOT NULL,
 	`last_name` VARCHAR(255) NOT NULL,
-	`phone_number` VARCHAR(11) NOT NULL,
+	`phone_number` VARCHAR(13) NOT NULL,
 	`email_address` VARCHAR(255) NOT NULL,
 	`date_of_birth` DATE NOT NULL,
 	`gender` ENUM('male', 'female', 'other') NOT NULL,
 	PRIMARY KEY(`id`)
 );
 
-CREATE OR REPLACE TABLE TABLE `staff_table` (
+CREATE OR REPLACE TABLE `staff_table` (
 	`id` INT NOT NULL AUTO_INCREMENT UNIQUE,
 	`detail_id` INT NOT NULL,
 	`address_id` INT NOT NULL,
@@ -84,7 +95,7 @@ CREATE OR REPLACE TABLE TABLE `staff_table` (
 	PRIMARY KEY(`id`)
 );
 
-CREATE OR REPLACE TABLE TABLE `admin_table` (
+CREATE OR REPLACE TABLE `admin_table` (
 	`id` INT NOT NULL AUTO_INCREMENT UNIQUE,
 	`detail_id` INT NOT NULL,
 	`address_id` INT NOT NULL,

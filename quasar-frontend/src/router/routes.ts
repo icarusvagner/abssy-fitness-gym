@@ -4,13 +4,17 @@ const routes: RouteRecordRaw[] = [
   {
     path: '/',
     name: 'home',
-    meta: { auth: true, roles: ['admin', 'staff'] },
+    meta: { auth: true, roles: ['admin', 'staff', 'super'] },
     component: () => import('layouts/MainLayout.vue'),
     children: [
-      { path: '', name: 'dashboard', meta: { auth: true, roles: ['admin', 'staff'] }, component: () => import('pages/IndexPage.vue') },
+      {
+        path: '', name: 'dashboard',
+        meta: { auth: true, roles: ['admin', 'staff', 'super'] },
+        component: () => import('pages/IndexPage.vue')
+      },
       {
         path: '/membership',
-        meta: { auth: true, roles: ['admin', 'staff'] },
+        meta: { auth: true, roles: ['admin', 'staff', 'super'] },
         component: () => import('layouts/MembershipLayout.vue'),
         children: [
           { path: '', name: 'membership', component: () => import('pages/MembershipPage.vue') },
@@ -24,24 +28,42 @@ const routes: RouteRecordRaw[] = [
         meta: { auth: true, roles: ['admin'] },
         component: () => import('layouts/StaffLayout.vue'),
         children: [
-          { path: '', name: 'staff', meta: { auth: true, roles: ['admin'] }, component: () => import('pages/StaffsPage.vue') },
-          { path: '/add', name: 'new_staff', meta: { auth: true, roles: ['admin'] }, component: () => import('pages/NewStaffPage.vue') },
+          { path: '', name: 'staff', meta: { auth: true, roles: ['admin', 'super'] }, component: () => import('pages/StaffsPage.vue') },
+          { path: '/add', name: 'new_staff', meta: { auth: true, roles: ['admin', 'super'] }, component: () => import('pages/NewStaffPage.vue') },
         ]
       },
       {
         path: '/trainer',
         name: 'trainers',
-        meta: { auth: true, roles: ['admin'] },
+        meta: { auth: true, roles: ['admin', 'super'] },
         component: () => import('layouts/TrainersLayout.vue'),
         children: [
           { path: '', name: 'trainer', component: () => import('pages/TrainersPage.vue') },
           { path: '/add', name: 'new_trainer', component: () => import('pages/NewTrainerPage.vue') },
         ]
       },
-      { path: '/sales', name: 'sales', component: () => import('pages/SalesPage.vue') },
-      { path: '/inventory', name: 'inventory', component: () => import('pages/InventoryPage.vue') },
-      { path: '/package', name: 'package', component: () => import('pages/PackagesPage.vue') },
-      { path: '/announcement', name: 'announcement', component: () => import('pages/AnnouncementsPage.vue') },
+      { path: '/sales',
+        name: 'sales',
+        meta: { auth: true, roles: ['admin', 'super', 'staff'] },
+        component: () => import('pages/SalesPage.vue') },
+      {
+        path: '/inventory',
+        name: 'inventory',
+        meta: { auth: true, roles: ['admin', 'super'] },
+        component: () => import('pages/InventoryPage.vue')
+      },
+      {
+        path: '/package',
+        name: 'package',
+        meta: { auth: true, roles: ['admin', 'super'] },
+        component: () => import('pages/PackagesPage.vue')
+      },
+      {
+        path: '/announcement',
+        name: 'announcement',
+        meta: { auth: true, roles: ['admin', 'super'] },
+        component: () => import('pages/AnnouncementsPage.vue')
+      },
     ],
   },
   {

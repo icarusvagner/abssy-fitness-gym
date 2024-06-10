@@ -5,19 +5,12 @@
       <div class="col-12 col-md-4">
         <q-btn :to="{ name: 'new_member' }" flat label="New Member" icon="mdi-plus" text-color="secondary" />
       </div>
-      <div class="col-12 col-md-8">
-        <q-input color="secondary" label-color="secondary" dense rounded outlined v-model="text" label="Search...">
-          <template v-slot:prepend>
-            <q-icon name="mdi-magnify" color="secondary" />
-          </template>
-        </q-input>
-      </div>
     </div>
 
     <q-separator class="q-my-lg"/>
 
-    <div class="row q-gutter-xl">
-      <MembersCard v-for="member in members" :key="member.id" v-bind="member" />
+    <div class="">
+      <MembersTable />
     </div>
   </q-page>
 </template>
@@ -25,6 +18,7 @@
 <script setup lang="ts">
   import { ref } from 'vue';
   import MembersCard from 'components/MembersCard.vue';
+  import MembersTable from 'components/MembersTable.vue';
   import { IMembers } from 'components/models';
 
   const text = ref('');

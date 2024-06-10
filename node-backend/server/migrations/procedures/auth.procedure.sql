@@ -5,7 +5,7 @@ CREATE OR REPLACE PROCEDURE register_staff(
     IN p_first_name VARCHAR(255),
     IN p_middle_name VARCHAR(255),
     IN p_last_name VARCHAR(255),
-    IN p_phone_number VARCHAR(11),
+    IN p_phone_number VARCHAR(13),
     IN p_email_address VARCHAR(255),
     IN p_date_of_birth DATE,
     IN p_gender ENUM('male', 'female', 'other'),
@@ -16,7 +16,7 @@ CREATE OR REPLACE PROCEDURE register_staff(
     IN p_ec_first_name VARCHAR(255),
     IN p_ec_last_name VARCHAR(255),
     IN p_relationship VARCHAR(255),
-    IN p_ec_phone_number VARCHAR(11),
+    IN p_ec_phone_number VARCHAR(13),
     IN p_username VARCHAR(255),
     IN p_password VARCHAR(255),
     IN p_role ENUM('receptionis', 'cleaner', 'encoder', 'maintenance', 'attendant', 'officer', 'childcare', 'dietitian', 'consultant', 'instructor', 'manager'),
@@ -77,7 +77,7 @@ CREATE OR REPLACE PROCEDURE `register_admin`(
     IN p_first_name VARCHAR(255),
     IN p_middle_name VARCHAR(255),
     IN p_last_name VARCHAR(255),
-    IN p_phone_number VARCHAR(11),
+    IN p_phone_number VARCHAR(13),
     IN p_email_address VARCHAR(255),
     IN p_date_of_birth DATE,
     IN p_gender ENUM('male', 'female', 'other'),
@@ -155,10 +155,11 @@ BEGIN
     IF login_id IS NULL OR login_id = 0 THEN
         -- If login_id is NULL or 0, handle special case
         SELECT 
+            ld.id AS user_id,
             ld.username, 
             ld.password, 
-            'Super' AS role, 
-            'Admin' AS user_type
+            'super' AS role, 
+            'super' AS user_type
         FROM 
             login_details ld
         WHERE 
@@ -169,19 +170,20 @@ BEGIN
         SELECT 
             NULL AS username, 
             NULL AS password, 
-            'Super' AS role, 
-            'Admin' AS user_type
+            'super' AS role, 
+            'super' AS user_type
         WHERE 
             NOT EXISTS (SELECT 1 FROM login_details WHERE id = 0);
     ELSE
         -- Check if login_id is in staff_table
         SELECT COUNT(*) INTO user_exists
-        FROM staff_table
-        WHERE login_id = login_id;
+        FROM staff_table st
+        WHERE st.login_id = login_id;
 
         IF user_exists THEN
             -- If login_id is found in staff_table
             SELECT 
+              ld.id AS user_id,
               ld.username,
               ld.password,
               st.role,
@@ -193,12 +195,13 @@ BEGIN
         ELSE
             -- Check if login_id is in admin_table
             SELECT COUNT(*) INTO user_exists
-            FROM admin_table
-            WHERE login_id = login_id;
+            FROM admin_table admint
+            WHERE admint.login_id = login_id;
 
             IF user_exists THEN
                 -- If login_id is found in admin_table
                SELECT 
+                ld.id AS user_id,
                 ld.username,
                 ld.password,
                 at2.role,

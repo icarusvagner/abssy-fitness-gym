@@ -5,7 +5,7 @@ CREATE PROCEDURE add_member(
     IN p_first_name VARCHAR(255),
     IN p_middle_name VARCHAR(255),
     IN p_last_name VARCHAR(255),
-    IN p_phone_number VARCHAR(11),
+    IN p_phone_number VARCHAR(13),
     IN p_email_address VARCHAR(255),
     IN p_date_of_birth DATE,
     IN p_gender ENUM('male', 'female', 'other'),
@@ -16,7 +16,7 @@ CREATE PROCEDURE add_member(
     IN p_ec_first_name VARCHAR(255),
     IN p_ec_last_name VARCHAR(255),
     IN p_relationship VARCHAR(255),
-    IN p_ec_phone_number VARCHAR(11),
+    IN p_ec_phone_number VARCHAR(13),
     IN p_package_id INT,
     IN p_health_condition VARCHAR(255)
 )
@@ -67,7 +67,7 @@ CREATE PROCEDURE update_member(
     IN p_first_name VARCHAR(255),
     IN p_middle_name VARCHAR(255),
     IN p_last_name VARCHAR(255),
-    IN p_phone_number VARCHAR(11),
+    IN p_phone_number VARCHAR(13),
     IN p_email_address VARCHAR(255),
     IN p_date_of_birth DATE,
     IN p_gender ENUM('male', 'female', 'other'),
@@ -78,7 +78,7 @@ CREATE PROCEDURE update_member(
     IN p_ec_first_name VARCHAR(255),
     IN p_ec_last_name VARCHAR(255),
     IN p_relationship VARCHAR(255),
-    IN p_ec_phone_number VARCHAR(11),
+    IN p_ec_phone_number VARCHAR(13),
     IN p_package_id INT,
     IN p_health_condition VARCHAR(255)
 )

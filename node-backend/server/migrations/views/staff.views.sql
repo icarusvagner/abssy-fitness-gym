@@ -16,7 +16,7 @@ SELECT s.id AS staff_id,
     ec.relationship AS ec_relationship, 
     ec.phone_number AS ec_phone_number, 
     s.role, 
-    s.hire_date, 
+    DATE_FORMAT(s.hire_date, "%M %d %Y") AS hire_date,
     s.shift_schedule, 
     s.staff_status
 FROM staff_table s

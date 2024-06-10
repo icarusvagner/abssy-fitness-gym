@@ -14,6 +14,7 @@
 </template>
 
 <script setup lang="ts">
-  import StaffTable from 'components/StaffTable.vue';
   import { ref } from 'vue';
+
+  import StaffTable from 'components/StaffTable.vue';
 </script>

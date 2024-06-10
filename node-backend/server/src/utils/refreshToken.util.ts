@@ -13,7 +13,7 @@ const refreshUserTokens = async (req: Request, res: Response) => {
   }
 
   const resultQuery: any = await executeQuery(
-    `SELECT created_at, COUNT(*) AS found_one FROM refresh_token WHERE refresh_token = '${refreshToken}' ORDER BY created_at ASC LIMIT 1;`,
+    `SELECT ctime, COUNT(*) AS found_one FROM refresh_token WHERE refresh_token = '${refreshToken}' ORDER BY ctime ASC LIMIT 1;`,
   );
 
   const created_at = new Date(resultQuery[0].created_at)

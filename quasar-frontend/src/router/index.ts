@@ -38,7 +38,7 @@ export default route(function (/* { store, ssrContext } */) {
     if (to.meta.auth && !auth.isAuthenticated) {
       next({ name: 'login' })
     } else if (!to.meta.auth && auth.isAuthenticated) {
-      next({ name: 'home' })
+      next({ name: 'dashboard' })
     } else {
       next()
     }

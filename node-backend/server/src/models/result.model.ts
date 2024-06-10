@@ -16,6 +16,7 @@ export interface IUser {
   0: {
     user_id: number;
     role: string;
+    user_type: string;
     password: string;
     user_type: string;
   };

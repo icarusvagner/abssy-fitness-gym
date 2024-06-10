@@ -13,6 +13,7 @@ import memberRoute from './routes/member.route';
 import staffRoute from './routes/staff.route';
 import trainerRoute from './routes/trainer.route';
 import paymentRoute from './routes/payment.route';
+import announcementRoute from './routes/announcement.route';
 
 const app: Express = express();
 const PORT: number = Number(process.env.PORT) || 3000;
@@ -43,6 +44,7 @@ app.use('/api/member', memberRoute);
 app.use('/api/staff', staffRoute);
 app.use('/api/trainer', trainerRoute);
 app.use('/api/payment', paymentRoute);
+app.use('/api/announcement', announcementRoute);
 
 // Error Handling
 app.use((req, res, next) => {

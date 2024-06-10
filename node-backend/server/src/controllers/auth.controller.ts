@@ -5,6 +5,7 @@ import * as authService from '../services/auth.service';
 const registerStaff = async (req: Request, res: Response) => {
   try {
     let staff: StaffForCreate = req.body;
+    console.log(staff);
     let result = await authService.register_staff(staff);
     res.status(200).json({ result });
   } catch (error: any) {
@@ -26,7 +27,6 @@ const registerAdmin = async (req: Request, res: Response) => {
 
 const loginUser = async (req: Request, res: Response) => {
   try {
-    console.log(req.body);
     let user: UserForLogin = req.body;
     let result = await authService.login_user(user);
     res.status(201).json({ result });

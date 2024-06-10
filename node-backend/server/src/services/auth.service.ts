@@ -97,6 +97,7 @@ const login_user = async (user: UserForLogin): Promise<string | any> => {
     connection.end();
 
     const result = await new Promise((resolve, reject) => {
+      console.log(user);
       bcryptjs.compare(user.password, users[0][0].password, (error, result) => {
         if (error) {
           console.error(error);
@@ -120,6 +121,7 @@ const login_user = async (user: UserForLogin): Promise<string | any> => {
               resolve({
                 id: users[0][0].user_id,
                 role: users[0][0].role,
+                user_type: users[0][0].user_type,
                 accessToken,
                 refreshToken,
               });

@@ -28,8 +28,8 @@ const updatePackage = async (req: Request, res: Response) => {
 
 const readPackage = async (req: Request, res: Response) => {
   try {
-    let { id } = req.body;
-    let result = await packageService.read_package(id);
+    let { id } = req.params;
+    let result = await packageService.read_package(parseInt(id));
 
     return res.status(200).json({ result });
   } catch (error: any) {
@@ -41,7 +41,7 @@ const readPackage = async (req: Request, res: Response) => {
 const deletePackage = async (req: Request, res: Response) => {
   try {
     let { id } = req.body;
-    let result = await packageService.delete_package(id);
+    let result = await packageService.delete_package(parseInt(id));
 
     return res.status(201).json({ result });
   } catch (error: any) {

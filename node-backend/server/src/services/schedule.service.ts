@@ -6,12 +6,12 @@ const create_schedule = async (sched: ScheduleForCreate) => {
   try {
     let query = "CALL add_schedule(?,?,?,?,?,?,?)"
     let result: any = await executeQuery(query, [
-      sched.class_name,
+      sched.class_name.toLowerCase(),
       sched.trainer_id,
       sched.start_time,
       sched.end_time,
-      sched.days_of_week,
-      sched.location,
+      sched.days_of_week.toLowerCase(),
+      sched.location.toLowerCase(),
       checkValidEnumValue(ScheduleStatus, sched.status)
     ]);
 
@@ -49,12 +49,12 @@ const update_schedule = async (sched: ScheduleForUpdate) => {
     let query = "CALL update_schedule(?,?,?,?,?,?,?,?)";
     let result: any = await executeQuery(query, [
       sched.id,
-      sched.class_name,
+      sched.class_name.toLowerCase(),
       sched.trainer_id,
       sched.start_time,
       sched.end_time,
-      sched.days_of_week,
-      sched.location,
+      sched.days_of_week.toLowerCase(),
+      sched.location.toLowerCase(),
       checkValidEnumValue(ScheduleStatus, sched.status)
     ]);
 

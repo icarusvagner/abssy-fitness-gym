@@ -35,9 +35,9 @@ export default route(function (/* { store, ssrContext } */) {
   });
 
   Router.beforeEach((to, from, next) => {
-    if (to.meta.auth && !auth.isAuthenticated) {
+    if (to.meta.auth && !auth.isAuthenticated && !auth.getAccessToken) {
       next({ name: 'login' })
-    } else if (!to.meta.auth && auth.isAuthenticated) {
+    } else if (!to.meta.auth && auth.isAuthenticated && auth.getAccessToken) {
       next({ name: 'dashboard' })
     } else {
       next()

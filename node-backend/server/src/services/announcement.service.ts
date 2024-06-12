@@ -6,8 +6,8 @@ const create_announcement = async (announcement: AnnouncementForCreate) => {
     let query = "CALL create_announcement(?,?,?)";
     let result: any = await executeQuery(query, [
       announcement.user_id,
-      announcement.title,
-      announcement.message,
+      announcement.title.toLowerCase(),
+      announcement.message.toLowerCase(),
     ]);
 
     return {
@@ -26,8 +26,8 @@ const update_announcement = async (announcement: AnnouncementForUpdate) => {
     let result: any = await executeQuery(query, [
       announcement.id,
       announcement.user_id,
-      announcement.title,
-      announcement.message
+      announcement.title.toLowerCase(),
+      announcement.message.toLowerCase(),
     ]);
     
     return {

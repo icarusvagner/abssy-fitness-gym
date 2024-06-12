@@ -12,9 +12,9 @@
     <div class="q-mt-md">
       <q-expansion-item
         v-for="(item, index) in announcements" :key="index"
-        icon="mdi-bullhorn-variant-outline"
-        label="By admin"
-        :caption="item.fullname"
+        :icon="isLessThanThreeDays(item.created_at) ? 'mdi-bullhorn-variant' : 'mdi-bullhorn-variant-outline'"
+        :label="item.title"
+        :caption="item.created_at"
       >
         <q-card class="bg-grey-3">
           <q-card-section>
@@ -24,6 +24,13 @@
       </q-expansion-item>
 
     </div>
+
+    <q-inner-loading
+      :showing="isLoading"
+      label="Loading announcements..."
+      label-class="secondary"
+      label-style="font-size: 1.1em"
+    />
   </q-page>
 
   <q-dialog v-model="new_announce" persistent>
@@ -70,6 +77,7 @@
   import AnnouncementService from 'src/services/announcement.service';
   import { AnnouncementForCreate, AnnouncementForUpdate, AnnouncementForSelect, AnnouncementForSelectWrapper } from 'src/types/announcement.type';
   import useAuthStore from 'stores/auth-store';
+  import { isLessThanThreeDays } from 'src/utils/checker.util';
 
   const authStore = useAuthStore();
   const new_announce = ref(false);

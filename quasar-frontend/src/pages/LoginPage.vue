@@ -1,7 +1,7 @@
 <template>
   <div class="row window-height" style="background-color: #eee8eb;">
     <!-- content -->
-    <div class="col-12 col-md-8 full-height column justify-center items-center">
+    <div v-if="!Platform.is.mobile" class="col-12 col-md-8 full-height column justify-center items-center">
       <div class="column q-gutter-y-lg">
         <q-img src="../assets/logo3.png" alt="logo" height="250px" width="250px" fit="fill" />
         <span class="text-h2 text-bold text-secondary bg-grey-4 q-pa-md rounded-borders">ABBSY Fitness Gym</span>
@@ -42,6 +42,8 @@
 <script setup lang="ts">
   import { ref } from 'vue';
   import { useRouter } from 'vue-router';
+  import { Platform, Notify } from 'quasar';
+
   import { LoginDetails } from 'components/models';
   import useAuthStore from 'stores/auth-store';
 
@@ -57,9 +59,22 @@
   const login_handler = async () => {
     isLoading.value = true;
     const result: any = await authStore.LoginUser(form.value);
-    console.log(result);
-    if (result.status === 200) {
+    if (result.error) {
+      Notify.create({
+        message: result.error,
+        position: 'top-right',
+        icon: 'mdi-exclamation-thick',
+        color: 'negative'
+      });
+    } else if (result.status === 200) {
       router.push({ name: 'dashboard'})
+    } else {
+       Notify.create({
+        message: result.message,
+        position: 'top-right',
+        icon: 'mdi-exclamation-thick',
+        color: 'negative'
+      });
     }
     isLoading.value = false;
   }

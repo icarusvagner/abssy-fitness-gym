@@ -76,7 +76,10 @@ const useAuthStore = defineStore('auth', {
       try {
         if (data.username !== '' && data.password !== '') {
           const response = await api.post('/login', data);
-          console.log(response.data);
+          if (response.data.result.status === 404) {
+            return response.data.result
+          }
+
           this.setAuthenticated(response.data.result);
           return {
             message: 'Success',
@@ -89,7 +92,7 @@ const useAuthStore = defineStore('auth', {
           }
         }
       } catch (error: any) {
-        throw error.message;
+        return error.response.data;
       }
     }
   },

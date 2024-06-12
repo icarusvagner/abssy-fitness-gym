@@ -26,6 +26,7 @@
             Export table
           </q-tooltip>
         </q-btn>
+
         <q-input outlined rounded dense debounce="300" v-model="filter" placeholder="Search">
           <template v-slot:append>
             <q-icon name="search" />

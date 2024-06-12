@@ -4,16 +4,25 @@ DELIMITER //
 CREATE PROCEDURE create_package(
     IN p_package_name VARCHAR(255),
     IN p_duration INT,
-    IN p_package_type ENUM('week', 'month', 'year'),
+    IN p_package_type ENUM('week','month','year', 'weeks', 'months', 'years'),
     IN p_price DECIMAL(10, 2),
     IN p_benefits VARCHAR(255)
 )
 BEGIN
-    DECLARE EXIT HANDLER FOR SQLEXCEPTION
-    BEGIN
-        ROLLBACK;
-        SELECT 'Error occurred during package creation.' AS error_message, 500 AS status;
-    END;
+	DECLARE EXIT HANDLER FOR SQLEXCEPTION
+	BEGIN
+	    DECLARE sql_state CHAR(5);
+	    DECLARE error_message TEXT;
+	    DECLARE error_code INT;
+	    
+	    GET DIAGNOSTICS CONDITION 1
+	        sql_state = RETURNED_SQLSTATE,
+	        error_message = MESSAGE_TEXT,
+	        error_code = MYSQL_ERRNO;
+	    
+	    ROLLBACK;
+	    SELECT 'Error occurred during package create.' AS error_message, error_code AS err_status, error_message AS detailed_message;
+	END;
 
     START TRANSACTION;
     
@@ -64,11 +73,20 @@ CREATE PROCEDURE update_package(
     IN p_benefits VARCHAR(255)
 )
 BEGIN
-    DECLARE EXIT HANDLER FOR SQLEXCEPTION
-    BEGIN
-        ROLLBACK;
-        SELECT 'Error occurred during package update.' AS error_message, 500 AS status;
-    END;
+	DECLARE EXIT HANDLER FOR SQLEXCEPTION
+	BEGIN
+	    DECLARE sql_state CHAR(5);
+	    DECLARE error_message TEXT;
+	    DECLARE error_code INT;
+	    
+	    GET DIAGNOSTICS CONDITION 1
+	        sql_state = RETURNED_SQLSTATE,
+	        error_message = MESSAGE_TEXT,
+	        error_code = MYSQL_ERRNO;
+	    
+	    ROLLBACK;
+	    SELECT 'Error occurred during package update.' AS error_message, error_code AS err_status, error_message AS detailed_message;
+	END;
 
     START TRANSACTION;
 

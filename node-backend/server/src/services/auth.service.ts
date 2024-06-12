@@ -17,21 +17,21 @@ const register_admin = async (
 
     const connection = await Connect();
     const result: any = await Query<IMySQLResult>(connection, query, [
-      admin.first_name,
-      admin.middle_name,
-      admin.last_name,
-      admin.phone_number,
-      admin.email_address,
+      admin.first_name.toLowerCase(),
+      admin.middle_name.toLowerCase(),
+      admin.last_name.toLowerCase(),
+      admin.phone_number.toLowerCase(),
+      admin.email_address.toLowerCase(),
       admin.date_of_birth,
       checkValidEnumValue(Gender, admin.gender),
-      admin.street,
-      admin.brgy,
-      admin.city,
-      admin.province,
+      admin.street.toLowerCase(),
+      admin.brgy.toLowerCase(),
+      admin.city.toLowerCase(),
+      admin.province.toLowerCase(),
       admin.username,
       hash,
       checkValidEnumValue(AdminRole, admin.role),
-      admin.permission_level
+      admin.permission_level,
     ]);
 
     return result[0][0];
@@ -56,25 +56,25 @@ const register_staff = async (
 
     const connection = await Connect();
     const result: any = await Query<IMySQLResult>(connection, query, [
-      staff.first_name,
-      staff.middle_name,
-      staff.last_name,
-      staff.phone_number,
-      staff.email_address,
+      staff.first_name.toLowerCase(),
+      staff.middle_name.toLowerCase(),
+      staff.last_name.toLowerCase(),
+      staff.phone_number.toLowerCase(),
+      staff.email_address.toLowerCase(),
       staff.date_of_birth,
       checkValidEnumValue(Gender, staff.gender),
-      staff.street,
-      staff.brgy,
-      staff.city,
-      staff.provine,
-      staff.ec_first_name,
-      staff.ec_last_name,
-      staff.relationship,
-      staff.ec_phone_number,
+      staff.street.toLowerCase(),
+      staff.brgy.toLowerCase(),
+      staff.city.toLowerCase(),
+      staff.provine.toLowerCase(),
+      staff.ec_first_name.toLowerCase(),
+      staff.ec_last_name.toLowerCase(),
+      staff.relationship.toLowerCase(),
+      staff.ec_phone_number.toLowerCase(),
       staff.username,
       hash,
       checkValidEnumValue(Role, staff.role),
-      staff.shift_schedule,
+      staff.shift_schedule.toLowerCase(),
     ]);
 
     return result[0][0];
@@ -93,11 +93,18 @@ const login_user = async (user: UserForLogin): Promise<string | any> => {
 
   try {
     const connection = await Connect();
-    const users = await Query<IUser[]>(connection, query, [user.username]);
+    const users: any = await Query<IUser[]>(connection, query, [user.username]);
     connection.end();
 
+    if (users[0][0].status) {
+      console.log(users[0])
+      return {
+        message: users[0][0].message,
+        status: users[0][0].status,
+      }
+    }
+
     const result = await new Promise((resolve, reject) => {
-      console.log(user);
       bcryptjs.compare(user.password, users[0][0].password, (error, result) => {
         if (error) {
           console.error(error);

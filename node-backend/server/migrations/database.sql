@@ -1,3 +1,38 @@
+CREATE OR REPLACE TABLE `inventory_table` (
+	`id` INT NOT NULL AUTO_INCREMENT UNIQUE,
+	`base_count` INT NOT NULL,
+	`total_count` INT NOT NULL,
+	`ctime` TIMESTAMP NOT NULL DEFAULT current_timestamp,
+	`mtime` TIMESTAMP NOT NULL DEFAULT current_timestamp,
+	PRIMARY KEY(`id`)
+);
+
+CREATE OR REPLACE TABLE `equipment_table` (
+	`id` INT NOT NULL AUTO_INCREMENT UNIQUE,
+	`inventory_id` INT NOT NULL,
+	`brand_name` VARCHAR(255) NOT NULL,
+	`equipment_type` VARCHAR(255) NOT NULL,
+	PRIMARY KEY(`id`)
+);
+
+CREATE OR REPLACE TABLE `supplement_table` (
+	`id` INT NOT NULL AUTO_INCREMENT UNIQUE,
+	`inventory_id` INT NOT NULL,
+	`supplement_name` VARCHAR(255) NOT NULL,
+	`classification` VARCHAR(255) NOT NULL,
+	PRIMARY KEY(`id`)
+);
+
+CREATE OR REPLACE TABLE `inventory_log_table` (
+	`id` INT NOT NULL AUTO_INCREMENT UNIQUE,
+  `inventory_id` INT NOT NULL,
+  `count_added` INT NOT NULL,
+  `classification_type` ENUM('supplement','equipment') NOT NULL,
+  `log_state` ENUM('added','deducted'),
+	`ctime` TIMESTAMP NOT NULL DEFAULT current_timestamp,
+	PRIMARY KEY(`id`)
+);
+
 CREATE OR REPLACE TABLE `announcement` (
 	`id` INT NOT NULL AUTO_INCREMENT UNIQUE,
   `user_id` INT NOT NULL,
@@ -134,11 +169,11 @@ CREATE OR REPLACE TABLE `attendance_table` (
 
 CREATE OR REPLACE TABLE `payments_table` (
 	`id` INT NOT NULL AUTO_INCREMENT UNIQUE,
+	`package_id` INT NOT NULL,
 	`member_id` INT NOT NULL,
 	`amount` DECIMAL(10,2) NOT NULL,
 	`payment_date` DATE NOT NULL,
 	`payment_method` ENUM('cash', 'card', 'ecash') NOT NULL DEFAULT 'cash',
-	`package_id` INT NOT NULL,
 	`payment_status` ENUM('active','late','early','removed'),
 	`ctime` TIMESTAMP NOT NULL DEFAULT current_timestamp,
 	`mtime` TIMESTAMP NOT NULL DEFAULT current_timestamp,
@@ -147,9 +182,9 @@ CREATE OR REPLACE TABLE `payments_table` (
 
 CREATE OR REPLACE TABLE `package_table` (
 	`id` INT NOT NULL AUTO_INCREMENT UNIQUE,
-	`package_name` VARCHAR(255) NOT NULL,
+	`package_name` VARCHAR(255) NOT NULL UNIQUE,
 	`duration` INT NOT NULL,
-  `package_type` ENUM('week','month','year') DEFAULT 'month',
+  `package_type` ENUM('week','month','year', 'weeks', 'months', 'years') DEFAULT 'month',
 	`price` DECIMAL(10, 2) NOT NULL,
 	`benefits` VARCHAR(255) NOT NULL,
   `status` ENUM('active','inactive', 'removed') DEFAULT 'active',

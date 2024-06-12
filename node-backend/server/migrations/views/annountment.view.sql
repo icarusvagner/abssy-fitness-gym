@@ -14,4 +14,5 @@ LEFT JOIN admin_table admint ON
     admint.login_id = an.user_id
 LEFT JOIN login_details ld ON
     ld.id = admint.login_id
-LEFT JOIN details_table dt ON dt.id = admint.detail_id;
+LEFT JOIN details_table dt ON dt.id = admint.detail_id
+ORDER BY an.ctime DESC;

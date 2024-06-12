@@ -152,70 +152,75 @@ BEGIN
     WHERE username = p_username
     LIMIT 1;
 
-    IF login_id IS NULL OR login_id = 0 THEN
-        -- If login_id is NULL or 0, handle special case
-        SELECT 
-            ld.id AS user_id,
-            ld.username, 
-            ld.password, 
-            'super' AS role, 
-            'super' AS user_type
-        FROM 
-            login_details ld
-        WHERE 
-            ld.id = 0
-
-        UNION ALL
-
-        SELECT 
-            NULL AS username, 
-            NULL AS password, 
-            'super' AS role, 
-            'super' AS user_type
-        WHERE 
-            NOT EXISTS (SELECT 1 FROM login_details WHERE id = 0);
-    ELSE
-        -- Check if login_id is in staff_table
-        SELECT COUNT(*) INTO user_exists
-        FROM staff_table st
-        WHERE st.login_id = login_id;
-
-        IF user_exists THEN
-            -- If login_id is found in staff_table
-            SELECT 
-              ld.id AS user_id,
-              ld.username,
-              ld.password,
-              st.role,
-              'staff' AS user_type
-            FROM
-              staff_table st
-            LEFT JOIN login_details ld ON ld.id =  st.login_id
-            WHERE ld.id = login_id;
-        ELSE
-            -- Check if login_id is in admin_table
-            SELECT COUNT(*) INTO user_exists
-            FROM admin_table admint
-            WHERE admint.login_id = login_id;
-
-            IF user_exists THEN
-                -- If login_id is found in admin_table
-               SELECT 
-                ld.id AS user_id,
-                ld.username,
-                ld.password,
-                at2.role,
-                'admin' AS user_type
-              FROM
-                admin_table at2
-              LEFT JOIN login_details ld ON ld.id = at2.login_id 
-              WHERE ld.id = login_id;
-            ELSE
-                -- If login_id is not found in both staff_table and admin_table
-                SELECT 'Account not found, user not registered' AS message, 404 AS status;
-            END IF;
-        END IF;
-    END IF;
+    IF login_id IS NULL THEN
+   		SELECT 'Username not found, account not registered' AS message, 404 as status;
+   	ELSE
+   
+	    IF login_id = 0 THEN
+	        -- If login_id is NULL or 0, handle special case
+	        SELECT 
+	            ld.username, 
+	            ld.password, 
+	            ld.id,
+	            'super' AS role, 
+	            'super' AS user_type
+	        FROM 
+	            login_details ld
+	        WHERE 
+	            ld.id = 0
+	
+	        UNION ALL
+	
+	        SELECT 
+	            NULL AS username, 
+	            NULL AS password,
+	            'super' AS role, 
+	            'super' AS user_type
+	        WHERE 
+	            NOT EXISTS (SELECT 1 FROM login_details WHERE id = 0);
+	    ELSE
+	        -- Check if login_id is in staff_table
+	        SELECT COUNT(*) INTO user_exists
+	        FROM staff_table st
+	        WHERE st.login_id = login_id;
+	       
+	        IF user_exists THEN
+	            -- If login_id is found in staff_table
+	            SELECT
+	            	ld.id AS user_id,
+					ld.username,
+					ld.password,
+					st.role,
+					'staff' AS user_type
+				FROM
+					staff_table st
+				LEFT JOIN login_details ld ON ld.id =  st.login_id
+				WHERE ld.id = login_id;
+	        ELSE
+	            -- Check if login_id is in admin_table
+	            SELECT COUNT(*) INTO user_exists
+	            FROM admin_table admint
+	            WHERE admint.login_id = login_id;
+	
+	            IF user_exists THEN
+	                -- If login_id is found in admin_table
+	                SELECT 
+	                	ld.id AS user_id,
+						ld.username,
+						ld.password,
+						at2.role,
+						'admin' AS user_type
+					FROM
+						admin_table at2
+					LEFT JOIN login_details ld ON ld.id = at2.login_id 
+					WHERE ld.id = login_id;
+	            ELSE
+	                -- If login_id is not found in both staff_table and admin_table
+	                SELECT 'Account not found, user not registered' AS message, 404 AS status;
+	            END IF;
+	        END IF;
+	    END IF;
+	 END IF;
 END //
 
 DELIMITER ;

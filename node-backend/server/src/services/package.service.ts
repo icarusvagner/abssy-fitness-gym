@@ -1,19 +1,21 @@
 import { Connect, Query } from "../utils/mysql.util";
 import checkValidEnumValue from "../utils/checkEnum.util";
 import executeQuery from "../utils/executeQuery.util";
-import { PackageDate, PackageForCreate, PackageForUpdate } from "../models/package.model";
+import { PackageType, PackageForCreate, PackageForUpdate } from "../models/package.model";
 
 const create_package = async (pack: PackageForCreate) => {
   try {
     let query = "CALL create_package(?,?,?,?,?)";
 
     let result: any = await executeQuery(query, [
-      pack.package_name,
+      pack.package_name.toLowerCase(),
       pack.duration,
-      checkValidEnumValue(PackageDate, pack.package_date),
+      checkValidEnumValue(PackageType, pack.package_type),
       pack.price,
-      pack.benefits,
+      pack.benefits.toLowerCase(),
     ]);
+
+    console.log(pack);
 
     return {
       message: 'Package created successfully',
@@ -50,11 +52,11 @@ const update_package = async (pack: PackageForUpdate) => {
     let query = "CALL update_package(?,?,?,?,?,?)";
     let result: any = await executeQuery(query, [
 			pack.id,
-			pack.package_name,
+			pack.package_name.toLowerCase(),
 			pack.duration,
-      checkValidEnumValue(PackageDate, pack.package_date),
+      checkValidEnumValue(PackageType, pack.package_type),
 			pack.price,
-			pack.benefits,
+			pack.benefits.toLowerCase(),
     ]);
 
     return {

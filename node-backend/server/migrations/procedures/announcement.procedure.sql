@@ -24,7 +24,7 @@ CREATE OR REPLACE PROCEDURE get_announcement (
 )
 BEGIN
   IF p_id = 0 THEN
-    SELECT * FROM announcements_view ORDER BY created_at DESC;
+    SELECT * FROM announcements_view;
   ELSE
     SELECT * FROM announcements_view WHERE login_id = p_id;
   END IF;

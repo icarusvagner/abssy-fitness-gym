@@ -1,7 +1,7 @@
 import { Connect, Query } from "../utils/mysql.util";
 import checkValidEnumValue from "../utils/checkEnum.util";
 import executeQuery from "../utils/executeQuery.util";
-import { PackageType, PackageForCreate, PackageForUpdate } from "../models/package.model";
+import { PackageType, PackageForCreate, PackageForUpdate, PackageStatus } from "../models/package.model";
 
 const create_package = async (pack: PackageForCreate) => {
   try {
@@ -49,7 +49,7 @@ const read_package = async (id: number) => {
 
 const update_package = async (pack: PackageForUpdate) => {
   try {
-    let query = "CALL update_package(?,?,?,?,?,?)";
+    let query = "CALL update_package(?,?,?,?,?,?,?)";
     let result: any = await executeQuery(query, [
 			pack.id,
 			pack.package_name.toLowerCase(),
@@ -57,7 +57,10 @@ const update_package = async (pack: PackageForUpdate) => {
       checkValidEnumValue(PackageType, pack.package_type),
 			pack.price,
 			pack.benefits.toLowerCase(),
+      checkValidEnumValue(PackageStatus, pack.pack_status),
     ]);
+    
+    console.log(result);
 
     return {
       message: 'Package updated successfully',

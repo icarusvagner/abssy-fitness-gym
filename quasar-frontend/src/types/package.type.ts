@@ -7,12 +7,19 @@ export enum PackageType {
   Years = 'years'
 }
 
+export enum PackageStatus {
+  Active = 'active',
+  Inactive = 'inactive',
+  Removed = 'removed',
+}
+
 export interface PackageForCreate {
   package_name: string;
   duration: number;
   package_type: PackageType;
   price: number;
   benefits: string;
+  status: string;
 }
 
 export interface PackageForUpdate {
@@ -22,6 +29,7 @@ export interface PackageForUpdate {
   package_type: PackageType;
 	price: number;
 	benefits: string;
+  pack_status: PackageStatus;
 }
 
 export interface PackageForSelect {

@@ -1,4 +1,5 @@
 import { route } from 'quasar/wrappers';
+import { Platform } from 'quasar';
 import {
   createMemoryHistory,
   createRouter,
@@ -35,12 +36,27 @@ export default route(function (/* { store, ssrContext } */) {
   });
 
   Router.beforeEach((to, from, next) => {
-    if (to.meta.auth && !auth.isAuthenticated && !auth.getAccessToken) {
-      next({ name: 'login' })
-    } else if (!to.meta.auth && auth.isAuthenticated && auth.getAccessToken) {
-      next({ name: 'dashboard' })
+
+    if (Platform.is.electron) {
+      console.log('Proceeding for electron route...')
+
+      if (to.meta.auth && !auth.isAuthenticated && !auth.getAccessToken) {
+        next({ name: 'login' })
+      } else if (!to.meta.auth && auth.isAuthenticated && auth.getAccessToken) {
+        next({ name: 'dashboard' })
+      } else {
+        next()
+      }
+
     } else {
-      next()
+      console.log('Proceeding for not electron route...')
+      if (to.meta.auth && !auth.isAuthenticated && !auth.getAccessToken) {
+        next({ name: 'landing_page' })
+      } else if (!to.meta.auth && auth.isAuthenticated && auth.getAccessToken) {
+        next({ name: 'dashboard' })
+      } else {
+        next()
+      }
     }
   })
 

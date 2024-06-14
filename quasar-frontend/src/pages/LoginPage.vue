@@ -1,7 +1,7 @@
 <template>
   <div class="row window-height" style="background-color: #eee8eb;">
     <!-- content -->
-    <div v-if="!Platform.is.mobile" class="col-12 col-md-8 full-height column justify-center items-center">
+    <div class="col-12 col-md-8 full-height column justify-center items-center">
       <div class="column q-gutter-y-lg">
         <q-img src="../assets/logo3.png" alt="logo" height="250px" width="250px" fit="fill" />
         <span class="text-h2 text-bold text-secondary bg-grey-4 q-pa-md rounded-borders">ABBSY Fitness Gym</span>
@@ -42,7 +42,7 @@
 <script setup lang="ts">
   import { ref } from 'vue';
   import { useRouter } from 'vue-router';
-  import { Platform, Notify } from 'quasar';
+  import { Notify } from 'quasar';
 
   import { LoginDetails } from 'components/models';
   import useAuthStore from 'stores/auth-store';

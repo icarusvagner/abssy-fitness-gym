@@ -1,6 +1,7 @@
 import { RouteRecordRaw } from 'vue-router';
+import { Platform } from 'quasar';
 
-const routes: RouteRecordRaw[] = [
+const electronRoute = [
   {
     path: '/',
     name: 'home',
@@ -69,15 +70,47 @@ const routes: RouteRecordRaw[] = [
   {
     path: '/login',
     name: 'login',
+    meta: { roles: ['admin', 'super'] },
     component: () => import('pages/LoginPage.vue')
   },
-
   // Always leave this as last one,
   // but you can also remove it
   {
     path: '/:catchAll(.*)*',
+    meta: { roles: ['admin', 'super', 'customer'] },
     component: () => import('pages/ErrorNotFound.vue'),
   },
 ];
+
+const notElectronRoute = [
+  {
+    path: '/info',
+    name: 'landing_page',
+    component: () => import('pages/LandingPage.vue')
+  },
+  {
+    path: '/login',
+    name: 'login',
+    component: () => import('pages/CustomerLoginPage.vue')
+  },
+  {
+    path: '/',
+    name: 'dashboard',
+    meta: { auth: true },
+    component: () => import('pages/CustomerPage.vue')
+  },
+  {
+    path: '/plan',
+    name: 'plan',
+    component: () => import('pages/CustomerChoosePackage.vue'),
+  },
+  {
+    path: '/:catchAll(.*)*',
+    meta: { roles: ['admin', 'super', 'customer'] },
+    component: () => import('pages/ErrorNotFound.vue'),
+  },
+];
+
+const routes: RouteRecordRaw[] = Platform.is.electron ? electronRoute : notElectronRoute;
 
 export default routes;

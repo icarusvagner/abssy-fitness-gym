@@ -58,8 +58,9 @@ CREATE OR REPLACE TABLE `member_table` (
 	`detail_id` INT NOT NULL,
 	`address_id` INT NOT NULL,
 	`ec_id` INT NOT NULL,
-  `package_id` INT NOT NULL,
+  `package_id` INT,
 	`health_condition` VARCHAR(255),
+  `member_status` ENUM('active','inactive','removed') NOT NULL DEFAULT 'inactive',
 	`ctime` TIMESTAMP NOT NULL DEFAULT current_timestamp,
 	`mtime` TIMESTAMP NOT NULL DEFAULT current_timestamp,
 	PRIMARY KEY(`id`)
@@ -188,6 +189,16 @@ CREATE OR REPLACE TABLE `package_table` (
 	`price` DECIMAL(10, 2) NOT NULL,
 	`benefits` VARCHAR(255) NOT NULL,
   `status` ENUM('active','inactive', 'removed') DEFAULT 'active',
+	`ctime` TIMESTAMP NOT NULL DEFAULT current_timestamp,
+	`mtime` TIMESTAMP NOT NULL DEFAULT current_timestamp,
+	PRIMARY KEY(`id`)
+);
+
+CREATE OR REPLACE TABLE `sales_table` (
+	`id` INT NOT NULL AUTO_INCREMENT UNIQUE,
+  `package_id` INT NOT NULL,
+  `member_id` INT NOT NULL,
+	`price` DECIMAL(10, 2) NOT NULL,
 	`ctime` TIMESTAMP NOT NULL DEFAULT current_timestamp,
 	`mtime` TIMESTAMP NOT NULL DEFAULT current_timestamp,
 	PRIMARY KEY(`id`)

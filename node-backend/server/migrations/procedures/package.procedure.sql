@@ -64,13 +64,14 @@ DELIMITER ;
 
 DELIMITER //
 
-CREATE PROCEDURE update_package(
+CREATE OR REPLACE PROCEDURE update_package(
     IN p_id INT,
     IN p_package_name VARCHAR(255),
     IN p_duration INT,
-    IN p_package_type ENUM('week', 'month', 'year'),
+    IN p_package_type ENUM('week','weeks','month','months','year','years'),
     IN p_price DECIMAL(10, 2),
-    IN p_benefits VARCHAR(255)
+    IN p_benefits VARCHAR(255),
+    IN p_pack_stats ENUM('active','inactive','removed')
 )
 BEGIN
 	DECLARE EXIT HANDLER FOR SQLEXCEPTION
@@ -96,6 +97,7 @@ BEGIN
         package_type = p_package_type,
         price = p_price,
         benefits = p_benefits,
+        status = p_pack_stats,
         mtime = CURRENT_TIMESTAMP
     WHERE id = p_id;
 

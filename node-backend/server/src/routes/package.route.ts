@@ -6,7 +6,7 @@ const router = Router();
 
 router.post('/create', verifyToken, packageController.createPackage);
 router.post('/update', verifyToken, packageController.updatePackage);
-router.get('/get/:id', verifyToken, packageController.readPackage);
+router.get('/get/:id', packageController.readPackage);
 router.post('/delete', verifyToken, packageController.deletePackage);
 
 export default router;

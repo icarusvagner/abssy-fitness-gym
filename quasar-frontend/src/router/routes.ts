@@ -84,25 +84,47 @@ const electronRoute = [
 
 const notElectronRoute = [
   {
-    path: '/info',
-    name: 'landing_page',
-    component: () => import('pages/LandingPage.vue')
+    path: '/',
+    name: 'user_layout',
+    component: () => import('layouts/UsersLayout.vue'),
+    children: [
+      {
+        path: '',
+        name: 'dashboard',
+        meta: { auth: true },
+        component: () => import('pages/CustomerPage.vue')
+      },
+      {
+        path: '/info',
+        name: 'landing_page',
+        component: () => import('pages/LandingPage.vue')
+      },
+      {
+        path: '/plan',
+        name: 'plan',
+        component: () => import('pages/CustomerChoosePackage.vue'),
+      },
+      {
+        path: '/shop',
+        name: 'shop',
+        component: () => import('pages/ShopPage.vue'),
+      },
+      {
+        path: '/event',
+        name: 'event',
+        component: () => import('pages/EventsPage.vue'),
+      },
+      {
+        path: '/about',
+        name: 'about',
+        component: () => import('pages/AboutUsPage.vue'),
+      },
+    ]
   },
   {
     path: '/login',
     name: 'login',
     component: () => import('pages/CustomerLoginPage.vue')
-  },
-  {
-    path: '/',
-    name: 'dashboard',
-    meta: { auth: true },
-    component: () => import('pages/CustomerPage.vue')
-  },
-  {
-    path: '/plan',
-    name: 'plan',
-    component: () => import('pages/CustomerChoosePackage.vue'),
   },
   {
     path: '/:catchAll(.*)*',

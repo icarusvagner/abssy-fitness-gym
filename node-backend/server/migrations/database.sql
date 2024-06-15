@@ -204,6 +204,16 @@ CREATE OR REPLACE TABLE `sales_table` (
 	PRIMARY KEY(`id`)
 );
 
+CREATE OR REPLACE TABLE `event_table` (
+	`id` INT NOT NULL AUTO_INCREMENT UNIQUE,
+  `title` VARCHAR(255) NOT NULL,
+  `details` TEXT NOT NULL,
+  `responsibles` VARCHAR(128) NULL,
+	`ctime` TIMESTAMP NOT NULL DEFAULT current_timestamp,
+	`mtime` TIMESTAMP NOT NULL DEFAULT current_timestamp,
+	PRIMARY KEY(`id`)
+);
+
 CREATE OR REPLACE TABLE `refresh_token` (
 	`id` INT NOT NULL AUTO_INCREMENT UNIQUE,
 	`username` VARCHAR(255) NOT NULL,

@@ -1,5 +1,6 @@
 <template>
   <div
+    v-if="props.status !== 'removed'"
     class="column items-center full-width shadow-10"
     style="
       border-radius: 13px 13px 75px 13px;
@@ -8,29 +9,24 @@
       overflow: hidden;
     "
   >
-    <div
-      class="full-width q-pa-sm text-h6 text-weight-bold text-dark bg-secondary text-center"
-    >
-      Basic
+    <div class="full-width q-pa-sm text-h6 text-weight-bold text-dark bg-secondary text-center text-uppercase" >
+      {{ props.package_name }}
     </div>
     <div class="column items-center q-pa-md q-gutter-y-lg">
       <div class="column q-gutter-y-sm items-center">
-        <span class="text-body2 text-weight-normal">Billed Monthly</span>
+        <span class="text-body2 text-weight-normal">One time payment for {{ props.duration }} {{ props.package_type }}</span>
         <div class="row items-center">
           <span class="text-body2 text-weight-normal text-secondary q-mr-xs"
-            >3 months</span
+            >{{ `${props.duration} ${props.package_type}`}}</span
           >
           <span class="text-body2 text-weight-normal">Validity</span>
         </div>
       </div>
-      <div class="row items-center">
-        <p class="text-h6 text-primary text-weight-bold q-ma-none">1300</p>
-        <span class="text-grey-9 text-weight-normal text-body1">/mo</span>
-      </div>
+      <p class="q-my-md text-h6 text-primary text-weight-bold q-ma-none">{{ props.price }}</p>
       <q-btn
         color="secondary"
         size="sm"
-        label="pay now"
+        label="purchase"
         rounded
         class="col full-width q-px-md q-py-sm"
       />
@@ -41,26 +37,24 @@
     </div>
     <div class="column q-gutter-y-md full-width q-pa-md">
       <span class="text-body1 text-weight-bold text-left">Plan Features:</span>
-      <span class="row items-center">
+      <small v-for="(item, index) in props.benefits.split(',')" :key="index" >
         <q-icon name="mdi-check-bold" size="16px" />
-        <small>Lorem ipsum dolor sit amet.</small>
-      </span>
-      <span class="row items-center q-gutter-x-xs text-body1">
-        <q-icon name="mdi-check-bold" />
-        <small>Lorem ipsum dolor sit amet.</small>
-      </span>
-      <span class="row items-center q-gutter-x-xs text-body1">
-        <q-icon name="mdi-check-bold" />
-        <small>Lorem ipsum dolor sit amet.</small>
-      </span>
-      <span class="row items-center q-gutter-x-xs text-body1">
-        <q-icon name="mdi-check-bold" />
-        <small>Lorem ipsum dolor sit amet.</small>
-      </span>
+          {{ item }}</small>
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
-import { PackageForSelect } from 'src/types/package.type';
+
+  const props = defineProps<{
+    id: number;
+    package_name: string;
+    duration: number;
+    package_type: string;
+    price: string;
+    benefits: string;
+    status: string;
+    ctime: string;
+  }>()
+
 </script>

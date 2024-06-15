@@ -9,7 +9,7 @@
   <div v-else class="full-height column items-center q-pa-lg">
     <span class="text-h6 text-weight-normal text-uppercase">choose your plan</span>
     <div class="column items-center full-width q-gutter-y-xl">
-      <ChoosePlansCardMobile v-for="n in 4" :key="n"/>
+      <ChoosePlansCardMobile v-for="item in packages" :key="item.id" v-bind="item" />
     </div>
   </div>
 </template>

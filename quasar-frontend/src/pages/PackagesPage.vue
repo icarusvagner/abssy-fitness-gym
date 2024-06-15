@@ -84,7 +84,7 @@
         </q-card-section>
 
         <q-card-actions align="right">
-          <q-btn flat label="Close" color="primary" v-close-popup />
+          <q-btn flat label="Close" color="primary" v-close-popup @click="isLoading = !isLoading" />
           <q-btn color="secondary" label="Add" type="submit" :loading="isLoading" @click="isLoading = !isLoading" />
         </q-card-actions>
       </q-form>
@@ -108,7 +108,7 @@
         <q-card-section class="q-pt-none">
           <q-input filled v-model="formUpdate.package_name" label="Package name" :rules="[ val => !!val || 'Please enter package name' ]" />
           <div class="row ">
-            <q-input filled v-model.number="formUpdate.duration" type="number" label="Duration" :rules="[ val => val > 1 || 'Please enter package duration' ]" class="col q-mr-md" />
+            <q-input filled v-model.number="formUpdate.duration" type="number" label="Duration" :rules="[ val => val > 0 || 'Please enter package duration' ]" class="col q-mr-md" />
             <q-select filled v-model="formUpdate.package_type" :options="options" label="Package date type" class="col" />
           </div>
           <q-input filled v-model.number="formUpdate.price" label="Price" type="number" :rules="[ val => val > 1 || 'Please enter package price' ]" />

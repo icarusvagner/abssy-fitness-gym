@@ -33,6 +33,7 @@ export interface PackageForUpdate {
 }
 
 export interface PackageForSelect {
+  id: number;
   package_name: string;
   duration: number;
   package_type: string;

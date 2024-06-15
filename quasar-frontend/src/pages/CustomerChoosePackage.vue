@@ -1,8 +1,15 @@
 <template>
-  <div class="full-height column items-center q-pa-xl q-gutter-y-xl">
-    <span class="text-h5 text-weight-normal text-uppercase">choose your plan</span>
-    <div class="row items-center q-gutter-x-xl">
-      <ChoosePlansCard v-for="n in 4" :key="n"/>
+  <div v-if="!Platform.is.mobile" class="full-height column items-center q-pa-xl">
+    <span class="text-h5 text-weight-normal text-uppercase q-mb-xl">choose your plan</span>
+    <div class="row row-wrap q-gutter-xl full-width">
+      <ChoosePlansCard v-for="item in packages" :key="item.id" v-bind="item" />
+    </div>
+  </div>
+
+  <div v-else class="full-height column items-center q-pa-lg">
+    <span class="text-h6 text-weight-normal text-uppercase">choose your plan</span>
+    <div class="column items-center full-width q-gutter-y-xl">
+      <ChoosePlansCardMobile v-for="n in 4" :key="n"/>
     </div>
   </div>
 </template>
@@ -14,6 +21,7 @@
 
   import { PackageForSelectWrapper } from 'src/types/package.type';
   import ChoosePlansCard from 'components/ChoosePlansCard.vue';
+  import ChoosePlansCardMobile from 'components/ChoosePlansCardMobile.vue';
 
   const packages = ref<PackageForSelectWrapper>([]);
 
@@ -22,6 +30,7 @@
     try {
       const response = await api.get('/package/get/0');
       packages.value = response.data.result;
+      console.log(packages.value);
     } catch (error: any) {
       throw error.message;
     }

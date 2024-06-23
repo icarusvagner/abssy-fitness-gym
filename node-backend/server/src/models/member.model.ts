@@ -14,10 +14,12 @@ export interface MemberForCreate {
 	province: string;
 	ec_first_name: string;
 	ec_last_name: string;
-	relationship: string;
+	ec_relationship: string;
 	ec_phone_number: string;
 	package_id: number;
 	health_condition: string;
+  reference_no: string;
+  purchased_id: string;
 }
 
 export interface MemberForUpdate {

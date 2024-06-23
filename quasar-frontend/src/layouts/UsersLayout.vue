@@ -10,17 +10,19 @@
     <q-header elevated class="bg-secondary text-white">
       <q-toolbar>
         <q-toolbar-title>
-          <q-avatar>
-            <img src="../assets/logo.png">
-          </q-avatar>
-          ABBSY Fitness Gym
+          <router-link :to="{ name: 'landing_page' }" class="text-grey-11" style="text-decoration-line: none;">
+            <q-avatar>
+              <img src="../assets/logo.png">
+            </q-avatar>
+            ABBSY Fitness Gym
+          </router-link>
         </q-toolbar-title>
 
         <div v-if="!Platform.is.mobile">
-          <q-btn flat dense no-caps :to="{ name: 'login' }" label="Shop" class="q-px-md" />
-          <q-btn flat dense no-caps :to="{ name: 'login' }" label="Events" class="q-px-md" />
-          <q-btn flat dense no-caps :to="{ name: 'login' }" label="About us" class="q-px-md" />
+          <q-btn flat dense no-caps :to="{ name: 'event' }" label="Events" class="q-px-md" />
+          <q-btn flat dense no-caps :to="{ name: 'about' }" label="About us" class="q-px-md" />
           <q-btn flat dense no-caps :to="{ name: 'login' }" label="Member Login" class="q-px-md" />
+          <q-btn dense color="grey-11" text-color="grey-9" :to="{ name: 'plan' }" label="get exclusive membership" class="q-px-md" />
         </div>
 
         <q-btn v-else flat dense icon="mdi-menu" color="grey-11" @click="drawer = !drawer" />
@@ -35,13 +37,13 @@
         <span class="text-h6">ABBSY Fitness Gym</span>
       </div>
       <q-list padding class="menu-list column items-start q-ml-lg text-grey-11 text-h6 q-gutter-y-lg">
-        <q-item clickable v-ripple :to="{ name: 'shop' }">
+        <q-item clickable v-ripple :to="{ name: 'plan' }">
           <q-item-section avatar>
             <q-icon name="mdi-store" />
           </q-item-section>
 
           <q-item-section>
-            Shop
+            Get Exclusive Membership
           </q-item-section>
         </q-item>
 
@@ -89,4 +91,5 @@
   import { ref } from 'vue';
 
   const drawer = ref(false);
+
 </script>

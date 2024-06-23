@@ -26,9 +26,10 @@
       <q-btn
         color="secondary"
         size="sm"
-        label="purchase"
+        label="select package"
         rounded
         class="col full-width q-px-md q-py-sm"
+        :to="{ name: 'membership', query: { pid: props.id, package: props.package_name, p: props.price }}"
       />
       <p class="text-grey-9 text-center">
         Lorem ipsum dolor sit amet, qui minim labore adipisicing minim sint
@@ -37,9 +38,10 @@
     </div>
     <div class="column q-gutter-y-md full-width q-pa-md">
       <span class="text-body1 text-weight-bold text-left">Plan Features:</span>
-      <small v-for="(item, index) in props.benefits.split(',')" :key="index" >
+      <small v-for="(item, index) in props.benefits.split(',')" :key="index" class="text-left" >
         <q-icon name="mdi-check-bold" size="16px" />
-          {{ item }}</small>
+          {{ item }}
+      </small>
     </div>
   </div>
 </template>

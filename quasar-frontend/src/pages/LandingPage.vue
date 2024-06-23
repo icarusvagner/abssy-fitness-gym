@@ -15,7 +15,7 @@
           <span class="text-h1 text-weight-bold">Get fit & healthly.</span>
           <p class="text-body1 text-grey-1 text-weight-normal">Lorem ipsum dolor sit amet, officia excepteur ex fugiat reprehenderit enim labore culpa sint ad nisi Lorem pariatur mollit ex esse exercitation amet. Nisi anim cupidatat excepteur officia. Reprehenderit nostrud nostrud ipsum Lorem est.</p>
           <div class="row">
-            <q-btn :to="{ name: 'plan' }" outlined color="secondary" label="get a membership" />
+            <q-btn :to="{ name: 'plan' }" outlined color="secondary" label="get exclusive membership" />
           </div>
         </div>
       </div>
@@ -28,7 +28,7 @@
           <span class="text-h3 text-weight-bold">Get fit & healthly.</span>
           <p class="text-grey-1 text-weight-normal">Lorem ipsum dolor sit amet, officia excepteur ex fugiat reprehenderit enim labore culpa sint ad nisi Lorem pariatur mollit ex esse exercitation amet. Nisi anim cupidatat excepteur officia. Reprehenderit nostrud nostrud ipsum Lorem est.</p>
           <div class="row">
-            <q-btn :to="{ name: 'plan' }" outlined color="secondary" label="get a membership" />
+            <q-btn :to="{ name: 'plan' }" outlined color="secondary" label="get exclusive membership" />
           </div>
         </div>
       </div>

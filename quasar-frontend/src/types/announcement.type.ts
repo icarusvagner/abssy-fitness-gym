@@ -1,3 +1,8 @@
+export enum AnnouncementType {
+  Announcement = 'announcement',
+  Event = 'event',
+}
+
 export interface AnnouncementForSelect {
   announcement_id
   login_id: number;
@@ -7,6 +12,7 @@ export interface AnnouncementForSelect {
   message: string;
   created_at: string;
   stats: string;
+  announcement_type: AnnouncementType;
 }
 
 export interface AnnouncementForSelectWrapper {
@@ -17,6 +23,7 @@ export interface AnnouncementForCreate {
   user_id: number;
   title: string;
   message: string;
+  announcement_type: AnnouncementType;
 }
 
 export interface AnnouncementForUpdate {

@@ -4,13 +4,14 @@ DELIMITER //
 CREATE OR REPLACE PROCEDURE create_announcement (
     IN p_user_id INT,
     IN p_title VARCHAR(128),
-    IN p_message TEXT
+    IN p_message TEXT,
+    IN p_type ENUM('announcement','event')
 )
 BEGIN
     START TRANSACTION;
     
-    INSERT INTO announcement (user_id, title, message)
-    VALUES (p_user_id, p_title, p_message);
+    INSERT INTO announcement (user_id, title, message, announcement_type)
+    VALUES (p_user_id, p_title, p_message, p_type);
     
     COMMIT;
 END //

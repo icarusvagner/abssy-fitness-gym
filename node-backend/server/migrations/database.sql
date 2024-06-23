@@ -39,6 +39,7 @@ CREATE OR REPLACE TABLE `announcement` (
   `title` VARCHAR(128) NOT NULL,
   `message` TEXT NOT NULL,
   `stats` ENUM('active','inactive','removed') NOT NULL DEFAULT 'active',
+  `announcement_type` ENUM('announcement','event') NOT NULL DEFAULT 'announcement',
 	`ctime` TIMESTAMP NOT NULL DEFAULT current_timestamp,
 	`mtime` TIMESTAMP NOT NULL DEFAULT current_timestamp,
   PRIMARY KEY(`id`)
@@ -188,6 +189,7 @@ CREATE OR REPLACE TABLE `package_table` (
   `package_type` ENUM('week','month','year', 'weeks', 'months', 'years') DEFAULT 'month',
 	`price` DECIMAL(10, 2) NOT NULL,
 	`benefits` VARCHAR(255) NOT NULL,
+  `purchase_count` INT NOT NULL DEFAULT 0,
   `status` ENUM('active','inactive', 'removed') DEFAULT 'active',
 	`ctime` TIMESTAMP NOT NULL DEFAULT current_timestamp,
 	`mtime` TIMESTAMP NOT NULL DEFAULT current_timestamp,
@@ -199,6 +201,17 @@ CREATE OR REPLACE TABLE `sales_table` (
   `package_id` INT NOT NULL,
   `member_id` INT NOT NULL,
 	`price` DECIMAL(10, 2) NOT NULL,
+	`ctime` TIMESTAMP NOT NULL DEFAULT current_timestamp,
+	`mtime` TIMESTAMP NOT NULL DEFAULT current_timestamp,
+	PRIMARY KEY(`id`)
+);
+
+CREATE OR REPLACE TABLE `purchased_package_table` (
+	`id` INT NOT NULL AUTO_INCREMENT UNIQUE,
+  `package_id` INT NOT NULL,
+  `member_id` INT NOT NULL,
+  `reference_number` VARCHAR(255) NOT NULL,
+  `purchased_id` VARCHAR(255) NOT NULL,
 	`ctime` TIMESTAMP NOT NULL DEFAULT current_timestamp,
 	`mtime` TIMESTAMP NOT NULL DEFAULT current_timestamp,
 	PRIMARY KEY(`id`)

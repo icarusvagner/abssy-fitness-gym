@@ -3,11 +3,12 @@ import { AnnouncementForCreate, AnnouncementForUpdate } from '../models/announce
 
 const create_announcement = async (announcement: AnnouncementForCreate) => {
   try {
-    let query = "CALL create_announcement(?,?,?)";
+    let query = "CALL create_announcement(?,?,?,?)";
     let result: any = await executeQuery(query, [
       announcement.user_id,
       announcement.title.toLowerCase(),
       announcement.message.toLowerCase(),
+      announcement.announcement_type.toLowerCase(),
     ]);
 
     return {

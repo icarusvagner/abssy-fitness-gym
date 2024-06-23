@@ -49,10 +49,22 @@ const deleteMember = async (req: Request, res: Response) => {
     return res.status(500).json({ 'error': error.message });
   }
 }
+const getPurchasedPackage = async (req: Request, res: Response) => {
+  try {
+    let { id } = req.body;
+    let result = await memberService.get_purchased_package(parseInt(id));
+
+    return res.status(200).json({ result });
+  } catch (error: any) {
+    console.error('Getting purchased package error on controller: ', error);
+    return res.status(500).json({ 'error': error.message });
+  }
+}
 
 export {
   addMember,
   getMembers,
   updateMember,
   deleteMember,
+  getPurchasedPackage,
 }

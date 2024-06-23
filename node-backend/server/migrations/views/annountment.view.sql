@@ -7,7 +7,8 @@ SELECT
     an.title AS title,
     an.message AS message,
     date_format(an.ctime, '%Y-%m-%d') AS created_at,
-    an.stats AS stats
+    an.stats AS stats,
+    an.announcement_type
 FROM
     announcement an
 LEFT JOIN admin_table admint ON

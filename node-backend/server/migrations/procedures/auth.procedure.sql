@@ -69,7 +69,6 @@ END //
 DELIMITER ;
 
 
-
 -- Registration for admin
 DELIMITER //
 

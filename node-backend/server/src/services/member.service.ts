@@ -5,7 +5,9 @@ import { Gender } from '../models/auth.model';
 
 const add_member = async (member: MemberForCreate) => {
   try {
-    let query = "CALL add_member(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+    console.log(member);
+
+    let query = "CALL add_member(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
     let result: any = await executeQuery(query, [
 			member.first_name.toLowerCase(),
 			member.middle_name.toLowerCase(),
@@ -20,10 +22,12 @@ const add_member = async (member: MemberForCreate) => {
 			member.province.toLowerCase(),
 			member.ec_first_name.toLowerCase(),
 			member.ec_last_name.toLowerCase(),
-			member.relationship.toLowerCase(),
+			member.ec_relationship.toLowerCase(),
 			member.ec_phone_number.toLowerCase(),
 			member.package_id,
 			member.health_condition.toLowerCase(),
+      member.reference_no,
+      member.purchased_id
     ]);
 
     return {
@@ -48,7 +52,7 @@ const get_members = async (id: number) => {
       }
     }
 
-    return result[0]
+    return result[0];
   } catch (error: any) {
     console.error('Getting member error on service: ', error);
     return error.message;
@@ -105,9 +109,22 @@ const delete_member = async (id: number) => {
   }
 }
 
+const get_purchased_package = async (id: number) => {
+  try {
+    let query = "CALL get_purchased_package(?)";
+    let result: any = await executeQuery(query, [id]);
+
+    return result[0];
+  } catch (error: any) {
+    console.error('Getting purchased package error on service: ', error);
+    return error.message;
+  }
+}
+
 export {
   add_member,
   get_members,
   update_member,
   delete_member,
+  get_purchased_package,
 }

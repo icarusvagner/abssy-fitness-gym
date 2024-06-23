@@ -10,19 +10,21 @@
         </div>
       </div>
       <p class="q-my-md text-h4 text-primary text-weight-bold q-ma-none">{{ props.price }}</p>
-      <q-btn color="secondary" label="purchase" rounded class="col full-width q-px-md q-py-sm" />
+      <q-btn color="secondary" label="select package" rounded class="col full-width q-px-md q-py-sm" :to="{ name: 'membership', query: { pid: props.id, package: props.package_name, p: props.price }}" />
       <span class="text-body1 text-weight-normal text-center">Lorem ipsum dolor sit amet, qui minim labore adipisicing minim sint cillum sint consectetur cupidatat.</span>
     </div>
     <div class="column q-gutter-y-md full-width q-pa-md">
       <span class="text-h6 text-weight-bold text-left">Plan Features:</span>
-        <small v-for="(item, index) in props.benefits.split(',')" :key="index" class="text-subtitle1" >
-        <q-icon name="mdi-check-bold" />
-          {{ item }}</small>
+        <small v-for="(item, index) in props.benefits.split(',')" :key="index" class="text-subtitle1 text-left" >
+          <q-icon name="mdi-check-bold" />
+          {{ item }}
+        </small>
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
+  import { ref } from 'vue';
 
   const props = defineProps<{
     id: number;

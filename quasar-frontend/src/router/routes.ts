@@ -105,9 +105,9 @@ const notElectronRoute = [
         component: () => import('pages/CustomerChoosePackage.vue'),
       },
       {
-        path: '/shop',
-        name: 'shop',
-        component: () => import('pages/ShopPage.vue'),
+        path: '/membership',
+        name: 'membership',
+        component: () => import('pages/NewMemberPage.vue'),
       },
       {
         path: '/event',

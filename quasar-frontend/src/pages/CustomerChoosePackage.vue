@@ -15,13 +15,25 @@
 </template>
 
 <script setup lang="ts">
-  import { ref, onMounted } from 'vue';
+  import { ref, onMounted, defineAsyncComponent } from 'vue';
   import { api } from 'boot/axios';
   import { debounce, Platform } from 'quasar';
 
   import { PackageForSelectWrapper } from 'src/types/package.type';
-  import ChoosePlansCard from 'components/ChoosePlansCard.vue';
-  import ChoosePlansCardMobile from 'components/ChoosePlansCardMobile.vue';
+  import LoadersComponent from 'components/LoadersComponent.vue';
+
+  const ChoosePlansCardMobile = defineAsyncComponent({
+    loader: () => import('components/ChoosePlansCardMobile.vue'),
+    loadingComponent: LoadersComponent,
+    delay: 500,
+    timeout: 3000,
+  });
+  const ChoosePlansCard = defineAsyncComponent({
+    loader: () => import('components/ChoosePlansCard.vue'),
+    loadingComponent: LoadersComponent,
+    delay: 500,
+    timeout: 3000,
+  });
 
   const packages = ref<PackageForSelectWrapper>([]);
 
@@ -30,7 +42,6 @@
     try {
       const response = await api.get('/package/get/0');
       packages.value = response.data.result;
-      console.log(packages.value);
     } catch (error: any) {
       throw error.message;
     }

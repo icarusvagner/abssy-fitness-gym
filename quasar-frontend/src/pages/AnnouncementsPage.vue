@@ -60,6 +60,7 @@
               label="Message"
               type="textarea"
             />
+          <q-select filled v-model="form.announcement_type" :options="options" label="Announcement type" />
           </q-card-section>
           <q-card-actions align="right">
             <q-btn flat label="Cancel" outlined v-close-popup @click="clear_inputs"/>
@@ -80,6 +81,7 @@
   import { isLessThanThreeDays } from 'src/utils/checker.util';
 
   const authStore = useAuthStore();
+  const options = ref(['announcement','event']);
   const new_announce = ref(false);
   const announcementService = new AnnouncementService();
   const isSubmit = ref(false);
@@ -88,6 +90,7 @@
     user_id: authStore.getId,
     title: '',
     message: '',
+    announcement_type: '',
   });
   const announcements = ref<AnnouncementForSelectWrapper>([]);
 

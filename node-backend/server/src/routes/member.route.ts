@@ -4,8 +4,9 @@ import * as memberController from '../controllers/member.controller';
 
 const router = Router();
 
-router.post('/create', verifyToken, memberController.addMember);
+router.post('/create', memberController.addMember);
 router.get('/get/:id', verifyToken, memberController.getMembers);
+router.get('/get/purchased/:id', verifyToken, memberController.getPurchasedPackage);
 router.post('/update', verifyToken, memberController.updateMember);
 router.post('/delete', verifyToken, memberController.deleteMember);
 

@@ -51,7 +51,7 @@ export default route(function (/* { store, ssrContext } */) {
     } else {
       console.log('Proceeding for not electron route...')
       if (to.meta.auth && !auth.isAuthenticated && !auth.getAccessToken) {
-        next({ name: 'landing_page' })
+        next({ name: 'login' })
       } else if (!to.meta.auth && auth.isAuthenticated && auth.getAccessToken) {
         next({ name: 'dashboard' })
       } else {

@@ -1,6 +1,5 @@
 import { api } from 'src/boot/axios';
 import { defineStore } from 'pinia';
-import { AdminForSelect, StaffForSelect } from 'src/types/user.type';
 
 const useAuthStore = defineStore('auth', {
   state: () => ({
@@ -17,10 +16,10 @@ const useAuthStore = defineStore('auth', {
       return state.auth;
     },
     getId (state) {
-      return this.id;
+      return state.id;
     },
     getRole (state) {
-      return this.role;
+      return state.role;
     },
     getUserType (state) {
       return state.user_type;

@@ -1,5 +1,5 @@
 CREATE OR REPLACE VIEW inventory_view AS
-SELECT 
+SELECT
     i.id AS inventory_id,
     i.base_count,
     i.total_count,
@@ -9,14 +9,14 @@ SELECT
     e.id AS item_id,
     e.brand_name AS item_name,
     e.equipment_type AS item_type
-FROM 
+FROM
     inventory_table i
-JOIN 
+JOIN
     equipment_table e ON i.id = e.inventory_id
 
 UNION ALL
 
-SELECT 
+SELECT
     i.id AS inventory_id,
     i.base_count,
     i.total_count,
@@ -26,9 +26,9 @@ SELECT
     s.id AS item_id,
     s.supplement_name AS item_name,
     s.classification AS item_type
-FROM 
+FROM
     inventory_table i
-JOIN 
+JOIN
     supplement_table s ON i.id = s.inventory_id;
 
 
@@ -43,7 +43,7 @@ SELECT
 FROM
   inventory_log_table AS ilt
 JOIN
-  supplement_table AS st ON st.inventory_id = inventory_log_table.inventory_id
+  supplement_table AS st ON st.inventory_id = ilt.inventory_id
 
 UNION ALL
 

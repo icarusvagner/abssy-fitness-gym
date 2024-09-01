@@ -5,8 +5,8 @@ dotenv.config();
 
 const MYSQL_HOST = process.env.MYSQLHOST || "localhost";
 const MYSQL_USER = process.env.MYSQLUSER || "root";
-const MYSQL_PASSWORD = process.env.MYSQLPASSWORD || "31N$t31n";
-const MYSQL_DATABASE = process.env.MYSQL_DATABASE || "gym_db";
+const MYSQL_PASSWORD = process.env.MYSQLPASSWORD || "31N$t31n@$";
+const MYSQL_DATABASE = process.env.MYSQLDATABASE || "gym_db";
 
 const MYSQL = {
   host: MYSQL_HOST,
@@ -16,17 +16,21 @@ const MYSQL = {
 };
 
 const SERVER_HOST = process.env.HOST || "localhost";
-const SERVER_PORT = process.env.MYSQL_PORT || 3306;
-const SERVER_ACCESS_TOKEN_EXPIRETIME = process.env.SERVER_ACCESS_TOKEN_EXPIRETIME || "60m";
-const SERVER_REFRESH_TOKEN_EXPIRETIME = process.env.SERVER_REFRESH_TOKEN_EXPIRETIME || "60m";
+const SERVER_PORT = process.env.MYSQLPORT || 3306;
+const SERVER_ACCESS_TOKEN_EXPIRETIME =
+  process.env.SERVER_ACCESS_TOKEN_EXPIRETIME || "60m";
+const SERVER_REFRESH_TOKEN_EXPIRETIME =
+  process.env.SERVER_REFRESH_TOKEN_EXPIRETIME || "60m";
 const SERVER_TOKEN_ISSUER = process.env.SERVER_TOKEN_ISSUER || "MIT";
 const SERVER_SECRET_KEY = process.env.SERVER_SECRET_KEY || "abbsy_gym_secret";
-const SERVER_REFRESH_SECRET_KEY = process.env.SERVER_REFRESH_SECRET_KEY || "abbsy_gym_secret";
+const SERVER_REFRESH_SECRET_KEY =
+  process.env.SERVER_REFRESH_SECRET_KEY || "abbsy_gym_secret";
 
-const SERVER_RESET_SECRET_KEY = process.env.SERVER_RESET_SECRET_KEY || 'abbsy_gym_secret';
-const SERVER_RESET_EXPIRETIME = process.env.SERVER_RESET_EXPIRETIME || '30m';
+const SERVER_RESET_SECRET_KEY =
+  process.env.SERVER_RESET_SECRET_KEY || "abbsy_gym_secret";
+const SERVER_RESET_EXPIRETIME = process.env.SERVER_RESET_EXPIRETIME || "30m";
 
-const MYSQL_URL = `mariadb://${MYSQL_USER}:${MYSQL_PASSWORD}@${MYSQL_HOST}:${SERVER_PORT}/${MYSQL_DATABASE}`
+const MYSQL_URL = `mariadb://${MYSQL_USER}:${MYSQL_PASSWORD}@${MYSQL_HOST}:${SERVER_PORT}/${MYSQL_DATABASE}`;
 
 const SERVER = {
   hostname: SERVER_HOST,
@@ -45,7 +49,7 @@ const SERVER = {
 const config = {
   mysql: MYSQL,
   server: SERVER,
-  mysqlurl: MYSQL_URL
+  mysqlurl: MYSQL_URL,
 };
 
 export default config;

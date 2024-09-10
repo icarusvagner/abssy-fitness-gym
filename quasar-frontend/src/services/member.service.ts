@@ -16,7 +16,12 @@ class MemberService<T, K> {
     const response = await api.get(`${this.base_end_point}/get/${id}`);
     return response.data;
   }
+
+  async put(id: number, data: K): Promise<T> {
+    const response = await api.put(`${this.base_end_point}/update/${id}`, data);
+
+    return response.data;
+  }
 }
 
 export default MemberService;
-

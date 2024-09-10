@@ -55,62 +55,147 @@
         </q-btn>
       </q-bar>
 
-      <q-card-section>
-        <div class="text-h6">Member Details</div>
-      </q-card-section>
-
-      <q-card-section class="q-pt-none q-gutter-md">
-        <div class="full-width row q-gutter-x-md">
-          <q-input
-            outlined
-            class="col"
-            v-model="member_detail.first_name"
-            label="First name"
-            dense
-            readonly
-          />
-          <q-input
-            outlined
-            class="col"
-            v-model="member_detail.middle_name"
-            label="First name"
-            dense
-            readonly
-          />
-          <q-input
-            outlined
-            class="col"
-            v-model="member_detail.last_name"
-            label="First name"
-            dense
-            readonly
-          />
+      <q-card-section class="q-gutter-y-md">
+        <div class="full-width q-gutter-y-md">
+          <span class="text-h6 q-mx-md">Information</span>
+          <hr class="q-ml-md" />
+          <div class="full-width row q-gutter-x-md">
+            <q-input
+              outlined
+              class="col"
+              v-model="member_detail.first_name"
+              label="First name"
+              dense
+              readonly
+            />
+            <q-input
+              outlined
+              class="col"
+              v-model="member_detail.middle_name"
+              label="Middle name"
+              dense
+              readonly
+            />
+            <q-input
+              outlined
+              class="col"
+              v-model="member_detail.last_name"
+              label="Last name"
+              dense
+              readonly
+            />
+          </div>
+          <div class="full-width row q-gutter-x-md">
+            <q-input
+              outlined
+              class="col"
+              v-model="member_detail.gender"
+              label="Gender"
+              dense
+              readonly
+            />
+            <q-input
+              outlined
+              class="col"
+              v-model="member_detail.email_address"
+              label="Email address"
+              dense
+              readonly
+            />
+            <q-input
+              outlined
+              class="col"
+              v-model="member_detail.phone_number"
+              label="Phone number"
+              dense
+              readonly
+            />
+          </div>
         </div>
-        <div class="full-width row q-gutter-md">
-          <q-input
-            outlined
-            class="col"
-            v-model="member_detail.gender"
-            label="First name"
-            dense
-            readonly
-          />
-          <q-input
-            outlined
-            class="col"
-            v-model="member_detail.email_address"
-            label="First name"
-            dense
-            readonly
-          />
-          <q-input
-            outlined
-            class="col"
-            v-model="member_detail.phone_number"
-            label="First name"
-            dense
-            readonly
-          />
+
+        <div class="full-width q-gutter-y-sm">
+          <span class="text-h6 q-mx-md">Address</span>
+          <hr class="q-ml-md" />
+          <div class="full-width row q-gutter-x-md">
+            <q-input
+              outlined
+              class="col"
+              v-model="member_detail.address_street"
+              label="Street"
+              dense
+              readonly
+            />
+            <q-input
+              outlined
+              class="col"
+              v-model="member_detail.address_brgy"
+              label="Barangay"
+              dense
+              readonly
+            />
+          </div>
+          <div class="full-width row q-gutter-x-md">
+            <q-input
+              outlined
+              class="col"
+              v-model="member_detail.address_city"
+              label="City"
+              dense
+              readonly
+            />
+            <q-input
+              outlined
+              class="col"
+              v-model="member_detail.address_province"
+              label="Province"
+              dense
+              readonly
+            />
+          </div>
+        </div>
+
+        <div class="full-width q-gutter-y-sm">
+          <span class="text-h6 q-mx-md">Emergency Contact</span>
+          <hr class="q-ml-md" />
+          <div class="full-width row q-gutter-x-md">
+            <q-input
+              outlined
+              class="col"
+              v-model="member_detail.ec_first_name"
+              label="First name"
+              dense
+              readonly
+            />
+            <q-input
+              outlined
+              class="col"
+              v-model="member_detail.ec_last_name"
+              label="Last name"
+              dense
+              readonly
+            />
+          </div>
+          <div class="full-width row q-gutter-x-md">
+            <q-input
+              outlined
+              class="col"
+              v-model="member_detail.ec_phone_number"
+              label="Phone number"
+              dense
+              readonly
+            />
+            <q-input
+              outlined
+              class="col"
+              v-model="member_detail.ec_relationship"
+              label="Relationship"
+              dense
+              readonly
+            />
+          </div>
+        </div>
+        <div class="q-ml-md">
+          <q-btn color="primary" label="Accept membership" />
         </div>
       </q-card-section>
     </q-card>

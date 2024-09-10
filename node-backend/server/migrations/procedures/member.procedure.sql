@@ -18,9 +18,7 @@ CREATE OR REPLACE PROCEDURE add_member(
     IN p_relationship VARCHAR(255),
     IN p_ec_phone_number VARCHAR(13),
     IN p_package_id INT,
-    IN p_health_condition VARCHAR(255),
-    IN p_reference_no VARCHAR(255),
-    IN p_purchased_id VARCHAR(255)
+    IN p_health_condition VARCHAR(255)
 )
 BEGIN
     DECLARE v_detail_id INT;
@@ -33,16 +31,15 @@ BEGIN
         DECLARE sql_state CHAR(5);
         DECLARE error_message TEXT;
         DECLARE error_code INT;
-        
+
         GET DIAGNOSTICS CONDITION 1
             sql_state = RETURNED_SQLSTATE,
             error_message = MESSAGE_TEXT,
             error_code = MYSQL_ERRNO;
-        
+
         ROLLBACK;
         SELECT 'Error occurred during member create.' AS error_message, error_code AS err_status, error_message AS detailed_message;
     END;
-
 
     START TRANSACTION;
 
@@ -66,10 +63,8 @@ BEGIN
     VALUES (v_detail_id, v_address_id, v_ec_id, p_package_id, p_health_condition);
     SET v_member_id = LAST_INSERT_ID();
 
-    CALL add_purchased_package(p_package_id,v_member_id,p_reference_no,p_purchased_id);
-
     SELECT v_member_id AS member_id;
-   
+
    	COMMIT;
 END //
 
@@ -78,7 +73,7 @@ DELIMITER ;
 -- Update member
 DELIMITER //
 
-CREATE PROCEDURE update_member(
+CREATE OR REPLACE PROCEDURE update_member(
     IN p_member_id INT,
     IN p_first_name VARCHAR(255),
     IN p_middle_name VARCHAR(255),
@@ -142,7 +137,7 @@ BEGIN
     SET package_id = p_package_id,
         health_confition = p_health_condition
     WHERE id = p_member_id;
-   
+
    	COMMIT;
 END //
 
@@ -151,7 +146,7 @@ DELIMITER ;
 -- Delete member
 DELIMITER //
 
-CREATE PROCEDURE delete_member(
+CREATE OR REPLACE PROCEDURE delete_member(
     IN p_member_id INT
 )
 BEGIN
@@ -163,7 +158,7 @@ DELIMITER ;
 -- Get member
 DELIMITER //
 
-CREATE PROCEDURE get_member(
+CREATE OR REPLACE PROCEDURE get_member(
     IN p_member_id INT
 )
 BEGIN
@@ -186,18 +181,17 @@ CREATE OR REPLACE PROCEDURE add_purchased_package (
 )
 
 BEGIN
-
     DECLARE EXIT HANDLER FOR SQLEXCEPTION
     BEGIN
         DECLARE sql_state CHAR(5);
         DECLARE error_message TEXT;
         DECLARE error_code INT;
-        
+
         GET DIAGNOSTICS CONDITION 1
             sql_state = RETURNED_SQLSTATE,
             error_message = MESSAGE_TEXT,
             error_code = MYSQL_ERRNO;
-        
+
         ROLLBACK;
         SELECT 'Error occurred during purchased_package create.' AS error_message, error_code AS err_status, error_message AS detailed_message;
     END;
@@ -224,6 +218,49 @@ BEGIN
   ELSE
     SELECT * FROM member_purchased_package WHERE id = p_id;
   END IF;
+END //
+
+DELIMITER ;
+
+-- Update member status
+DELIMITER //
+
+CREATE OR REPLACE PROCEDURE update_member_status (
+    IN p_email VARCHAR(255),
+    IN p_username VARCHAR(255),
+    IN p_password VARCHAR(255),
+    IN p_reference_no VARCHAR(255),
+    IN p_purchased_id VARCHAR(255)
+)
+
+BEGIN
+    DECLARE m_id INT;
+    DECLARE d_id INT;
+    DECLARE EXIT HANDLER FOR SQLEXCEPTION
+    BEGIN
+        DECLARE sql_state CHAR(5);
+        DECLARE error_message TEXT;
+        DECLARE error_code INT;
+
+        GET DIAGNOSTICS CONDITION 1
+            sql_state = RETURNED_SQLSTATE,
+            error_message = MESSAGE_TEXT,
+            error_code = MYSQL_ERRNO;
+
+        ROLLBACK;
+        SELECT 'Error occurred during update_status.' AS error_message, error_code AS err_status, error_message AS detailed_message;
+    END;
+
+    START TRANSACTION;
+
+    SELECT id INTO d_id FROM details_table WHERE email = p_email;
+    SELECT id INTO m_id FROM member_table WHERE detail_id = d_id;
+
+    UPDATE FROM member_table mt SET mt.member_status = 'active' WHERE id = m_id;
+    UPDATE FROM details_table SET email_verified_at = CURRENT_TIMESTAMP() WHERE id = d_id;
+
+    CALL add_purchased_package(p_package_id,v_member_id,p_reference_no,p_purchased_id);
+    COMMIT;
 END //
 
 DELIMITER ;

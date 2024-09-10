@@ -59,8 +59,9 @@ CREATE OR REPLACE TABLE `member_table` (
 	`detail_id` INT NOT NULL,
 	`address_id` INT NOT NULL,
 	`ec_id` INT NOT NULL,
-  `package_id` INT,
-	`health_condition` VARCHAR(255),
+    `package_id` INT NULL,
+    `login_id` INT NULL,
+	`health_condition` VARCHAR(255) NULL,
   `member_status` ENUM('active','inactive','removed') NOT NULL DEFAULT 'inactive',
 	`ctime` TIMESTAMP NOT NULL DEFAULT current_timestamp,
 	`mtime` TIMESTAMP NOT NULL DEFAULT current_timestamp,
@@ -111,9 +112,10 @@ CREATE OR REPLACE TABLE `details_table` (
 	`middle_name` VARCHAR(255) NOT NULL,
 	`last_name` VARCHAR(255) NOT NULL,
 	`phone_number` VARCHAR(13) NOT NULL,
-	`email_address` VARCHAR(255) NOT NULL,
+	`email_address` VARCHAR(255) NOT NULL UNIQUE,
 	`date_of_birth` DATE NOT NULL,
 	`gender` ENUM('male', 'female', 'other') NOT NULL,
+	`email_verified_at` VARCHAR(255) NULL,
 	PRIMARY KEY(`id`)
 );
 
@@ -234,4 +236,3 @@ CREATE OR REPLACE TABLE `refresh_token` (
 	`ctime` TIMESTAMP NOT NULL DEFAULT current_timestamp,
 	PRIMARY KEY(`id`)
 );
-

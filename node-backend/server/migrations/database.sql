@@ -62,7 +62,7 @@ CREATE OR REPLACE TABLE `member_table` (
     `package_id` INT NULL,
     `login_id` INT NULL,
 	`health_condition` VARCHAR(255) NULL,
-  `member_status` ENUM('active','inactive','removed') NOT NULL DEFAULT 'inactive',
+    `member_status` ENUM('active','inactive','removed') NOT NULL DEFAULT 'inactive',
 	`ctime` TIMESTAMP NOT NULL DEFAULT current_timestamp,
 	`mtime` TIMESTAMP NOT NULL DEFAULT current_timestamp,
 	PRIMARY KEY(`id`)

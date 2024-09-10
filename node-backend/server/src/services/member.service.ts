@@ -1,15 +1,13 @@
 import executeQuery from "../utils/executeQuery.util";
+import bcryptjs from "bcryptjs";
 import checkValidEnumValue from "../utils/checkEnum.util";
 import { MemberForCreate, MemberForUpdate } from "../models/member.model";
 import { Gender } from "../models/auth.model";
 import { read_package } from "./package.service";
 import EmailTemplate from "../utils/emailTemplate.util";
-import EncodeB64 from "../utils/encodeB64.util";
 
 const add_member = async (member: MemberForCreate) => {
   try {
-    console.log(member);
-
     let query = "CALL add_member(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
     let result: any = await executeQuery(query, [
       member.first_name.toLowerCase(),
@@ -31,21 +29,23 @@ const add_member = async (member: MemberForCreate) => {
       member.health_condition.toLowerCase(),
     ]);
 
-    let encoded = new EncodeB64();
-    let varEncode = encoded.encodeInput(member.email_address, "abbsy");
+    let varEncode =
+      btoa(member.email_address) +
+      "." +
+      btoa("abbsy") +
+      "." +
+      btoa(String(Date.now()));
     let pack = await read_package(member.package_id);
     let encodePack =
-      btoa(pack.package_name) +
+      btoa(pack[0].package_name) +
       "." +
-      btoa(pack.package_price) +
+      btoa(pack[0].price) +
       "." +
-      btoa(pack.id);
-    let message = `http://${process.env.WEB_URL}:${process.env.WEB_PORT}/verification?user=${varEncode}?package=${encodePack}`;
+      btoa(pack[0].id);
+    let message = `http://${process.env.WEB_URL}:${process.env.WEB_PORT}/verification?user=${varEncode}&package=${encodePack}`;
 
     let emailTem = new EmailTemplate(member.email_address, message);
     let res_sent = await emailTem.sendEmailWithNodeMailer();
-    console.log("Var encode: %s", atob(varEncode));
-    console.log("Package encode: %s", atob(encodePack));
 
     return {
       message: res_sent,
@@ -136,7 +136,51 @@ const get_purchased_package = async (id: number) => {
   }
 };
 
+const verify_change_pass = async (
+  email: string,
+  username: string,
+  password: string,
+  reference_no: string,
+  purchased_id: number,
+  package_id: number,
+) => {
+  try {
+    let query = "CALL update_member_status(?,?,?,?,?,?)";
+    let hash = await bcryptjs.hash(password, 10);
+    let result: any = await executeQuery(query, [
+      email,
+      username,
+      hash,
+      reference_no,
+      purchased_id,
+      package_id,
+    ]);
+
+    return result[0][0];
+  } catch (error: any) {
+    console.error("Verify and change pass error on service: ", error);
+    return error.message;
+  }
+};
+
+const checkIfVerified = async (email: string) => {
+  try {
+    let query = "CALL check_verified_email(?)";
+    let result: any = await executeQuery(query, [email]);
+
+    return result[0][0];
+  } catch (error: any) {
+    console.error(
+      "Checking email address if verified error on service: ",
+      error.message,
+    );
+    return error.message;
+  }
+};
+
 export {
+  checkIfVerified,
+  verify_change_pass,
   add_member,
   get_members,
   update_member,

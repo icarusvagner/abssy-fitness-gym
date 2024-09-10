@@ -222,7 +222,6 @@ END //
 
 DELIMITER ;
 
--- Update member status
 DELIMITER //
 
 CREATE OR REPLACE PROCEDURE update_member_status (
@@ -230,12 +229,87 @@ CREATE OR REPLACE PROCEDURE update_member_status (
     IN p_username VARCHAR(255),
     IN p_password VARCHAR(255),
     IN p_reference_no VARCHAR(255),
-    IN p_purchased_id VARCHAR(255)
+    IN p_purchased_id VARCHAR(255),
+    IN p_package_id INT
 )
-
 BEGIN
     DECLARE m_id INT;
     DECLARE d_id INT;
+    DECLARE l_id INT;
+    DECLARE sql_state CHAR(5);
+    DECLARE error_message TEXT;
+    DECLARE error_code INT;
+
+    -- Exit handler for exceptions
+    DECLARE EXIT HANDLER FOR SQLEXCEPTION
+    BEGIN
+        GET DIAGNOSTICS CONDITION 1
+            sql_state = RETURNED_SQLSTATE,
+            error_message = MESSAGE_TEXT,
+            error_code = MYSQL_ERRNO;
+
+        -- Rollback transaction in case of an error
+        ROLLBACK;
+        SELECT 'Error occurred during update_member_status.' AS error_message,
+                error_code AS err_status,
+                error_message AS detailed_message;
+    END;
+
+    -- Start the transaction
+    START TRANSACTION;
+
+    -- Get the id from details_table
+    SELECT id INTO d_id FROM details_table WHERE email_address = p_email;
+
+    -- Check if a valid id was found
+    IF d_id IS NOT NULL THEN
+        -- Get the member id from member_table
+        SELECT id INTO m_id FROM member_table WHERE detail_id = d_id;
+
+        IF m_id IS NOT NULL THEN
+            INSERT INTO login_details (username, password) VALUES (p_username, p_password);
+            SET l_id = LAST_INSERT_ID();
+
+            -- Update the member status to 'active'
+            UPDATE member_table
+            SET member_status = 'active',
+            login_id = l_id
+            WHERE id = m_id;
+
+            -- Update the email verified timestamp
+            UPDATE details_table
+            SET email_verified_at = CURRENT_TIMESTAMP()
+            WHERE id = d_id;
+
+            -- Call add_purchased_package procedure
+            CALL add_purchased_package(p_package_id, m_id, p_reference_no, p_purchased_id);
+
+            SELECT 'Success' AS message, 201 AS status;
+
+            -- Commit the transaction
+            COMMIT;
+        ELSE
+            -- If no member found, rollback
+            ROLLBACK;
+            SELECT 'No member found for the given detail_id.' AS error_message;
+        END IF;
+    ELSE
+        -- If no details found, rollback
+        ROLLBACK;
+        SELECT 'No details found for the given email address.' AS error_message;
+    END IF;
+END //
+
+DELIMITER ;
+
+DELIMITER //
+
+CREATE OR REPLACE PROCEDURE check_verified_email (
+    IN p_email VARCHAR(255)
+)
+
+BEGIN
+
     DECLARE EXIT HANDLER FOR SQLEXCEPTION
     BEGIN
         DECLARE sql_state CHAR(5);
@@ -253,14 +327,50 @@ BEGIN
 
     START TRANSACTION;
 
-    SELECT id INTO d_id FROM details_table WHERE email = p_email;
-    SELECT id INTO m_id FROM member_table WHERE detail_id = d_id;
+    SELECT email_verified_at FROM details_table WHERE email_address= p_email;
 
-    UPDATE FROM member_table mt SET mt.member_status = 'active' WHERE id = m_id;
-    UPDATE FROM details_table SET email_verified_at = CURRENT_TIMESTAMP() WHERE id = d_id;
-
-    CALL add_purchased_package(p_package_id,v_member_id,p_reference_no,p_purchased_id);
     COMMIT;
+END //
+
+DELIMITER ;
+
+DELIMITER //
+
+CREATE OR REPLACE PROCEDURE login_member(
+    IN p_username VARCHAR(255)
+)
+
+BEGIN
+    DECLARE m_id INT;
+    DECLARE user_count INT;
+
+    -- Error handling
+    DECLARE EXIT HANDLER FOR SQLEXCEPTION
+    BEGIN
+        DECLARE sql_state CHAR(5);
+        DECLARE error_message TEXT;
+        DECLARE error_code INT;
+
+        GET DIAGNOSTICS CONDITION 1
+            sql_state = RETURNED_SQLSTATE,
+            error_message = MESSAGE_TEXT,
+            error_code = MYSQL_ERRNO;
+
+        ROLLBACK;
+        SELECT 'Error occurred during login_member procedure.' AS error_message, error_code AS err_status, error_message AS detailed_message;
+    END;
+
+    -- Check if the username exists
+    SELECT COUNT(id) INTO user_count FROM login_details WHERE username = p_username;
+
+    IF user_count > 0 THEN
+        -- Username found, return the user details
+        SELECT * FROM login_details WHERE username = p_username LIMIT 1;
+    ELSE
+        -- Username not found, return error message
+        SELECT 'Username not registered' AS message, 404 AS status;
+    END IF;
+
 END //
 
 DELIMITER ;

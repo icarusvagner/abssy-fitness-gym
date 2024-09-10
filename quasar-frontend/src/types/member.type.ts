@@ -18,8 +18,6 @@ export interface MemberForCreate {
 	ec_phone_number: string;
 	package_id: number;
 	health_condition: string;
-  reference_no: string;
-  purchased_id: string;
 }
 
 export interface MemberForSelect {

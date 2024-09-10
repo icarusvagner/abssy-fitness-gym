@@ -1,7 +1,7 @@
 <template>
-  <q-page padding class="q-pb-xl">
+  <q-page padding class="q-pb-xl fit">
     <!-- content -->
-    <div class="column q-gutter-y-sm">
+    <div v-if="!isClickedReg" class="column q-gutter-y-sm">
       <h1 class="text-center text-h6">ABBSY Fitness Gym Membership form</h1>
       <q-form @submit="onSubmit" @reset="onReset" class="q-gutter-md">
         <span class="text-h6">Member Details</span>
@@ -82,12 +82,17 @@
             use-input
             use-chips
             multiple
+            bottom-slots
             hide-dropdown-icon
             input-debounce="0"
             new-value-mode="add-unique"
             class="col-12 col-md"
             :rules="[(val) => !!val || 'Enter health conditions']"
-          />
+          >
+            <template v-slot:hint>
+              Just type 'none' if no health condition
+            </template>
+          </q-select>
         </div>
 
         <q-separator class="q-my-lg" />
@@ -219,6 +224,14 @@
         </div>
       </q-form>
     </div>
+    <div v-else class="fit column items-center justify-center">
+      <p class="text-h6 text-md-h4">
+        You have successfully register in ABBSY Fitness GYM
+      </p>
+      <p class="text-positive text-md-h5">
+        Please check your email for verification.
+      </p>
+    </div>
   </q-page>
 
   <q-dialog
@@ -246,28 +259,6 @@
       </q-card-actions>
     </q-card>
   </q-dialog>
-
-  <q-dialog v-model="alertMsg" persistent>
-    <q-card>
-      <q-card-section>
-        <div class="text-h6">Notice</div>
-      </q-card-section>
-
-      <q-card-section class="q-pt-none">
-        After proceeding to payment please copy the Refrence Number above.
-      </q-card-section>
-
-      <q-card-actions align="right">
-        <q-btn
-          flat
-          label="OK"
-          color="primary"
-          v-close-popup
-          @click="changeRoute"
-        />
-      </q-card-actions>
-    </q-card>
-  </q-dialog>
 </template>
 
 <script setup lang="ts">
@@ -276,7 +267,6 @@ import { Notify, debounce } from 'quasar';
 import { useRouter } from 'vue-router';
 
 import MemberService from 'src/services/member.service';
-import PaymongoService from 'src/services/paymongo.service';
 import { MemberForCreate } from 'src/types/member.type';
 import {
   validatePhoneNumber,
@@ -284,9 +274,8 @@ import {
 } from 'src/utils/validator.util';
 
 const memberService = new MemberService();
-const paymongoService = new PaymongoService();
 const paymentUrl = ref('');
-const alertMsg = ref(false);
+const isClickedReg = ref(false);
 const options = ref(['male', 'female', 'other']);
 const packages = ref<{
   package_name: string;
@@ -319,8 +308,6 @@ const form = ref<MemberForCreate>({
   ec_phone_number: '',
   package_id: 0,
   health_condition: '',
-  reference_no: '',
-  purchased_id: '',
 });
 
 const onSubmit = async () => {
@@ -343,14 +330,11 @@ const sendMemberForm = debounce(() => {
   form.value.health_condition = health_cond.value.join(', ');
   form.value.package_id = router.currentRoute.value.query.pid;
 
-  let package_price = parseInt(
-    packages.value.package_price.split('.').join('')
-  );
   memberService.create(form.value).then((res) => {
     if (res.result.status !== 201) {
       return;
     }
-    alertMsg.value = true;
+    isClickedReg.value = true;
     isLoading.value = false;
   });
   // paymongoService.create_link({ package_name: packages.value.package_name, package_price }).then(res => {

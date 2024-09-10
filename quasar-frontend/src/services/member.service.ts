@@ -12,8 +12,23 @@ class MemberService<T, K> {
     return response.data;
   }
 
+  async verify_change(data: K): Promise<T[]> {
+    const response = await api.post(
+      `${this.base_end_point}/verify-change`,
+      data
+    );
+    return response.data;
+  }
+
   async get(id: number): Promise<T> {
     const response = await api.get(`${this.base_end_point}/get/${id}`);
+    return response.data;
+  }
+
+  async check_verified_email(email: string): Promise<T> {
+    const response = await api.get(
+      `${this.base_end_point}/check-verified-email/${email}`
+    );
     return response.data;
   }
 

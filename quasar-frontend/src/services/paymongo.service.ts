@@ -7,12 +7,13 @@ class PaymongoService<T, K> {
   }
 
   async create_link(data: K): Promise<T[]> {
+    console.log(data);
     const options = {
       method: 'POST',
       headers: {
-        'Accept': 'application/json',
+        Accept: 'application/json',
         'Content-Type': 'application/json',
-        'Authorization': this.authHeader,
+        Authorization: this.authHeader,
       },
       body: JSON.stringify({
         data: {
@@ -35,11 +36,14 @@ class PaymongoService<T, K> {
       method: 'GET',
       headers: {
         accept: 'application/json',
-        authorization: this.authHeader
-      }
+        authorization: this.authHeader,
+      },
     };
 
-    const response = await fetch(`${this.base_end_point}/payments?limit=${limit}`, options)
+    const response = await fetch(
+      `${this.base_end_point}/payments?limit=${limit}`,
+      options
+    );
     const responseData = await response.json();
     return responseData.data;
   }

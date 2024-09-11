@@ -18,5 +18,7 @@ router.get(
 );
 router.post("/update", verifyToken, memberController.updateMember);
 router.post("/delete", verifyToken, memberController.deleteMember);
+router.post("/login", memberController.login_member);
+router.post("/after-login", verifyToken, memberController.get_member_details);
 
 export default router;

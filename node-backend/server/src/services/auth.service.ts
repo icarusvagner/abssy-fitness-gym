@@ -1,13 +1,22 @@
 import bcryptjs from "bcryptjs";
 import signedJWT from "../utils/signedJWT.util";
-import { UserForLogin, StaffForCreate, AdminForCreate, Gender, Role, AdminRole, RoleUpdate, PasswordForUpdate } from "../models/auth.model";
+import {
+  UserForLogin,
+  StaffForCreate,
+  AdminForCreate,
+  Gender,
+  Role,
+  AdminRole,
+  RoleUpdate,
+  PasswordForUpdate,
+} from "../models/auth.model";
 import { Connect, Query } from "../utils/mysql.util";
 import { IMySQLResult, IUser } from "../models/result.model";
 import checkValidEnumValue from "../utils/checkEnum.util";
 import executeQuery from "../utils/executeQuery.util";
 
 const register_admin = async (
-  admin: AdminForCreate
+  admin: AdminForCreate,
 ): Promise<AdminForCreate | any> => {
   try {
     const hash = await bcryptjs.hash(admin.password, 10);
@@ -46,7 +55,7 @@ const register_admin = async (
 };
 
 const register_staff = async (
-  staff: StaffForCreate
+  staff: StaffForCreate,
 ): Promise<StaffForCreate | any> => {
   try {
     const hash = await bcryptjs.hash(staff.password, 10);
@@ -89,19 +98,19 @@ const register_staff = async (
 };
 
 const login_user = async (user: UserForLogin): Promise<string | any> => {
-  let query = "CALL login_user(?)";
-
   try {
+    let query = "CALL login_user(?)";
+
     const connection = await Connect();
     const users: any = await Query<IUser[]>(connection, query, [user.username]);
     connection.end();
 
     if (users[0][0].status) {
-      console.log(users[0])
+      console.log(users[0]);
       return {
         message: users[0][0].message,
         status: users[0][0].status,
-      }
+      };
     }
 
     const result = await new Promise((resolve, reject) => {
@@ -182,11 +191,15 @@ const change_user_password = async (user: PasswordForUpdate) => {
   try {
     const query = "CALL change_password(?,?,?)";
     const hash = await bcryptjs.hash(user.new_password, 10);
-    const result: any = await executeQuery(query, [user.id, checkValidEnumValue(RoleUpdate, user.role), hash]);
+    const result: any = await executeQuery(query, [
+      user.id,
+      checkValidEnumValue(RoleUpdate, user.role),
+      hash,
+    ]);
 
     return result[0][0];
   } catch (error: any) {
-    console.error('Changing password on service error: ', error);
+    console.error("Changing password on service error: ", error);
     return {
       message: error.message,
       error,

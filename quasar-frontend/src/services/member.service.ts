@@ -37,6 +37,18 @@ class MemberService<T, K> {
 
     return response.data;
   }
+
+  async login_member(data: K): Promise<T> {
+    const response = await api.post(`${this.base_end_point}/login`, data);
+
+    return response.data;
+  }
+
+  async after_login(data: K): Promise<T> {
+    const response = await api.post(`${this.base_end_point}/after-login`, data);
+
+    return response.data;
+  }
 }
 
 export default MemberService;

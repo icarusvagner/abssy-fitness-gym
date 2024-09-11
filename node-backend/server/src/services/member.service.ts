@@ -5,6 +5,7 @@ import { MemberForCreate, MemberForUpdate } from "../models/member.model";
 import { Gender } from "../models/auth.model";
 import { read_package } from "./package.service";
 import EmailTemplate from "../utils/emailTemplate.util";
+import signedJWT from "../utils/signedJWT.util";
 
 const add_member = async (member: MemberForCreate) => {
   try {
@@ -178,7 +179,88 @@ const checkIfVerified = async (email: string) => {
   }
 };
 
+const login_member = async (
+  username: string,
+  password: string,
+): Promise<string | any> => {
+  try {
+    let query = "CALL login_member(?)";
+    let member: any = await executeQuery(query, [username]);
+
+    if (member[0][0].status == 404) {
+      return member[0][0];
+    }
+
+    let mem_iden = {
+      username: member[0][0].username,
+      password: member[0][0].password,
+      user_id: member[0][0].id,
+      role: "member",
+    };
+
+    const result = await new Promise((resolve, reject) => {
+      bcryptjs.compare(password, mem_iden.password, (error, result) => {
+        if (error) {
+          console.error(error);
+          // Reject the Promise with an error object
+          reject({
+            message: error.message,
+            error,
+            status: 500,
+          });
+        } else if (result) {
+          signedJWT(
+            { ...member[0], user_id: member[0][0].id, role: "member" },
+            (_error, accessToken, refreshToken) => {
+              if (_error) {
+                // Reject the Promise with an error object
+                reject({
+                  message: "Unable to SIGN Token",
+                  error: _error,
+                  status: 401,
+                });
+              } else if (accessToken && refreshToken) {
+                // Resolve the Promise with the desired value
+                resolve({
+                  accessToken,
+                  refreshToken,
+                  status: 200,
+                });
+              }
+            },
+          );
+        } else {
+          // Reject the Promise with an error object
+          reject({
+            message: "Login failed wrong password",
+            status: 500,
+          });
+        }
+      });
+    });
+
+    return result; // Resolve the Promise with the result
+  } catch (error: any) {
+    console.error("Logging in member error on service: ", error.message);
+    return error.message;
+  }
+};
+
+const get_member_details = async (username: string) => {
+  try {
+    let query = "CALL after_login(?)";
+    let result: any = await executeQuery(query, [username]);
+
+    return result[0];
+  } catch (error: any) {
+    console.error("Getting member details error on service: ", error.message);
+    return error.message;
+  }
+};
+
 export {
+  get_member_details,
+  login_member,
   checkIfVerified,
   verify_change_pass,
   add_member,

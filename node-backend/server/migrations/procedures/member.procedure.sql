@@ -374,3 +374,63 @@ BEGIN
 END //
 
 DELIMITER ;
+
+DELIMITER //
+
+CREATE OR REPLACE PROCEDURE after_login(
+    IN p_username VARCHAR(255)
+)
+
+BEGIN
+    DECLARE l_id INT;
+    DECLARE m_id INT;
+    DECLARE user_count INT;
+
+    -- Error handling
+    DECLARE EXIT HANDLER FOR SQLEXCEPTION
+    BEGIN
+        DECLARE sql_state CHAR(5);
+        DECLARE error_message TEXT;
+        DECLARE error_code INT;
+
+        GET DIAGNOSTICS CONDITION 1
+            sql_state = RETURNED_SQLSTATE,
+            error_message = MESSAGE_TEXT,
+            error_code = MYSQL_ERRNO;
+
+        -- Since there are no transactional changes, no rollback is necessary
+        SELECT 'Error occurred during after_login procedure.' AS error_message, error_code AS err_status, error_message AS detailed_message;
+    END;
+
+    -- Check if the user exists
+    SELECT COUNT(id) INTO user_count FROM login_details WHERE username = p_username;
+
+    IF user_count > 0 THEN
+        -- Get the login id
+        SELECT id INTO l_id FROM login_details WHERE username = p_username;
+
+        -- Check if login id was found
+        IF l_id IS NOT NULL THEN
+            -- Get the member id using login id
+            SELECT id INTO m_id FROM member_details WHERE login_id = l_id;
+
+            -- Check if member id was found
+            IF m_id IS NOT NULL THEN
+                -- Call another procedure to get member details
+                CALL get_member(m_id);
+            ELSE
+                -- Member not found
+                SELECT 'Member not found for the given login id' AS message, 404 AS status;
+            END IF;
+        ELSE
+            -- Login id not found
+            SELECT 'Login ID not found' AS message, 404 AS status;
+        END IF;
+    ELSE
+        -- Username not found, return error message
+        SELECT 'Username not registered' AS message, 404 AS status;
+    END IF;
+
+END //
+
+DELIMITER ;

@@ -122,12 +122,6 @@ const notElectronRoute = [
     component: () => import('layouts/UsersLayout.vue'),
     children: [
       {
-        path: '',
-        name: 'dashboard',
-        meta: { auth: true },
-        component: () => import('pages/CustomerPage.vue'),
-      },
-      {
         path: '/info',
         name: 'landing_page',
         component: () => import('pages/LandingPage.vue'),
@@ -156,6 +150,20 @@ const notElectronRoute = [
         path: '/verification',
         name: 'verification',
         component: () => import('pages/VerificationPage.vue'),
+      },
+    ],
+  },
+  {
+    path: '/home',
+    meta: { auth: true },
+    name: 'home',
+    component: () => import('layouts/CustomerLayout.vue'),
+    children: [
+      {
+        path: '',
+        name: 'dashboard',
+        meta: { auth: true },
+        component: () => import('pages/CustomerPage.vue'),
       },
     ],
   },

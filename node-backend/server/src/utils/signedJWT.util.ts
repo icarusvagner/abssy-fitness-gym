@@ -5,9 +5,16 @@ import executeQuery from "./executeQuery.util";
 
 const signedJWT = (
   user: any,
-  callback: ( error: Error | null, accessToken: string | null, refreshToken: string | null,) => void,
+  callback: (
+    error: Error | null,
+    accessToken: string | null,
+    refreshToken: string | null,
+  ) => void,
 ): void => {
-  console.info(`Attempting to sign tokens for ${user[0].username || user[0].email_address}`);
+  console.info("User %s", user[0]);
+  console.info(
+    `Attempting to sign tokens for ${user[0].username || user[0].email_address}`,
+  );
 
   try {
     // Create the access token

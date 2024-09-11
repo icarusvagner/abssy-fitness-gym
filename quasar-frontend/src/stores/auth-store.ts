@@ -3,101 +3,108 @@ import { defineStore } from 'pinia';
 
 const useAuthStore = defineStore('auth', {
   state: () => ({
-    auth                : false,
-    access_token        : '',
-    refresh_token       : '',
-    role                : '',
-    user_type           : '',
-    id                  : null,
+    auth: false,
+    access_token: '',
+    refresh_token: '',
+    role: '' || null,
+    user_type: '' || null,
+    id: null,
   }),
 
   getters: {
-    isAuthenticated (state) {
+    isAuthenticated(state) {
       return state.auth;
     },
-    getId (state) {
+    getId(state) {
       return state.id;
     },
-    getRole (state) {
+    getRole(state) {
       return state.role;
     },
-    getUserType (state) {
+    getUserType(state) {
       return state.user_type;
     },
-    getAccessToken (state) {
+    getAccessToken(state) {
       return state.access_token;
     },
-    getRefreshToken (state) {
+    getRefreshToken(state) {
       return state.refresh_token;
     },
   },
 
   actions: {
-    setAccessToken (accessToken: string) {
+    setAccessToken(accessToken: string) {
       this.access_token = accessToken;
     },
-    setAuthenticated (data: { refreshToken: string; accessToken: string; role: string; user_type: string; id: number; }) {
+    setAuthenticated(data: {
+      refreshToken: string;
+      accessToken: string;
+      role: string | null;
+      user_type: string | null;
+      id: number | null;
+    }) {
       this.auth = true;
       this.role = data.role;
-      this.user_type = data.user_type
+      this.user_type = data.user_type;
       this.access_token = data.accessToken;
       this.refresh_token = data.refreshToken;
       this.id = data.id;
     },
-    async ChangePassword (data: { new_pass: string; id: number; }) {
+    async ChangePassword(data: { new_pass: string; id: number }) {
       try {
-
       } catch (error: any) {
         throw error.message;
       }
     },
-    async LogoutUser () {
+    async LogoutUser() {
       try {
-        const response = await api.post('/logout', { refresh_token: this.getRefreshToken });
+        const response = await api.post('/logout', {
+          refresh_token: this.getRefreshToken,
+        });
         if (response.status === 200) {
-          this.auth                = false;
-          this.access_token        = '';
-          this.refresh_token       = '';
-          this.role                = '';
-          this.user_type           = '';
-          this.id                  = null;
+          this.auth = false;
+          this.access_token = '';
+          this.refresh_token = '';
+          this.role = '';
+          this.user_type = '';
+          this.id = null;
 
           return {
             message: 'Logout Successfully',
-            status: 201
-          }
+            status: 201,
+          };
         }
       } catch (error: any) {
         throw error.message;
       }
     },
-    async LoginUser (data: { username: string; password: string; }) {
+    async LoginUser(data: { username: string; password: string }) {
       try {
         if (data.username !== '' && data.password !== '') {
           const response = await api.post('/login', data);
           if (response.data.result.status === 404) {
-            return response.data.result
+            return response.data.result;
           }
 
           this.setAuthenticated(response.data.result);
           return {
             message: 'Success',
-            status: 200
-          }
+            status: 200,
+          };
         } else {
           return {
             message: 'Empty fields',
-            status: 422
-          }
+            status: 422,
+          };
         }
       } catch (error: any) {
         return error.response.data;
       }
-    }
+    },
   },
   persist: {
     storage: localStorage,
-  }
+  },
 });
 
 export default useAuthStore;

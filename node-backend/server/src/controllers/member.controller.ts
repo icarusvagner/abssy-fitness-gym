@@ -96,7 +96,34 @@ const check_verified_email = async (req: Request, res: Response) => {
   }
 };
 
+const login_member = async (req: Request, res: Response) => {
+  try {
+    let { username, password } = req.body;
+    let result = await memberService.login_member(username, password);
+
+    return res.status(200).json({ result });
+  } catch (error: any) {
+    console.error("Logging in member error on controller: ", error.message);
+    return res.status(500).json({ error: error.message });
+  }
+};
+
+const get_member_details = (req: Request, res: Response) => {
+  try {
+    console.log(req);
+    return { test: "success" };
+  } catch (error: any) {
+    console.error(
+      "Getting member details error on controller: ",
+      error.message,
+    );
+    return res.status(500).json({ error: error.message });
+  }
+};
+
 export {
+  get_member_details,
+  login_member,
   check_verified_email,
   verify_change_pass,
   addMember,

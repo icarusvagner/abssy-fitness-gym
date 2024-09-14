@@ -4,7 +4,7 @@ export enum AnnouncementType {
 }
 
 export interface AnnouncementForSelect {
-  announcement_id
+  announcement_id: number;
   login_id: number;
   admin_id: number;
   fullname: string;

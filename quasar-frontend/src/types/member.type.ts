@@ -46,3 +46,18 @@ export interface MemberForSelect {
 export interface MemberForSelectWrapper {
   members: [] as MemberForSelect;
 }
+
+export interface OneMemberPackage {
+  address: string;
+  benefits: string;
+  duration: number;
+  first_name: string;
+  last_name: string;
+  member_id: number;
+  middle_name: string;
+  package_id: number;
+  package_name: string;
+  package_type: string;
+  phone_number: string;
+  price: string;
+}

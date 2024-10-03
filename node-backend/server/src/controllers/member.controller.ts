@@ -121,7 +121,22 @@ const get_member_details = (req: Request, res: Response) => {
   }
 };
 
+const get_one_member_details = async (req: Request, res: Response) => {
+  try {
+    const { user } = req.body;
+    let result = await memberService.get_one_member_details(user["username"]);
+    return res.status(200).json({ result });
+  } catch (error: any) {
+    console.error(
+      "Getting one member details error on controller: ",
+      error.message,
+    );
+    return res.status(500).json({ error: error.message });
+  }
+};
+
 export {
+  get_one_member_details,
   get_member_details,
   login_member,
   check_verified_email,

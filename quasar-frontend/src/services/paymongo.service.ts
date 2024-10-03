@@ -19,7 +19,7 @@ class PaymongoService<T, K> {
         data: {
           attributes: {
             amount: data.package_price, // use the price from the input data
-            description: `Payment for ${data.package_name} package`, // use the package name from the input data
+            description: `Payment details: - \n Package ID: ${data.package_id} - \n Package name: ${data.package_name}`, // use the package name from the input data
             remarks: 'normal',
           },
         },

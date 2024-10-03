@@ -258,7 +258,20 @@ const get_member_details = async (username: string) => {
   }
 };
 
+const get_one_member_details = async (user: string) => {
+  try {
+    let query = "CALL get_one_member_details(?)";
+    let result: any = await executeQuery(query, [user]);
+    return result[0][0];
+    return;
+  } catch (error: any) {
+    console.error("Getting one member error on service: ", error.message);
+    return error.message;
+  }
+};
+
 export {
+  get_one_member_details,
   get_member_details,
   login_member,
   checkIfVerified,

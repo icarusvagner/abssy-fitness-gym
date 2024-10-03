@@ -20,11 +20,12 @@ CREATE OR REPLACE PROCEDURE add_member(
     IN p_package_id INT,
     IN p_health_condition VARCHAR(255)
 )
-BEGIN
+procedure_add_member:BEGIN
     DECLARE v_detail_id INT;
     DECLARE v_address_id INT;
     DECLARE v_ec_id INT;
     DECLARE v_member_id INT;
+    DECLARE v_email_count INT;  -- Variable to store email check result
 
     DECLARE EXIT HANDLER FOR SQLEXCEPTION
     BEGIN
@@ -38,10 +39,22 @@ BEGIN
             error_code = MYSQL_ERRNO;
 
         ROLLBACK;
-        SELECT 'Error occurred during member create.' AS error_message, error_code AS err_status, error_message AS detailed_message;
+        SELECT 'Error occurred during member creation.' AS error_message, error_code AS err_status, error_message AS detailed_message;
     END;
 
     START TRANSACTION;
+
+    -- Check if email already exists
+    SELECT COUNT(id) INTO v_email_count
+    FROM details_table
+    WHERE email_address = p_email_address;
+
+    -- If email exists, return a message and terminate the procedure
+    IF v_email_count > 0 THEN
+        SELECT 'This email is already registered' AS message, 403 AS status;
+        ROLLBACK;
+        LEAVE procedure_add_member;
+    END IF;
 
     -- Add details
     INSERT INTO details_table (first_name, middle_name, last_name, phone_number, email_address, date_of_birth, gender)
@@ -63,12 +76,14 @@ BEGIN
     VALUES (v_detail_id, v_address_id, v_ec_id, p_package_id, p_health_condition);
     SET v_member_id = LAST_INSERT_ID();
 
+    -- Return the inserted member ID
     SELECT v_member_id AS member_id;
 
-   	COMMIT;
+    COMMIT;
 END //
 
 DELIMITER ;
+
 
 -- Update member
 DELIMITER //
@@ -429,6 +444,31 @@ BEGIN
     ELSE
         -- Username not found, return error message
         SELECT 'Username not registered' AS message, 404 AS status;
+    END IF;
+
+END //
+
+DELIMITER ;
+
+-- get one member details using username from login details
+DELIMITER //
+
+CREATE OR REPLACE PROCEDURE get_one_member_details(
+    IN p_username VARCHAR(255)
+)
+
+BEGIN
+
+    DECLARE v_login_id INT;
+    DECLARE v_member_id INT;
+
+    SELECT id INTO v_login_id FROM login_details WHERE username = p_username LIMIT 1;
+    SELECT id INTO v_member_id FROM member_table WHERE login_id = v_login_id LIMIT 1;
+
+    IF v_member_id THEN
+        SELECT * FROM member_package_view WHERE member_id = v_member_id;
+    ELSE
+        SELECT 'Cannot find member with the id' AS message, 404 AS status;
     END IF;
 
 END //

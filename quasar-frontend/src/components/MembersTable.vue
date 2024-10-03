@@ -195,7 +195,7 @@
           </div>
         </div>
         <div class="q-ml-md">
-          <q-btn color="primary" label="Accept membership" />
+          <q-btn color="primary" label="Close" v-close-popup />
         </div>
       </q-card-section>
     </q-card>

@@ -5,7 +5,6 @@ import config from "./config.util";
 // Middleware for verifying JWT token
 const verifyToken = (req: Request, res: Response, next: NextFunction) => {
   const authHeader = req.headers.authorization;
-  
 
   if (!authHeader) {
     console.warn("Unauthorized: No Token Provided");
@@ -26,7 +25,7 @@ const verifyToken = (req: Request, res: Response, next: NextFunction) => {
         console.error(err.message);
         return res.status(401).json({ message: "Unauthorized: Token expired" });
       }
-      req.body.user = decoded.user; // Attach user data to the request for later use
+      req.body.user = decoded; // Attach user data to the request for later use
       next();
     },
   );

@@ -1,7 +1,7 @@
 -- Create trainer
 DELIMITER //
 
-CREATE PROCEDURE create_trainer(
+CREATE OR REPLACE PROCEDURE create_trainer(
     IN p_first_name VARCHAR(255),
     IN p_middle_name VARCHAR(255),
     IN p_last_name VARCHAR(255),
@@ -33,12 +33,12 @@ BEGIN
         DECLARE sql_state CHAR(5);
         DECLARE error_message TEXT;
         DECLARE error_code INT;
-        
+
         GET DIAGNOSTICS CONDITION 1
             sql_state = RETURNED_SQLSTATE,
             error_message = MESSAGE_TEXT,
             error_code = MYSQL_ERRNO;
-        
+
         ROLLBACK;
         SELECT 'Error occurred during trainer create.' AS error_message, error_code AS err_status, error_message AS detailed_message;
     END;
@@ -74,18 +74,18 @@ DELIMITER ;
 -- Read trainers
 DELIMITER //
 
-CREATE PROCEDURE read_trainer(
+CREATE OR REPLACE PROCEDURE read_trainer(
     IN p_id INT
 )
 BEGIN
     START TRANSACTION;
-    
+
     IF p_id = 0 THEN
-      SELECT * FROM trainer_details_view ORDER BY ctime DESC;
+      SELECT * FROM trainers_details_view ORDER BY ctime DESC;
     ELSE
-      SELECT * FROM trainer_details_view WHERE trainer_id = p_id LIMIT 1;
+      SELECT * FROM trainers_details_view WHERE trainer_id = p_id LIMIT 1;
     END IF;
-    
+
     COMMIT;
 END //
 
@@ -94,7 +94,7 @@ DELIMITER ;
 -- Update trainer
 DELIMITER //
 
-CREATE PROCEDURE update_trainer(
+CREATE OR REPLACE PROCEDURE update_trainer(
     IN p_trainer_id INT,
     IN p_first_name VARCHAR(255),
     IN p_middle_name VARCHAR(255),
@@ -128,12 +128,12 @@ BEGIN
         DECLARE sql_state CHAR(5);
         DECLARE error_message TEXT;
         DECLARE error_code INT;
-        
+
         GET DIAGNOSTICS CONDITION 1
             sql_state = RETURNED_SQLSTATE,
             error_message = MESSAGE_TEXT,
             error_code = MYSQL_ERRNO;
-        
+
         ROLLBACK;
         SELECT 'Error occurred during trainer update.' AS error_message, error_code AS err_status, error_message AS detailed_message;
     END;
@@ -160,14 +160,14 @@ BEGIN
 
     -- Update emergency_contact_table
     UPDATE emergency_contact_table
-    SET first_name = p_ec_first_name, last_name = p_ec_last_name, relationship = p_ec_relationship, 
+    SET first_name = p_ec_first_name, last_name = p_ec_last_name, relationship = p_ec_relationship,
         phone_number = p_ec_phone_number
     WHERE id = v_ec_id;
 
     -- Update trainers_table
     UPDATE trainers_table
-    SET specialization = p_specialization, certifications = p_certifications, 
-        experience_years = p_experience_years, hire_date = p_hire_date, 
+    SET specialization = p_specialization, certifications = p_certifications,
+        experience_years = p_experience_years, hire_date = p_hire_date,
         availability = p_availability, trainer_status = p_trainer_status
     WHERE id = p_trainer_id;
 
@@ -180,14 +180,14 @@ DELIMITER ;
 -- Delete trainer
 DELIMITER //
 
-CREATE PROCEDURE delete_trainer(
+CREATE OR REPLACE PROCEDURE delete_trainer(
     IN p_id INT
 )
 BEGIN
     START TRANSACTION;
-    
+
     UPDATE trainers_table SET trainer_status = 'removed' WHERE id = p_id;
-    
+
     COMMIT;
 END //
 

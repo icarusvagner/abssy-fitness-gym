@@ -128,6 +128,7 @@ const submitChangePass = debounce(async () => {
     .create_link({
       package_name: decodePack.value[0],
       package_price: Math.round(parseFloat(decodePack.value[1]) * 100),
+      package_id: decodePack.value[2],
     })
     .then((res) => {
       paymentUrl.value = res.data.attributes.checkout_url;

@@ -1,5 +1,5 @@
 CREATE OR REPLACE VIEW trainers_details_view AS
-SELECT 
+SELECT
     t.id AS trainer_id,
     d.first_name,
     d.middle_name,
@@ -24,7 +24,7 @@ SELECT
     t.trainer_status,
     DATE_FORMAT(t.ctime, '%Y-%m-%d') AS ctime,
     DATE_FORMAT(t.mtime, '%Y-%m-%d') AS mtime
-FROM 
+FROM
     trainers_table t
 JOIN
     details_table d ON t.detail_id = d.id

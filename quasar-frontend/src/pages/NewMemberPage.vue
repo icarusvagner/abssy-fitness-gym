@@ -278,9 +278,11 @@ const paymentUrl = ref('');
 const isClickedReg = ref(false);
 const options = ref(['male', 'female', 'other']);
 const packages = ref<{
+  package_id: number;
   package_name: string;
   package_price: number;
 }>({
+  package_id: 0,
   package_name: '',
   package_price: 0,
 });
@@ -328,7 +330,7 @@ const onSubmit = async () => {
 
 const sendMemberForm = debounce(() => {
   form.value.health_condition = health_cond.value.join(', ');
-  form.value.package_id = router.currentRoute.value.query.pid;
+  form.value.package_id = packages.value.package_id;
 
   memberService.create(form.value).then((res) => {
     if (res.result.status !== 201) {
@@ -337,34 +339,15 @@ const sendMemberForm = debounce(() => {
     isClickedReg.value = true;
     isLoading.value = false;
   });
-  // paymongoService.create_link({ package_name: packages.value.package_name, package_price }).then(res => {
-  //   paymentUrl.value = res.data.attributes.checkout_url;
-  //   form.value.reference_no = res.data.attributes.reference_number;
-  //   form.value.purchased_id = res.data.id;
-
-  //   memberService.create(form.value).then(res => {
-  //     if (res.result.status !== 201) {
-  //       return
-  //     }
-  //     alertMsg.value = true;
-  //     isLoading.value = false;
-  //   })
-  // }).catch(error => {
-  //   isLoading.value = false;
-  //   throw error;
-  // });
 }, 1200);
-
-const changeRoute = () => {
-  window.location.href = paymentUrl.value;
-};
 
 const onReset = () => {
   accept.value = false;
 };
 
 onMounted(() => {
-  packages.value.package_name = router.currentRoute.value.query.package;
-  packages.value.package_price = router.currentRoute.value.query.p;
+  packages.value.package_id = Number(router.currentRoute.value.query.pid);
+  packages.value.package_name = String(router.currentRoute.value.query.package);
+  packages.value.package_price = Number(router.currentRoute.value.query.p);
 });
 </script>

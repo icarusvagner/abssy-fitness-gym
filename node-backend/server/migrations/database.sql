@@ -25,24 +25,24 @@ CREATE OR REPLACE TABLE `supplement_table` (
 
 CREATE OR REPLACE TABLE `inventory_log_table` (
 	`id` INT NOT NULL AUTO_INCREMENT UNIQUE,
-  `inventory_id` INT NOT NULL,
-  `count_added` INT NOT NULL,
-  `classification_type` ENUM('supplement','equipment') NOT NULL,
-  `log_state` ENUM('added','deducted'),
+    `inventory_id` INT NOT NULL,
+    `count_added` INT NOT NULL,
+    `classification_type` ENUM('supplement','equipment') NOT NULL,
+    `log_state` ENUM('added','deducted'),
 	`ctime` TIMESTAMP NOT NULL DEFAULT current_timestamp,
 	PRIMARY KEY(`id`)
 );
 
 CREATE OR REPLACE TABLE `announcement` (
 	`id` INT NOT NULL AUTO_INCREMENT UNIQUE,
-  `user_id` INT NOT NULL,
-  `title` VARCHAR(128) NOT NULL,
-  `message` TEXT NOT NULL,
-  `stats` ENUM('active','inactive','removed') NOT NULL DEFAULT 'active',
-  `announcement_type` ENUM('announcement','event') NOT NULL DEFAULT 'announcement',
+    `user_id` INT NOT NULL,
+    `title` VARCHAR(128) NOT NULL,
+    `message` TEXT NOT NULL,
+    `stats` ENUM('active','inactive','removed') NOT NULL DEFAULT 'active',
+    `announcement_type` ENUM('announcement','event') NOT NULL DEFAULT 'announcement',
 	`ctime` TIMESTAMP NOT NULL DEFAULT current_timestamp,
 	`mtime` TIMESTAMP NOT NULL DEFAULT current_timestamp,
-  PRIMARY KEY(`id`)
+    PRIMARY KEY(`id`)
 );
 
 CREATE OR REPLACE TABLE `login_details` (
@@ -51,7 +51,7 @@ CREATE OR REPLACE TABLE `login_details` (
 	`password` VARCHAR(255) NOT NULL,
 	`ctime` TIMESTAMP NOT NULL DEFAULT current_timestamp,
 	`mtime` TIMESTAMP NOT NULL DEFAULT current_timestamp,
-  PRIMARY KEY(`id`)
+    PRIMARY KEY(`id`)
 ) AUTO_INCREMENT=0;
 
 CREATE OR REPLACE TABLE `member_table` (
@@ -154,7 +154,7 @@ CREATE OR REPLACE TABLE `schedules_table` (
 	`end_time` TIME NOT NULL,
 	`days_of_week` VARCHAR(255) NOT NULL,
 	`location` VARCHAR(255) NOT NULL,
-  `status` ENUM('available', 'unavailable'),
+    `status` ENUM('available', 'unavailable'),
 	`ctime` TIMESTAMP NOT NULL DEFAULT current_timestamp,
 	`mtime` TIMESTAMP NOT NULL DEFAULT current_timestamp,
 	PRIMARY KEY(`id`)
@@ -188,32 +188,40 @@ CREATE OR REPLACE TABLE `package_table` (
 	`id` INT NOT NULL AUTO_INCREMENT UNIQUE,
 	`package_name` VARCHAR(255) NOT NULL UNIQUE,
 	`duration` INT NOT NULL,
-  `package_type` ENUM('week','month','year', 'weeks', 'months', 'years') DEFAULT 'month',
+    `package_type` ENUM('week','month','year', 'weeks', 'months', 'years') DEFAULT 'month',
 	`price` DECIMAL(10, 2) NOT NULL,
 	`benefits` VARCHAR(255) NOT NULL,
-  `purchase_count` INT NOT NULL DEFAULT 0,
-  `status` ENUM('active','inactive', 'removed') DEFAULT 'active',
+    `purchase_count` INT NOT NULL DEFAULT 0,
+    `status` ENUM('active','inactive', 'removed') DEFAULT 'active',
 	`ctime` TIMESTAMP NOT NULL DEFAULT current_timestamp,
 	`mtime` TIMESTAMP NOT NULL DEFAULT current_timestamp,
 	PRIMARY KEY(`id`)
 );
 
+
 CREATE OR REPLACE TABLE `sales_table` (
 	`id` INT NOT NULL AUTO_INCREMENT UNIQUE,
-  `package_id` INT NOT NULL,
-  `member_id` INT NOT NULL,
-	`price` DECIMAL(10, 2) NOT NULL,
+    `package_id` INT NOT NULL,
+	`amount` DECIMAL(10, 2) NOT NULL,
+   	`trans_id` VARCHAR(255),
+    `ref_no` VARCHAR(255),
+    `acc_name` VARCHAR(255),
+    `email_add` VARCHAR(255),
+    `phone_number` VARCHAR(13),
+    `description` VARCHAR(255),
+    `date_paid` DATETIME,
+    `stat` VARCHAR(25),
 	`ctime` TIMESTAMP NOT NULL DEFAULT current_timestamp,
 	`mtime` TIMESTAMP NOT NULL DEFAULT current_timestamp,
 	PRIMARY KEY(`id`)
 );
 
 CREATE OR REPLACE TABLE `purchased_package_table` (
-	`id` INT NOT NULL AUTO_INCREMENT UNIQUE,
-  `package_id` INT NOT NULL,
-  `member_id` INT NOT NULL,
-  `reference_number` VARCHAR(255) NOT NULL,
-  `purchased_id` VARCHAR(255) NOT NULL,
+   	`id` INT NOT NULL AUTO_INCREMENT UNIQUE,
+    `package_id` INT NOT NULL,
+    `member_id` INT NOT NULL,
+    `reference_number` VARCHAR(255) NOT NULL,
+    `purchased_id` VARCHAR(255) NOT NULL,
 	`ctime` TIMESTAMP NOT NULL DEFAULT current_timestamp,
 	`mtime` TIMESTAMP NOT NULL DEFAULT current_timestamp,
 	PRIMARY KEY(`id`)
@@ -221,9 +229,9 @@ CREATE OR REPLACE TABLE `purchased_package_table` (
 
 CREATE OR REPLACE TABLE `event_table` (
 	`id` INT NOT NULL AUTO_INCREMENT UNIQUE,
-  `title` VARCHAR(255) NOT NULL,
-  `details` TEXT NOT NULL,
-  `responsibles` VARCHAR(128) NULL,
+    `title` VARCHAR(255) NOT NULL,
+    `details` TEXT NOT NULL,
+    `responsibles` VARCHAR(128) NULL,
 	`ctime` TIMESTAMP NOT NULL DEFAULT current_timestamp,
 	`mtime` TIMESTAMP NOT NULL DEFAULT current_timestamp,
 	PRIMARY KEY(`id`)

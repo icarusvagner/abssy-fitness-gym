@@ -25,6 +25,11 @@ class MemberService<T, K> {
     return response.data;
   }
 
+  async get_one(): Promise<T> {
+    const response = await api.get(`${this.base_end_point}/one`);
+    return response.data;
+  }
+
   async check_verified_email(email: string): Promise<T> {
     const response = await api.get(
       `${this.base_end_point}/check-verified-email/${email}`

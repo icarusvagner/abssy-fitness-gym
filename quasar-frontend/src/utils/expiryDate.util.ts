@@ -1,6 +1,10 @@
 class ExpiryDate {
-  getFutureDate = (duration: number, pack_type: string): Date | string => {
-    const currentDate = new Date();
+  getFutureDate = (
+    ctime: string,
+    duration: number,
+    pack_type: string
+  ): Date | string => {
+    const currentDate = new Date(ctime);
 
     switch (pack_type) {
       case 'week':

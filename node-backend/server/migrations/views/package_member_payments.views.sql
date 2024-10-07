@@ -20,8 +20,8 @@ LEFT JOIN package_table pack ON pack.id = pt.package_id;
 
 CREATE OR REPLACE VIEW member_package_view AS
 SELECT
-  mt.id AS member_id,
-  pt.id AS package_id,
+    mt.id AS member_id,
+    pt.id AS package_id,
 	dt.first_name,
 	dt.middle_name,
 	dt.last_name,
@@ -31,7 +31,8 @@ SELECT
     pt.duration,
     pt.package_type,
     pt.price,
-    pt.benefits
+    pt.benefits,
+    mt.ctime AS registered_at
 FROM
   member_table mt
 LEFT JOIN address_table at2 ON at2.id = mt.address_id

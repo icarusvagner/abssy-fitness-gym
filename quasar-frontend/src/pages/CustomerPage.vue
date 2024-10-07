@@ -43,6 +43,7 @@
             {{
               date.formatDate(
                 expiryDate.getFutureDate(
+                  details.registered_at,
                   details.duration,
                   details.package_type
                 ),
@@ -99,86 +100,134 @@ onMounted(() => {
 
 <style scoped lang="scss">
 .membership-card {
-  background-color: #ffffff;
-  width: 45%;
-  border-radius: 15px;
-  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
-  padding: 20px;
-  text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 16px 20px;
+  border-radius: 12px;
+  background-color: #fff;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  width: 90%;
+  max-width: 600px;
+  margin: auto;
+  text-align: left;
 
-  /* Header section */
+  .header,
+  .details,
+  .footer {
+    width: 100%;
+    padding: 8px 0;
+  }
+
   .header {
-    display: grid;
-    grid-template-columns: 2fr 1fr 1fr; /* Logo takes up 2 spans, rest 1 span each */
-    align-items: start; /* Align items at the start */
-    gap: 10px; /* Optional spacing between columns */
-    border-bottom: 2px solid #eee;
-    padding-bottom: 10px;
-    margin-bottom: 15px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 1px solid #eee;
+    margin-bottom: 12px;
 
-    .logo {
-      grid-column: span 1; /* Logo spans 2 columns */
-      img {
-        width: 45%; /* Ensure image takes full space of its column */
-        height: auto;
-        border-radius: 24px;
-      }
+    .logo img {
+      width: 70px;
+      height: 70px;
+      border-radius: 50%;
     }
 
     .gym-info {
-      grid-column: span 2;
+      flex-grow: 1;
+      margin-left: 12px;
+
       h1 {
         margin: 0;
-        font-size: 22px;
+        font-size: 20px;
+        font-weight: bold;
+        color: #333;
+      }
+
+      .availability {
+        font-size: 13px;
+        color: #32cd32;
+        margin-top: 4px;
       }
     }
-
-    .availability {
-      font-size: 14px;
-      color: #32cd32;
-    }
   }
 
-  /* Member details */
   .details {
     display: flex;
-    justify-content: space-between;
-    padding: 10px 0;
-    border-bottom: 2px solid #eee;
-    margin-bottom: 15px;
-  }
+    flex-direction: column; /* Stack items in a column */
+    gap: 12px; /* Space between items */
+    border-bottom: 1px solid #eee;
+    margin-bottom: 12px;
+    padding-bottom: 12px;
 
-  .member-info {
-    flex-wrap: 1;
-    text-align: start;
-    h3,
-    h6 {
-      margin: 0;
-      font-size: 18px;
+    .member-info,
+    .package-info {
+      display: flex;
+      flex-direction: column; /* Stack content vertically */
+      align-items: flex-start;
+
+      h3 {
+        margin: 0 0 4px;
+        font-size: 18px;
+        color: #333;
+      }
+
+      h5 {
+        margin: 0;
+        font-size: 16px;
+        color: #555;
+      }
+
+      p {
+        font-size: 14px;
+        color: #555;
+        margin: 4px 0;
+      }
     }
   }
 
-  .package-info {
-    flex-wrap: 1;
-    text-align: start;
+  .footer {
+    font-size: 15px;
+    font-weight: bold;
+    color: #ff4500;
+    text-align: center;
+    padding-top: 8px;
+  }
+}
 
-    h3 {
-      margin: 0;
-      font-size: 16px;
-    }
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+  .membership-card {
+    width: 100%;
+    padding: 12px;
+  }
 
-    p {
-      text-wrap: wrap;
-      font-size: 16px;
-      color: #666;
+  .header .gym-info h1 {
+    font-size: 18px;
+  }
+
+  .details h3,
+  .details h5 {
+    font-size: 16px;
+  }
+}
+
+@media (max-width: 480px) {
+  .membership-card {
+    padding: 8px;
+  }
+
+  .header {
+    flex-direction: column;
+    align-items: flex-start;
+
+    .gym-info {
+      margin-left: 0;
+      margin-top: 8px;
     }
   }
 
-  /* Footer */
   .footer {
     font-size: 14px;
-    font-weight: bold;
-    color: #ff0000;
   }
 }
 </style>

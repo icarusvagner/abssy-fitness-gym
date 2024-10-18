@@ -216,6 +216,14 @@ const filter = ref('');
 const isLoading = ref(false);
 const columns = ref([
   {
+    name: 'member_id',
+    field: 'member_id',
+    required: true,
+    label: 'ID#',
+    align: 'left',
+    sortable: true,
+  },
+  {
     name: 'fullname',
     required: true,
     label: 'Fullname',
@@ -261,13 +269,11 @@ const get_members = debounce(() => {
   memberService.get(0).then((res) => {
     rows.value = res.result;
     isLoading.value = false;
-    console.log(rows.value);
   });
 }, 1200);
 
 const onItemClick = (row) => {
   member_detail.value = row;
-  console.log(member_detail.value);
   memberInfo.value = true;
 };
 

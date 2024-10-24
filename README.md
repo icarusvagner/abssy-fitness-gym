@@ -3,11 +3,11 @@
 ABBSY Fitness Gym website and desktop for ease us for each members and admins.
 
 ## Table of contents
-- [Set up database](#setup database)
+- [Database](#database)
 - [Installation](#installation)
 - [License](#license)
 
-## Setup database
+## Database
 
 ```bash
 # navigate to the migrations

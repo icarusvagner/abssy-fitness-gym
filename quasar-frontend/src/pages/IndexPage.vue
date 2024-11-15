@@ -18,9 +18,32 @@
 import { ref, defineAsyncComponent } from 'vue';
 import { IDashboardCard } from 'components/models';
 
-const BarChart = defineAsyncComponent(() => import('components/charts/BarChart.vue'));
-const LineChart = defineAsyncComponent(() => import('components/charts/LineChart.vue'));
-const DashboardCard = defineAsyncComponent(() => import('components/DashboardCard.vue'));
+import DashboardService from 'src/services/dashboard.servive';
+import {
+  DashboardForSelect,
+  DashboardPerMonthForSelect,
+} from 'src/types/dashboard.type';
+
+const BarChart = defineAsyncComponent(
+  () => import('components/charts/BarChart.vue')
+);
+const LineChart = defineAsyncComponent(
+  () => import('components/charts/LineChart.vue')
+);
+const DashboardCard = defineAsyncComponent(
+  () => import('components/DashboardCard.vue')
+);
+
+const dashboardService = new DashboardService();
+const dashboards = ref<DashboardForSelect>({
+  members: 0,
+  trainers: 0,
+  staffs: 0,
+});
+const members_per_month = ref<DashboardPerMonthForSelect>({
+  month_name: '',
+  member_count: 0,
+});
 
 const reports = ref<IDashboardCard[]>([
   {
@@ -43,6 +66,5 @@ const reports = ref<IDashboardCard[]>([
     name: 'Staff',
     count: 5,
   },
-])
-
+]);
 </script>

@@ -28,6 +28,7 @@ import { processPayments } from 'src/utils/payments.util';
 import DashboardService from 'src/services/dashboard.servive';
 import PaymongoService from 'src/services/paymongo.service';
 import { SalesReportType } from 'src/types/dashboard.type';
+import { formatNumber } from 'src/utils/validator.util';
 
 const BarChart = defineAsyncComponent({
   loader: () => import('components/charts/BarChart.vue'),
@@ -109,10 +110,13 @@ const get_payments_purchased = debounce(() => {
   sales_report.value = [];
   paymongoService.get_payments(100).then((res) => {
     let temp_res = processPayments(res);
+    let temp_total = 0;
     temp_res.map((item) => {
       months.value.push(item['month']);
       total_amount.value.push(item['totalAmount']);
+      temp_total += parseInt(item['totalAmount']);
     });
+    reports.value[0]['count'] = formatNumber(temp_total);
     isLoading.value = false;
   });
 }, 500);

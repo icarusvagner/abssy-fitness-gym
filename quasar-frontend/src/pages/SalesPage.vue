@@ -110,6 +110,7 @@ const months_params = ref<{ month_name: string; month_val: string }[]>([
   { month_name: 'Nov', month_val: '11' },
   { month_name: 'Dec', month_val: '12' },
 ]);
+const count_items = ref(100);
 
 // const form = ref({
 //   from_date: null,
@@ -132,7 +133,7 @@ const reset_filter = () => {
 const get_payments_purchased_filtered = debounce(() => {
   isLoading.value = true;
   sales_report.value = [];
-  paymongoService.get_payments(100).then((res) => {
+  paymongoService.get_payments(count_items.value).then((res) => {
     let temp_res: GroupedPayment[] = processPayments(res, month_val.value);
     console.log(processPayments(res, month_val.value));
 
@@ -148,7 +149,7 @@ const get_payments_purchased_filtered = debounce(() => {
 const get_payments_purchased = debounce(() => {
   isLoading.value = true;
   sales_report.value = [];
-  paymongoService.get_payments(100).then((res) => {
+  paymongoService.get_payments(count_items.value).then((res) => {
     let temp_res: GroupedPayment[] = processPayments(res);
 
     months.value.push(...temp_res.map((item) => item['month']));

@@ -1,5 +1,8 @@
 import executeQuery from "../utils/executeQuery.util";
-import { AnnouncementForCreate, AnnouncementForUpdate } from '../models/announcement.model';
+import {
+  AnnouncementForCreate,
+  AnnouncementForUpdate,
+} from "../models/announcement.model";
 
 const create_announcement = async (announcement: AnnouncementForCreate) => {
   try {
@@ -12,14 +15,14 @@ const create_announcement = async (announcement: AnnouncementForCreate) => {
     ]);
 
     return {
-      message: 'Announcement created',
-      status: 201
-    }
+      message: "Announcement created",
+      status: 201,
+    };
   } catch (error: any) {
-    console.error('Creating announcement error on service: ', error);
+    console.error("Creating announcement error on service: ", error);
     return error.message;
   }
-}
+};
 
 const update_announcement = async (announcement: AnnouncementForUpdate) => {
   try {
@@ -30,28 +33,28 @@ const update_announcement = async (announcement: AnnouncementForUpdate) => {
       announcement.title.toLowerCase(),
       announcement.message.toLowerCase(),
     ]);
-    
+
     return {
-      message: 'Announcement updated',
-      status: 200
-    }
+      message: "Announcement updated",
+      status: 200,
+    };
   } catch (error: any) {
-    console.error('Updating announcement error on service: ', error);
+    console.error("Updating announcement error on service: ", error);
     return error.message;
   }
-}
+};
 
 const get_announcement = async (id: number) => {
   try {
     let query = "CALL get_announcement(?)";
     let result: any = await executeQuery(query, [id]);
-    
+    console.log("id: ", id, result[0]);
     return result[0];
   } catch (error: any) {
-    console.error('Updating announcement error on service: ', error);
+    console.error("Updating announcement error on service: ", error);
     return error.message;
   }
-}
+};
 
 const delete_announcement = async (id: number) => {
   try {
@@ -59,18 +62,18 @@ const delete_announcement = async (id: number) => {
     let result: any = await executeQuery(query, [id]);
 
     return {
-      message: 'Announcement removed',
-      status: 200
-    }
+      message: "Announcement removed",
+      status: 200,
+    };
   } catch (error: any) {
-    console.error('Updating announcement error on service: ', error);
+    console.error("Updating announcement error on service: ", error);
     return error.message;
   }
-}
+};
 
 export {
   create_announcement,
   get_announcement,
   delete_announcement,
   update_announcement,
-}
+};

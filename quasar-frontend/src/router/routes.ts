@@ -122,7 +122,7 @@ const notElectronRoute = [
     component: () => import('layouts/UsersLayout.vue'),
     children: [
       {
-        path: '/info',
+        path: '',
         name: 'landing_page',
         component: () => import('pages/LandingPage.vue'),
       },

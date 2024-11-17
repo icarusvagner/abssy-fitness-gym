@@ -9,10 +9,10 @@ CREATE OR REPLACE PROCEDURE create_announcement (
 )
 BEGIN
     START TRANSACTION;
-    
+
     INSERT INTO announcement (user_id, title, message, announcement_type)
     VALUES (p_user_id, p_title, p_message, p_type);
-    
+
     COMMIT;
 END //
 
@@ -25,7 +25,7 @@ CREATE OR REPLACE PROCEDURE get_announcement (
 )
 BEGIN
   IF p_id = 0 THEN
-    SELECT * FROM announcements_view;
+    SELECT * FROM announcements_view WHERE stats != 'removed';
   ELSE
     SELECT * FROM announcements_view WHERE login_id = p_id;
   END IF;
@@ -51,7 +51,7 @@ BEGIN
         message = p_message,
         mtime = current_timestamp()
     WHERE id = p_id;
-    
+
     COMMIT;
 END //
 
@@ -64,9 +64,9 @@ CREATE OR REPLACE PROCEDURE delete_announcement (
 )
 BEGIN
     START TRANSACTION;
-    
+
     UPDATE announcement SET stats = 'removed' WHERE id = p_id;
-    
+
     COMMIT;
 END //
 

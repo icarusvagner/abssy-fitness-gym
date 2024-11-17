@@ -12,8 +12,8 @@ class AnnouncementService<T, K> {
     return response.data;
   }
 
-  async get(): Promise<T[]> {
-    const response = await api.get<T[]>(`${this.base_end_point}/get/0`);
+  async get(id: number): Promise<T[]> {
+    const response = await api.get<T[]>(`${this.base_end_point}/get/${id}`);
     return response.data;
   }
 

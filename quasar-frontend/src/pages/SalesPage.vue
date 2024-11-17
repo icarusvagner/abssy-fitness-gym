@@ -125,6 +125,7 @@ const filter_func = (monthval: string) => {
 const reset_filter = () => {
   months.value = [];
   total_amount.value = [];
+  total_sales.value = 0;
   get_payments_purchased();
 };
 
@@ -137,6 +138,9 @@ const get_payments_purchased_filtered = debounce(() => {
 
     months.value.push(...temp_res.map((item) => item['month']));
     total_amount.value.push(...temp_res.map((item) => item['totalAmount']));
+    temp_res.map(
+      (item) => (total_sales.value += parseInt(item['totalAmount']))
+    );
     isLoading.value = false;
   });
 }, 500);
@@ -163,6 +167,7 @@ onMounted(() => {
 watch(month_val, () => {
   months.value = [];
   total_amount.value = [];
+  total_sales.value = 0;
   get_payments_purchased_filtered();
 });
 </script>

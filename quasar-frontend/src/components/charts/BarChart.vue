@@ -1,25 +1,45 @@
 <template>
   <div style="max-width: 97%">
     <div id="chart">
-      <apexchart type="bar" height="450" :options="chartOptions" :series="series"></apexchart>
+      <apexchart
+        type="bar"
+        height="450"
+        :options="chartOptions"
+        :series="series"
+      ></apexchart>
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
-  import { ref } from 'vue';
+import { ref } from 'vue';
 
-  const series = ref([{
-    data: [400, 430, 448, 470, 540, 580, 690, 710, 808, 890, 920, 950]
-  }]);
+const props = defineProps({
+  total_amount: {
+    type: Array,
+    required: true,
+  },
+  months: {
+    type: Array,
+    required: true,
+  },
+});
 
-  const chartOptions =  ref({
-    chart: {
-      type: 'bar',
-      height: 450
-    },
-    annotations: {
-      xaxis: [{
+const series = ref([
+  {
+    name: 'Total',
+    data: props.total_amount,
+  },
+]);
+
+const chartOptions = ref({
+  chart: {
+    type: 'bar',
+    height: 450,
+  },
+  annotations: {
+    xaxis: [
+      {
         x: 500,
         borderColor: '#00E396',
         label: {
@@ -29,43 +49,45 @@
             background: '#00E396',
           },
           text: 'X annotation',
-        }
-      }],
-      yaxis: [{
+        },
+      },
+    ],
+    yaxis: [
+      {
         y: 'July',
         y2: 'September',
         label: {
-          text: 'Y annotation'
-        }
-      }]
+          text: 'Y annotation',
+        },
+      },
+    ],
+  },
+  title: {
+    text: 'Total Sales',
+    align: 'left',
+  },
+  plotOptions: {
+    bar: {
+      columnWidth: '45%',
     },
-    title: {
-      text: 'Total Sales',
-      align: 'left'
-    },
-    plotOptions: {
-      bar: {
-        columnWidth: '45%',
-      }
-    },
-    dataLabels: {
-      enabled: true
-    },
+  },
+  dataLabels: {
+    enabled: true,
+  },
+  xaxis: {
+    categories: props.months,
+  },
+  grid: {
     xaxis: {
-      categories: ['January','Febuary','March','April','May','June', 'July', 'August', 'September', 'October', 'November', 'December'],
+      lines: {
+        show: true,
+      },
     },
-    grid: {
-      xaxis: {
-        lines: {
-          show: true
-        }
-      }
+  },
+  yaxis: {
+    axisTicks: {
+      show: true,
     },
-    yaxis: {
-      axisTicks: {
-        show: true
-      }
-    }
-  })
-
+  },
+});
 </script>

@@ -5,7 +5,7 @@ const get_dashboard = async () => {
     let query = "CALL get_dashboard()";
     let result: any = await executeQuery(query, []);
 
-    return result[0];
+    return result[0][0];
   } catch (error: any) {
     console.error("Getting dashboard error on service: ", error);
     return error.message;

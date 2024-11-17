@@ -6,44 +6,57 @@
       </div>
     </div>
     <div class="rounded-borders shadow-10 q-pa-md">
-      <LineChart />
+      <LineChart
+        :is_load="isLoading"
+        :month_name="month_name"
+        :members_count="members_count"
+      />
     </div>
     <div class="rounded-borders shadow-10 q-pa-md">
-      <BarChart />
+      <BarChart :months="months" :total_amount="total_amount" />
     </div>
   </q-page>
 </template>
 
 <script setup lang="ts">
-import { ref, defineAsyncComponent } from 'vue';
+import { ref, defineAsyncComponent, onMounted } from 'vue';
 import { IDashboardCard } from 'components/models';
+import { debounce } from 'quasar';
 
+import GraphLoaderComponent from 'components/LoaderComponent.vue';
+import { processPayments } from 'src/utils/payments.util';
 import DashboardService from 'src/services/dashboard.servive';
-import {
-  DashboardForSelect,
-  DashboardPerMonthForSelect,
-} from 'src/types/dashboard.type';
+import PaymongoService from 'src/services/paymongo.service';
+import { SalesReportType } from 'src/types/dashboard.type';
 
-const BarChart = defineAsyncComponent(
-  () => import('components/charts/BarChart.vue')
-);
-const LineChart = defineAsyncComponent(
-  () => import('components/charts/LineChart.vue')
-);
-const DashboardCard = defineAsyncComponent(
-  () => import('components/DashboardCard.vue')
-);
+const BarChart = defineAsyncComponent({
+  loader: () => import('components/charts/BarChart.vue'),
+  loadingComponent: GraphLoaderComponent,
+  delay: 1000,
+  timeout: 3000,
+  suspensible: false,
+});
+const LineChart = defineAsyncComponent({
+  loader: () => import('components/charts/LineChart.vue'),
+  loadingComponent: GraphLoaderComponent,
+  delay: 1000,
+  timeout: 3000,
+  suspensible: false,
+});
+const DashboardCard = defineAsyncComponent({
+  loader: () => import('components/DashboardCard.vue'),
+  delay: 1000,
+  timeout: 3000,
+  suspensible: false,
+});
 
+const isLoading = ref(false);
+const paymongoService = new PaymongoService();
 const dashboardService = new DashboardService();
-const dashboards = ref<DashboardForSelect>({
-  members: 0,
-  trainers: 0,
-  staffs: 0,
-});
-const members_per_month = ref<DashboardPerMonthForSelect>({
-  month_name: '',
-  member_count: 0,
-});
+const members_count = ref([]);
+const months = ref([]);
+const total_amount = ref([]);
+const month_name = ref([]);
 
 const reports = ref<IDashboardCard[]>([
   {
@@ -54,17 +67,59 @@ const reports = ref<IDashboardCard[]>([
   {
     icon: 'mdi-account-plus',
     name: 'Members',
-    count: 55,
+    count: 0,
   },
   {
     icon: 'mdi-account-tie',
     name: 'Trainers',
-    count: 13,
+    count: 0,
   },
   {
     icon: 'mdi-account-multiple-outline',
     name: 'Staff',
-    count: 5,
+    count: 0,
   },
 ]);
+const sales_report = ref<SalesReportType[]>([]);
+
+const get_dashboard = debounce(() => {
+  isLoading.value = true;
+  dashboardService.get_dashboard().then((res) => {
+    reports.value[1]['count'] = parseInt(res.result['members']);
+    reports.value[2]['count'] = parseInt(res.result['trainers']);
+    reports.value[3]['count'] = parseInt(res.result['staffs']);
+    isLoading.value = false;
+  });
+}, 500);
+
+const get_members_per_month = debounce(() => {
+  isLoading.value = true;
+  dashboardService.get_members_per_month().then((res) => {
+    var temp = res.result;
+    temp.map((item) => {
+      month_name.value.push(item['month_name']);
+      members_count.value.push(parseInt(item['member_count']));
+    });
+    isLoading.value = false;
+  });
+}, 500);
+
+const get_payments_purchased = debounce(() => {
+  isLoading.value = true;
+  sales_report.value = [];
+  paymongoService.get_payments(100).then((res) => {
+    let temp_res = processPayments(res);
+    temp_res.map((item) => {
+      months.value.push(item['month']);
+      total_amount.value.push(item['totalAmount']);
+    });
+    isLoading.value = false;
+  });
+}, 500);
+
+onMounted(() => {
+  get_dashboard();
+  get_members_per_month();
+  get_payments_purchased();
+});
 </script>

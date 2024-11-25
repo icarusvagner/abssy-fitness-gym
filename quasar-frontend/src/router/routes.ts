@@ -24,11 +24,11 @@ const electronRoute = [
             name: 'membership',
             component: () => import('pages/MembershipPage.vue'),
           },
-          {
-            path: '/add',
-            name: 'new_member',
-            component: () => import('pages/NewMemberPage.vue'),
-          },
+          // {
+          //   path: '/add',
+          //   name: 'new_member',
+          //   component: () => import('pages/NewMemberPage.vue'),
+          // },
           {
             path: '/:id',
             name: 'one_member',
@@ -39,7 +39,7 @@ const electronRoute = [
       {
         path: '/staff',
         name: 'staffs',
-        meta: { auth: true, roles: ['admin'] },
+        meta: { auth: true, roles: ['admin', 'super'] },
         component: () => import('layouts/StaffLayout.vue'),
         children: [
           {

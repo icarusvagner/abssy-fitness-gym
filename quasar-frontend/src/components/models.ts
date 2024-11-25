@@ -6,7 +6,7 @@ export interface LoginDetails {
 export interface IDashboardCard {
   icon: string;
   name: string;
-  count: number;
+  count: string;
 }
 
 export interface Todo {

@@ -1,12 +1,9 @@
 export const validatePhoneNumber = (phoneNumber: string): boolean => {
-  const mobilePattern = /^(?:\+63|0)9\d{9}$/;
-  const landlinePattern = /^(0\d{2,4})?(\d{7,8})$/;
+  const mobilePattern = /^09\d{9}$/;
 
   const sanitizedNumber = phoneNumber.replace(/\D/g, '');
 
-  return (
-    mobilePattern.test(sanitizedNumber) || landlinePattern.test(sanitizedNumber)
-  );
+  return mobilePattern.test(sanitizedNumber);
 };
 
 export const validateEmailAddress = (email: string): boolean => {

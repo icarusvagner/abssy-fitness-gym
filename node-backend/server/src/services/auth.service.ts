@@ -43,7 +43,10 @@ const register_admin = async (
       admin.permission_level,
     ]);
 
-    return result[0][0];
+    return {
+      message: "admin registered",
+      status: 201,
+    };
   } catch (error: any) {
     console.error(`Registration Error: ${error.message}`);
     return {
@@ -86,7 +89,10 @@ const register_staff = async (
       staff.shift_schedule.toLowerCase(),
     ]);
 
-    return result[0][0];
+    return {
+      message: "admin registered",
+      status: 201,
+    };
   } catch (error: any) {
     console.error(`Registration Error: ${error.message}`);
     return {

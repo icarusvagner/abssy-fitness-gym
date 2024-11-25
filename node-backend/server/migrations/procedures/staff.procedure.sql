@@ -18,7 +18,7 @@ CREATE OR REPLACE PROCEDURE update_staff(
     IN p_ec_last_name VARCHAR(255),
     IN p_relationship VARCHAR(255),
     IN p_ec_phone_number VARCHAR(13),
-    IN p_role ENUM('receptionis', 'cleaner', 'encoder', 'maintenance', 'attendant', 'officer', 'childcare', 'dietitian', 'consultant', 'instructor', 'manager'),
+    IN p_role ENUM('receptionist', 'cleaner', 'encoder', "maintenance", "attendant", "officer", "childcare", "dietitian", "consultant", "instructor", "manager"),
     IN p_shift_schedule VARCHAR(255)
 )
 BEGIN
@@ -27,12 +27,12 @@ BEGIN
       DECLARE sql_state CHAR(5);
       DECLARE error_message TEXT;
       DECLARE error_code INT;
-      
+
       GET DIAGNOSTICS CONDITION 1
           sql_state = RETURNED_SQLSTATE,
           error_message = MESSAGE_TEXT,
           error_code = MYSQL_ERRNO;
-      
+
       ROLLBACK;
       SELECT 'Error occurred during staff update.' AS error_message, error_code AS err_status, error_message AS detailed_message;
   END;

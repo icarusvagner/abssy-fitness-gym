@@ -19,7 +19,7 @@ CREATE OR REPLACE PROCEDURE register_staff(
     IN p_ec_phone_number VARCHAR(13),
     IN p_username VARCHAR(255),
     IN p_password VARCHAR(255),
-    IN p_role ENUM('receptionis', 'cleaner', 'encoder', 'maintenance', 'attendant', 'officer', 'childcare', 'dietitian', 'consultant', 'instructor', 'manager'),
+    IN p_role ENUM('receptionist', 'cleaner', 'encoder', "maintenance", "attendant", "officer", "childcare", "dietitian", "consultant", "instructor", "manager"),
     IN p_shift_schedule VARCHAR(255)
 )
 BEGIN
@@ -27,7 +27,7 @@ BEGIN
     DECLARE address_id INT;
     DECLARE ec_id INT;
     DECLARE login_id INT;
-    DECLARE EXIT HANDLER FOR SQLEXCEPTION 
+    DECLARE EXIT HANDLER FOR SQLEXCEPTION
     BEGIN
         -- Rollback any changes if an error occurs
         ROLLBACK;
@@ -93,7 +93,7 @@ BEGIN
     DECLARE detail_id INT;
     DECLARE address_id INT;
     DECLARE login_id INT;
-    DECLARE exit handler for sqlexception 
+    DECLARE exit handler for sqlexception
     BEGIN
         -- Rollback any changes if an error occurs
         ROLLBACK;
@@ -139,7 +139,7 @@ CREATE OR REPLACE PROCEDURE `login_user`(
 BEGIN
     DECLARE login_id INT;
     DECLARE user_exists BOOLEAN DEFAULT FALSE;
-    DECLARE EXIT HANDLER FOR SQLEXCEPTION 
+    DECLARE EXIT HANDLER FOR SQLEXCEPTION
     BEGIN
         -- Handle any SQL exceptions
         SELECT 'An error occurred during login process' AS message, 500 AS status;
@@ -154,35 +154,35 @@ BEGIN
     IF login_id IS NULL THEN
    		SELECT 'Username not found, account not registered' AS message, 404 as status;
    	ELSE
-   
+
 	    IF login_id = 0 THEN
 	        -- If login_id is NULL or 0, handle special case
-	        SELECT 
-	            ld.username, 
-	            ld.password, 
+	        SELECT
+	            ld.username,
+	            ld.password,
 	            ld.id,
-	            'super' AS role, 
+	            'super' AS role,
 	            'super' AS user_type
-	        FROM 
+	        FROM
 	            login_details ld
-	        WHERE 
+	        WHERE
 	            ld.id = 0
-	
+
 	        UNION ALL
-	
-	        SELECT 
-	            NULL AS username, 
+
+	        SELECT
+	            NULL AS username,
 	            NULL AS password,
-	            'super' AS role, 
+	            'super' AS role,
 	            'super' AS user_type
-	        WHERE 
+	        WHERE
 	            NOT EXISTS (SELECT 1 FROM login_details WHERE id = 0);
 	    ELSE
 	        -- Check if login_id is in staff_table
 	        SELECT COUNT(*) INTO user_exists
 	        FROM staff_table st
 	        WHERE st.login_id = login_id;
-	       
+
 	        IF user_exists THEN
 	            -- If login_id is found in staff_table
 	            SELECT
@@ -200,10 +200,10 @@ BEGIN
 	            SELECT COUNT(*) INTO user_exists
 	            FROM admin_table admint
 	            WHERE admint.login_id = login_id;
-	
+
 	            IF user_exists THEN
 	                -- If login_id is found in admin_table
-	                SELECT 
+	                SELECT
 	                	ld.id AS user_id,
 						ld.username,
 						ld.password,
@@ -211,7 +211,7 @@ BEGIN
 						'admin' AS user_type
 					FROM
 						admin_table at2
-					LEFT JOIN login_details ld ON ld.id = at2.login_id 
+					LEFT JOIN login_details ld ON ld.id = at2.login_id
 					WHERE ld.id = login_id;
 	            ELSE
 	                -- If login_id is not found in both staff_table and admin_table
@@ -234,7 +234,7 @@ CREATE OR REPLACE PROCEDURE change_password(
 )
 BEGIN
     DECLARE v_error_message VARCHAR(255) DEFAULT NULL;
-    DECLARE EXIT HANDLER FOR SQLEXCEPTION 
+    DECLARE EXIT HANDLER FOR SQLEXCEPTION
     BEGIN
         -- Handle any SQL exceptions
         ROLLBACK;
@@ -273,4 +273,3 @@ BEGIN
 END //
 
 DELIMITER ;
-

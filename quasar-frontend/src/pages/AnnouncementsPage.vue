@@ -169,6 +169,8 @@ const onSubmit = () => {
         textColor: 'white',
         icon: 'mdi-cloud-check-outline',
       });
+
+      new_announce.value = false;
     } else {
       Notify.create({
         position: 'top-right',

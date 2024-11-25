@@ -124,7 +124,7 @@ CREATE OR REPLACE TABLE `staff_table` (
 	`detail_id` INT NOT NULL,
 	`address_id` INT NOT NULL,
 	`ec_id` INT NOT NULL,
-	`role` ENUM('receptionis', 'cleaner', 'encoder', "maintenance", "attendant", "officer", "childcare", "dietitian", "consultant", "instructor", "manager") NOT NULL,
+	`role` ENUM('receptionist', 'cleaner', 'encoder', "maintenance", "attendant", "officer", "childcare", "dietitian", "consultant", "instructor", "manager") NOT NULL,
 	`hire_date` TIMESTAMP NOT NULL DEFAULT current_timestamp,
 	`shift_schedule` VARCHAR(255) NOT NULL,
 	`login_id` INT NOT NULL,

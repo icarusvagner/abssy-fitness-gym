@@ -63,22 +63,22 @@ const reports = ref<IDashboardCard[]>([
   {
     icon: 'mdi-wallet-outline',
     name: 'Total Sales',
-    count: 2350.55,
+    count: '0',
   },
   {
     icon: 'mdi-account-plus',
     name: 'Members',
-    count: 0,
+    count: '0',
   },
   {
     icon: 'mdi-account-tie',
     name: 'Trainers',
-    count: 0,
+    count: '0',
   },
   {
     icon: 'mdi-account-multiple-outline',
     name: 'Staff',
-    count: 0,
+    count: '0',
   },
 ]);
 const sales_report = ref<SalesReportType[]>([]);

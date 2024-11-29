@@ -1,4 +1,6 @@
 export enum PackageType {
+  Day = 'day',
+  Days = 'days',
   Week = 'week',
   Weeks = 'weeks',
   Month = 'month',

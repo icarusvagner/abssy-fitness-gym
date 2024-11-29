@@ -165,6 +165,12 @@ const notElectronRoute = [
         meta: { auth: true },
         component: () => import('pages/CustomerPage.vue'),
       },
+      {
+        path: 'plan',
+        meta: { auth: true },
+        name: 'plan',
+        component: () => import('pages/CustomerChoosePackage.vue'),
+      },
     ],
   },
   {

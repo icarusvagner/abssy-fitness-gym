@@ -9,7 +9,13 @@
           ABBSY Fitness GYM
         </q-toolbar-title>
         <div class="row q-gutter-x-md">
-          <q-btn outline style="color: gold" label="Upgrade Package" />
+          <q-btn
+            outline
+            style="color: gold"
+            label="Upgrade Package"
+            :to="{ name: 'plan', query: { q: 'upgrade' } }"
+          />
+          <q-btn flat label="Home" :to="{ name: 'dashboard' }" />
           <q-btn flat color="white" label="Logout" @click="logout_handler" />
         </div>
       </q-toolbar>

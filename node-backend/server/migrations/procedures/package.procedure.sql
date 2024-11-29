@@ -4,7 +4,7 @@ DELIMITER //
 CREATE OR REPLACE PROCEDURE create_package(
     IN p_package_name VARCHAR(255),
     IN p_duration INT,
-    IN p_package_type ENUM('week','month','year', 'weeks', 'months', 'years'),
+    IN p_package_type ENUM('day', 'days', 'week','month','year', 'weeks', 'months', 'years'),
     IN p_price DECIMAL(10, 2),
     IN p_benefits VARCHAR(255)
 )
@@ -68,7 +68,7 @@ CREATE OR REPLACE PROCEDURE update_package(
     IN p_id INT,
     IN p_package_name VARCHAR(255),
     IN p_duration INT,
-    IN p_package_type ENUM('week','weeks','month','months','year','years'),
+    IN p_package_type ENUM('day', 'days', 'week','month','year', 'weeks', 'months', 'years'),
     IN p_price DECIMAL(10, 2),
     IN p_benefits VARCHAR(255),
     IN p_pack_stats ENUM('active','inactive','removed')
@@ -123,7 +123,7 @@ BEGIN
 
     START TRANSACTION;
 
-    DELETE FROM package_table WHERE id = p_id;
+    UPDATE gym_db.package_table SET status='removed', mtime=current_timestamp() WHERE id=p_id;
 
     COMMIT;
 

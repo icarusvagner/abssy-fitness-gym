@@ -188,7 +188,7 @@ CREATE OR REPLACE TABLE `package_table` (
 	`id` INT NOT NULL AUTO_INCREMENT UNIQUE,
 	`package_name` VARCHAR(255) NOT NULL UNIQUE,
 	`duration` INT NOT NULL,
-    `package_type` ENUM('week','month','year', 'weeks', 'months', 'years') DEFAULT 'month',
+    `package_type` ENUM('day','days', 'week','month','year', 'weeks', 'months', 'years') DEFAULT 'month',
 	`price` DECIMAL(10, 2) NOT NULL,
 	`benefits` VARCHAR(255) NOT NULL,
     `purchase_count` INT NOT NULL DEFAULT 0,

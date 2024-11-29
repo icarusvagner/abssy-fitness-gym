@@ -49,6 +49,7 @@
 import { ref, onMounted, defineAsyncComponent } from 'vue';
 import { api } from 'boot/axios';
 import { debounce, Platform } from 'quasar';
+import { useRouter } from 'vue-router';
 
 import { PackageForSelectWrapper } from 'src/types/package.type';
 import LoadersComponent from 'components/LoadersComponent.vue';
@@ -66,8 +67,10 @@ const ChoosePlansCard = defineAsyncComponent({
   timeout: 3000,
 });
 
+const router = useRouter();
 const packages = ref<PackageForSelectWrapper>([]);
 const is_loading = ref(false);
+const param_upgrade = ref('');
 
 const get_packages = debounce(async () => {
   packages.value = [];
@@ -83,5 +86,7 @@ const get_packages = debounce(async () => {
 onMounted(() => {
   is_loading.value = true;
   get_packages();
+  let temp = router.currentRoute.value.query;
+  param_upgrade.value = temp.q ? temp.q : '';
 });
 </script>

@@ -17,7 +17,6 @@
         v-if="Platform.is.mobile"
         class="row q-gutter-x-md q-pl-lg q-pb-md q-pt-md items-center justify-center"
       >
-        <q-btn outline style="color: gold" label="Upgrade Package" />
         <q-btn flat color="white" label="Logout" @click="logout_handler" />
       </div>
     </q-header>

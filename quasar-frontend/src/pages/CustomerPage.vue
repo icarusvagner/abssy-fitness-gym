@@ -37,7 +37,12 @@
         </div>
 
         <!-- Footer: Expiration -->
-        <div class="footer">
+
+        <div v-if="is_expired_date" class="column justify-center items-center">
+          <p class="text-h5 text-weight-bold text-red-5">{{ expiry_date }}</p>
+          <q-btn color="secondary" label="Renew membership" />
+        </div>
+        <div v-else class="footer">
           <p>
             Expires:
             {{
@@ -58,13 +63,15 @@
 </template>
 
 <script setup lang="ts">
-import { date } from 'quasar';
-import { onMounted, ref } from 'vue';
+import { date, debounce } from 'quasar';
+import { onBeforeMount, ref } from 'vue';
 import MemberService from 'src/services/member.service';
 import { OneMemberPackage } from 'src/types/member.type';
 import ExpiryDate from 'src/utils/expiryDate.util';
 
 const expiryDate = new ExpiryDate();
+const is_expired_date = ref(false);
+const expiry_date = ref('');
 const memberService = new MemberService();
 const details = ref<OneMemberPackage>({
   address: '',
@@ -86,14 +93,25 @@ const get_my_details = () => {
     .get_one()
     .then((res) => {
       details.value = res.result;
-      console.log(details.value);
+      is_expired_date.value = expiryDate.isExpired(
+        details.value.registered_at,
+        details.value.duration,
+        details.value.package_type
+      );
+      expiry_date.value = expiryDate.isExpired(
+        details.value.registered_at,
+        details.value.duration,
+        details.value.package_type
+      )
+        ? 'Membership has expired'
+        : '';
     })
     .catch((error) => {
       throw error;
     });
 };
 
-onMounted(() => {
+onBeforeMount(() => {
   get_my_details();
 });
 </script>

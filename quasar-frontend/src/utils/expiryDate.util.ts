@@ -5,6 +5,7 @@ class ExpiryDate {
     pack_type: string
   ): Date | string => {
     const currentDate = new Date(ctime);
+    console.log(ctime + ' ' + duration + ' ' + pack_type);
 
     switch (pack_type) {
       case 'week':
@@ -26,6 +27,20 @@ class ExpiryDate {
         return 'Invalid pack_type! Please use "week", "month", or "year".';
     }
     return currentDate;
+  };
+
+  // New function to check if the date is expired within the given duration and pack_type
+  isExpired = (ctime: string, duration: number, pack_type: string): boolean => {
+    const futureDate = this.getFutureDate(ctime, duration, pack_type);
+
+    if (typeof futureDate === 'string') {
+      throw new Error(futureDate); // Handle invalid pack_type error
+    }
+
+    const now = new Date();
+
+    // Return true if the current date is after the calculated future date
+    return now.getTime() > futureDate.getTime();
   };
 }
 

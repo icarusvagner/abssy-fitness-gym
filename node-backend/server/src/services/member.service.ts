@@ -285,7 +285,7 @@ const upgrade_member_package = async (member_update: MemberUpgradePackage) => {
       member_update.purchased_id,
     ]);
 
-    return result[0];
+    return result[0][0];
   } catch (error: any) {
     console.error("Upgrade member package service error: ", error.message);
     return error.message;

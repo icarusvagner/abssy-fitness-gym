@@ -22,6 +22,7 @@ class MemberService<T, K> {
 
   async get(id: number): Promise<T> {
     const response = await api.get(`${this.base_end_point}/get/${id}`);
+
     return response.data;
   }
 

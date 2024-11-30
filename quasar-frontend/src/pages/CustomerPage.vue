@@ -111,6 +111,7 @@ const get_my_details = debounce(() => {
   memberService
     .get_one()
     .then((res) => {
+      console.log(res);
       details.value = res.result;
 
       is_expired_date.value = expiryDate.isExpired(

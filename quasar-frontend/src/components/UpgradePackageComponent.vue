@@ -35,16 +35,24 @@
       <q-separator />
 
       <q-card-actions>
-        <q-btn flat color="secondary">Select Package</q-btn>
+        <q-btn
+          flat
+          color="secondary"
+          @click="
+            proceed_selection(item.package_name, parseInt(item.price), item.id)
+          "
+          >Select Package</q-btn
+        >
       </q-card-actions>
     </q-card>
   </div>
 </template>
 
 <script setup lang="ts">
+import { defineComponent, onBeforeMount, ref } from 'vue';
+import { useRouter } from 'vue-router';
 import { debounce } from 'quasar';
 import { PackageForSelectWrapper } from 'src/types/package.type';
-import { defineComponent, onBeforeMount, ref } from 'vue';
 import { api } from 'boot/axios';
 
 import PaymongoService from 'src/services/paymongo.service';
@@ -56,11 +64,25 @@ defineComponent({
 
 const paymongoService = new PaymongoService();
 const memberService = new MemberService();
+const router = useRouter();
+
 const lorem = ref(
   'Lorem ipsum dolor sit amet consectetur adipisicing elit. Nemo id, blanditiis suscipit vero dolores ipsam libero fugit! Deleniti, beatae sunt illum dignissimos nesciunt quis nostrum veritatis dolorum, placeat facilis explicabo.'
 );
 const packages = ref<PackageForSelectWrapper>([]);
 const is_loading = ref(false);
+
+const formUpgrade = ref<{
+  member_id: number;
+  ref_number: string;
+  purchased_id: number;
+  pack_id: number;
+}>({
+  member_id: 0,
+  ref_number: '',
+  purchased_id: 0,
+  pack_id: 0,
+});
 
 const get_packages = debounce(async () => {
   packages.value = [];
@@ -76,6 +98,7 @@ const get_packages = debounce(async () => {
 const proceed_selection = debounce(
   (pack_name: string, pack_price: number, pack_id: number) => {
     is_loading.value = true;
+
     paymongoService
       .create_link({
         package_name: pack_name,
@@ -84,19 +107,27 @@ const proceed_selection = debounce(
       })
       .then((res) => {
         console.log(res);
-        paymentUrl.value = res.data.attributes.checkout_url;
-        form.value.reference_no = res.data.attributes.reference_number;
+        let temp_url = res.data.attributes.checkout_url;
 
-        memberService.upgrade_package_member(form.value).then((res) => {
-          isLoading.value = false;
-          if (res.result.status !== 201) {
+        formUpgrade.value.ref_number = res.data.attributes.reference_number;
+        formUpgrade.value.member_id = parseInt(
+          router.currentRoute.value.query.member_id
+        );
+        formUpgrade.value.purchased_id = res.data.id;
+        formUpgrade.value.pack_id = pack_id;
+
+        memberService.upgrade_package_member(formUpgrade.value).then((res2) => {
+          is_loading.value = false;
+          console.log(res2);
+          if (res2.result.status !== 201) {
             return;
           }
-          alertMsg.value = true;
+
+          window.location.replace(temp_url);
         });
       })
       .catch((error) => {
-        isLoading.value = false;
+        is_loading.value = false;
         throw error;
       });
   },

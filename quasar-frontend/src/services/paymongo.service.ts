@@ -1,4 +1,4 @@
-const PAYMONGO_API_SECRET = 'sk_test_L7sSc8cJW2XvKSUso3wuDBNz';
+const PAYMONGO_API_SECRET = 'sk_test_x4XS5fPGcywyJuHbVzVeMMsi';
 
 class PaymongoService<T, K> {
   constructor() {

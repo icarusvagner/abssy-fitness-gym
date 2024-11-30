@@ -150,14 +150,6 @@
           />
           <q-input
             filled
-            v-model="form.duration"
-            type="number"
-            label="Duration"
-            min="7"
-            :rules="[(val) => val > 0 || 'Please enter duration of package']"
-          />
-          <q-input
-            filled
             v-model="form.package_type"
             label="Package date"
             bottom-slots
@@ -167,6 +159,14 @@
           >
             <template v-slot:hint> e.g(day, week, month, year, etc.) </template>
           </q-input>
+          <q-input
+            filled
+            v-model="form.duration"
+            type="number"
+            label="Duration"
+            :min="form.package_type != 'day' ? 1 : 7"
+            :rules="[(val) => val > 0 || 'Please enter duration of package']"
+          />
           <q-input
             filled
             v-model="form.price"
@@ -226,20 +226,21 @@
             :rules="[(val) => !!val || 'Please enter package name']"
           />
           <div class="row">
-            <q-input
-              filled
-              v-model.number="formUpdate.duration"
-              type="number"
-              label="Duration"
-              :rules="[(val) => val > 0 || 'Please enter package duration']"
-              class="col q-mr-md"
-            />
             <q-select
               filled
               v-model="formUpdate.package_type"
               :options="options"
               label="Package date type"
               class="col"
+            />
+            <q-input
+              filled
+              v-model.number="formUpdate.duration"
+              type="number"
+              label="Duration"
+              :min="formUpdate.package_type != 'day' || 'days' ? 1 : 7"
+              :rules="[(val) => val > 0 || 'Please enter package duration']"
+              class="col q-mr-md"
             />
           </div>
           <q-input

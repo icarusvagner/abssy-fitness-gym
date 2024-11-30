@@ -112,11 +112,7 @@ const get_my_details = debounce(() => {
     .get_one()
     .then((res) => {
       details.value = res.result;
-      console.log(
-        details.value.registered_at,
-        details.value.duration,
-        details.value.package_type
-      );
+
       is_expired_date.value = expiryDate.isExpired(
         details.value.registered_at,
         details.value.duration,

@@ -45,11 +45,14 @@
         </div>
       </div>
     </div>
+    <div v-else class="flex column items-center justify-center q-pa-md">
+      <UpgradePackageComponent />
+    </div>
   </q-page>
 </template>
 
 <script setup lang="ts">
-import { defineComponent, onMounted, ref } from 'vue';
+import { defineComponent, onMounted, ref, defineAsyncComponent } from 'vue';
 import { useRouter } from 'vue-router';
 import { debounce } from 'quasar';
 
@@ -57,6 +60,10 @@ import PackageService from 'src/services/package.service';
 import PaymongoService from 'src/services/paymongo.service';
 import MemberService from 'src/services/member.service';
 import { PackageForSelect } from 'src/types/package.type';
+
+const UpgradePackageComponent = defineAsyncComponent(
+  () => import('components/UpgradePackageComponent.vue')
+);
 
 const packageService = new PackageService();
 const paymongoService = new PaymongoService();

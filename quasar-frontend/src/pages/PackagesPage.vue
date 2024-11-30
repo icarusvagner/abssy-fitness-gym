@@ -51,11 +51,7 @@
         <q-tr
           :props="props"
           @click="onRowClick(props.row)"
-          :class="
-            props.row.status === 'removed'
-              ? 'cursor-pointer bg-red-5 text-white'
-              : 'cursor-pointer'
-          "
+          v-if="props.row.status != 'removed'"
         >
           <q-td key="package_name" :props="props">
             {{ props.row.package_name }}
@@ -67,11 +63,70 @@
             {{ props.row.price }}
           </q-td>
           <q-td key="ctime" :props="props">
-            {{ props.row.ctime }}
+            {{ date.formatDate(props.row.ctime, 'MMMM DD, YYYY') }}
           </q-td>
         </q-tr>
       </template>
     </q-table>
+
+    <div class="q-mt-xl flex column q-gutter-y-md">
+      <div class="row">
+        <span class="text-h5 text-weight-normal col">Package removed List</span>
+      </div>
+      <q-table
+        ref="tableRef"
+        bordered
+        title="Packages"
+        :rows="rows"
+        :columns="columns"
+        row-key="item_name"
+        :filter="filter"
+        :loading="isLoading"
+        card-class="bg-grey-12 text-grey-10"
+        table-class="text-capitalize"
+      >
+        <template v-slot:top-right>
+          <q-input
+            color="secondary"
+            outlined
+            dense
+            debounce="300"
+            v-model="filter"
+            placeholder="Search"
+          >
+            <template v-slot:append>
+              <q-icon name="search" />
+            </template>
+          </q-input>
+        </template>
+
+        <template v-slot:loading>
+          <q-inner-loading showing color="secondary" />
+        </template>
+
+        <template v-slot:body="props">
+          <q-tr
+            :props="props"
+            @click="onRowClick(props.row)"
+            v-if="props.row.status == 'removed'"
+            class="cursor-pointer bg-red-5 text-white"
+          >
+            <q-td key="package_name" :props="props">
+              {{ props.row.package_name }}
+            </q-td>
+            <q-td key="duration" :props="props">
+              {{ `${props.row.duration} ${props.row.package_type}` }}
+            </q-td>
+            <q-td key="price" :props="props">
+              {{ props.row.price }}
+            </q-td>
+            <q-td key="ctime" :props="props">
+              {{ date.formatDate(props.row.ctime, 'MMMM DD, YYYY') }}
+            </q-td>
+          </q-tr>
+        </template>
+      </q-table>
+    </div>
   </q-page>
 
   <q-dialog v-model="medium" persistent>
@@ -98,7 +153,7 @@
             v-model="form.duration"
             type="number"
             label="Duration"
-            min="1"
+            min="7"
             :rules="[(val) => val > 0 || 'Please enter duration of package']"
           />
           <q-input
@@ -117,7 +172,7 @@
             v-model="form.price"
             type="number"
             label="Price"
-            min="1"
+            min="100"
             :rules="[(val) => val > 0 || 'Please enter package price']"
           />
           <q-select
@@ -240,7 +295,7 @@
 
 <script setup lang="ts">
 import { ref, onBeforeMount } from 'vue';
-import { debounce, Notify } from 'quasar';
+import { debounce, date, Notify } from 'quasar';
 
 import PackageService from 'src/services/package.service';
 import {
@@ -415,6 +470,7 @@ const remove_package = debounce((id: number) => {
       color: 'warning',
       timeout: 1300,
     });
+    get_packages();
     medium2.value = false;
     isLoading.value = false;
   });

@@ -19,6 +19,10 @@ router.get(
 router.post("/update", verifyToken, memberController.updateMember);
 router.post("/delete", verifyToken, memberController.deleteMember);
 router.post("/login", memberController.login_member);
+router.post("/renew", memberController.renew_member_package);
+router.post("/upgrade", memberController.upgrade_member_package);
+router.post("/after-login", verifyToken, memberController.get_member_details);
+router.post("/after-login", verifyToken, memberController.get_member_details);
 router.post("/after-login", verifyToken, memberController.get_member_details);
 router.get("/one", verifyToken, memberController.get_one_member_details);
 

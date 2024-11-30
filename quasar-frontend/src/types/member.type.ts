@@ -59,6 +59,7 @@ export interface OneMemberPackage {
   package_name: string;
   package_type: string;
   phone_number: string;
+  email_address: string;
   price: string;
   registered_at: string;
 }

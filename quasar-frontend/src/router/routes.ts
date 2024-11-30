@@ -168,8 +168,8 @@ const notElectronRoute = [
       {
         path: 'plan',
         meta: { auth: true },
-        name: 'plan',
-        component: () => import('pages/CustomerChoosePackage.vue'),
+        name: 'choose_plan',
+        component: () => import('pages/CustomerPackagePage.vue'),
       },
     ],
   },

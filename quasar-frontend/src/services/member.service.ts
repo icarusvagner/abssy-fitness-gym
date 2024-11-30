@@ -54,6 +54,18 @@ class MemberService<T, K> {
 
     return response.data;
   }
+
+  async renew_package_member(data: K): Promise<T> {
+    const response = await api.post(`${this.base_end_point}/renew`, data);
+
+    return response.data;
+  }
+
+  async upgrade_package_member(data: K): Promise<T> {
+    const response = await api.post(`${this.base_end_point}/upgrade`, data);
+
+    return response.data;
+  }
 }
 
 export default MemberService;

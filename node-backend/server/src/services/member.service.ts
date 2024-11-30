@@ -1,7 +1,12 @@
 import executeQuery from "../utils/executeQuery.util";
 import bcryptjs from "bcryptjs";
 import checkValidEnumValue from "../utils/checkEnum.util";
-import { MemberForCreate, MemberForUpdate } from "../models/member.model";
+import {
+  MemberForCreate,
+  MemberForUpdate,
+  MemberRenewPackage,
+  MemberUpgradePackage,
+} from "../models/member.model";
 import { Gender } from "../models/auth.model";
 import { read_package } from "./package.service";
 import EmailTemplate from "../utils/emailTemplate.util";
@@ -270,6 +275,38 @@ const get_one_member_details = async (user: string) => {
   }
 };
 
+const upgrade_member_package = async (member_update: MemberUpgradePackage) => {
+  try {
+    let query = "CALL upgrade_member_package(?,?,?,?)";
+    let result: any = await executeQuery(query, [
+      member_update.pack_id,
+      member_update.member_id,
+      member_update.ref_number,
+      member_update.purchased_id,
+    ]);
+
+    return result[0];
+  } catch (error: any) {
+    console.error("Upgrade member package service error: ", error.message);
+    return error.message;
+  }
+};
+
+const renew_member_package = async (renew_pack: MemberRenewPackage) => {
+  try {
+    let query = "CALL renew_member_package(?,?)";
+    let result: any = await executeQuery(query, [
+      renew_pack.pack_id,
+      renew_pack.member_id,
+    ]);
+
+    return result[0][0];
+  } catch (error: any) {
+    console.error("Renewing member package service error: ", error.message);
+    return error.message;
+  }
+};
+
 export {
   get_one_member_details,
   get_member_details,
@@ -281,4 +318,6 @@ export {
   update_member,
   delete_member,
   get_purchased_package,
+  upgrade_member_package,
+  renew_member_package,
 };

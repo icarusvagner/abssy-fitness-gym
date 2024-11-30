@@ -40,3 +40,15 @@ export interface MemberForUpdate {
   package_id: number;
   health_condition: string;
 }
+
+export interface MemberUpgradePackage {
+  pack_id: number;
+  member_id: number;
+  ref_number: string;
+  purchased_id: string;
+}
+
+export interface MemberRenewPackage {
+  pack_id: number;
+  member_id: number;
+}

@@ -13,7 +13,7 @@
             outline
             style="color: gold"
             label="Upgrade Package"
-            :to="{ name: 'plan', query: { q: 'upgrade' } }"
+            :to="{ name: 'choose_plan', query: { q: 'upgrade' } }"
           />
           <q-btn flat label="Home" :to="{ name: 'dashboard' }" />
           <q-btn flat color="white" label="Logout" @click="logout_handler" />

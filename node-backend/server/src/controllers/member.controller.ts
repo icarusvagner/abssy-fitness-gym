@@ -1,5 +1,10 @@
 import { Request, Response, NextFunction } from "express";
-import { MemberForCreate, MemberForUpdate } from "../models/member.model";
+import {
+  MemberForCreate,
+  MemberForUpdate,
+  MemberRenewPackage,
+  MemberUpgradePackage,
+} from "../models/member.model";
 import * as memberService from "../services/member.service";
 
 const addMember = async (req: Request, res: Response) => {
@@ -135,6 +140,34 @@ const get_one_member_details = async (req: Request, res: Response) => {
   }
 };
 
+const upgrade_member_package = async (req: Request, res: Response) => {
+  try {
+    const member_update: MemberUpgradePackage = req.body;
+    let result = await memberService.upgrade_member_package(member_update);
+    return res.status(201).json({ result });
+  } catch (error: any) {
+    console.error(
+      "Upgrade member packager error on controller: ",
+      error.message,
+    );
+    return res.status(500).json({ error: error.message });
+  }
+};
+
+const renew_member_package = async (req: Request, res: Response) => {
+  try {
+    const member_renew: MemberRenewPackage = req.body;
+    let result = await memberService.renew_member_package(member_renew);
+    return res.status(201).json({ result });
+  } catch (error: any) {
+    console.error(
+      "Renewing member packager error on controller: ",
+      error.message,
+    );
+    return res.status(500).json({ error: error.message });
+  }
+};
+
 export {
   get_one_member_details,
   get_member_details,
@@ -146,4 +179,6 @@ export {
   updateMember,
   deleteMember,
   getPurchasedPackage,
+  renew_member_package,
+  upgrade_member_package,
 };

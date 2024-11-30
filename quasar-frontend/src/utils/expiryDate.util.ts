@@ -1,13 +1,31 @@
 class ExpiryDate {
+  private normalizePackType = (pack_type: string): string => {
+    const normalized = pack_type.toLowerCase();
+    if (['day', 'days'].includes(normalized)) return 'day';
+    if (['week', 'weeks'].includes(normalized)) return 'week';
+    if (['month', 'months'].includes(normalized)) return 'month';
+    if (['year', 'years'].includes(normalized)) return 'year';
+    return 'invalid';
+  };
+
   getFutureDate = (
     ctime: string,
     duration: number,
     pack_type: string
   ): Date | string => {
     const currentDate = new Date(ctime);
-    console.log(ctime + ' ' + duration + ' ' + pack_type);
+    const normalizedPackType = this.normalizePackType(pack_type);
 
-    switch (pack_type) {
+    switch (normalizedPackType) {
+      case 'day':
+        if (isNaN(currentDate.getTime())) {
+          throw new Error(
+            'Invalid date string! Please provide a valid ISO date.'
+          );
+        }
+
+        currentDate.setDate(currentDate.getDate() + 1);
+        break;
       case 'week':
         currentDate.setDate(currentDate.getDate() + duration * 7);
         break;

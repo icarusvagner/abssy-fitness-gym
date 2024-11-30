@@ -474,3 +474,79 @@ BEGIN
 END //
 
 DELIMITER ;
+
+
+DELIMITER //
+
+CREATE OR REPLACE PROCEDURE renew_member_package(
+    IN p_member_id INT,
+    IN p_pack_id INT
+)
+
+BEGIN
+
+    DECLARE EXIT HANDLER FOR SQLEXCEPTION
+    	BEGIN
+    	    DECLARE sql_state CHAR(5);
+    	    DECLARE error_message TEXT;
+    	    DECLARE error_code INT;
+
+    	    GET DIAGNOSTICS CONDITION 1
+    	        sql_state = RETURNED_SQLSTATE,
+    	        error_message = MESSAGE_TEXT,
+    	        error_code = MYSQL_ERRNO;
+
+    	    ROLLBACK;
+    	    SELECT 'Error occurred during member package update.' AS error_message, error_code AS err_status, error_message AS detailed_message;
+   	END;
+
+    START TRANSACTION;
+
+        UPDATE member_table SET package_id=p_pack_id, mtime=CURRENT_TIMESTAMP() WHERE id = p_member_id;
+
+        SELECT 'Package member upgraded successfully' AS message, 201 AS status;
+
+    COMMIT;
+
+END //
+
+DELIMITER ;
+
+DELIMITER //
+
+CREATE OR REPLACE PROCEDURE upgrade_member_package (
+    IN p_pack_id INT,
+    IN p_member_id INT,
+    IN p_ref_number VARCHAR(255),
+    IN p_purchased_id VARCHAR(255)
+)
+
+DECLARE EXIT HANDLER FOR SQLEXCEPTION
+ 	BEGIN
+ 	    DECLARE sql_state CHAR(5);
+ 	    DECLARE error_message TEXT;
+ 	    DECLARE error_code INT;
+
+ 	    GET DIAGNOSTICS CONDITION 1
+ 	        sql_state = RETURNED_SQLSTATE,
+ 	        error_message = MESSAGE_TEXT,
+ 	        error_code = MYSQL_ERRNO;
+
+ 	    ROLLBACK;
+ 	    SELECT 'Error occurred during member package update.' AS error_message, error_code AS err_status, error_message AS detailed_message;
+	END;
+
+ START TRANSACTION;
+
+    INSERT INTO purchased_package_table
+    (package_id, member_id, reference_number, purchased_id)
+    VALUES(p_pack_id, p_member_id, p_ref_number, p_puchased_id);
+
+    UPDATE member_table
+    SET package_id=p_pack_id, mtime=CURRENT_TIMESTAMP()
+    WHERE id=p_member_id;
+
+    SELECT 'Upgrade successfully' AS message, 201 AS status;
+
+ COMMIT;
+DELIMITER ;

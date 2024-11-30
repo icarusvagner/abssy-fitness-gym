@@ -131,6 +131,7 @@ const submitChangePass = debounce(async () => {
       package_id: decodePack.value[2],
     })
     .then((res) => {
+      console.log(res);
       paymentUrl.value = res.data.attributes.checkout_url;
       form.value.reference_no = res.data.attributes.reference_number;
       form.value.email = decodeUser.value[0];
